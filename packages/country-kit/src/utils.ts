@@ -75,11 +75,11 @@ export const getCountryByCode = (code: CountryCode): Country | undefined => {
    * @param {CountryCode} code - The ISO 3166-1 alpha-2 country code
    * @returns {string | undefined} The flag emoji if found, undefined otherwise
    * @example
-   * getFlag('US') // returns '🇺🇸'
-   * getFlag('GB') // returns '🇬🇧'
+   * getCountryFlag('US') // returns '🇺🇸'
+   * getCountryFlag('GB') // returns '🇬🇧'
    */
   export const getCountryFlag = (code: CountryCode): string | undefined => 
-    code ? getFlag(code) : undefined;
+    countryData[code.toUpperCase()]?.flag;
   
   /**
    * Gets an array of all countries with their complete information

@@ -51,6 +51,48 @@ describe('Country Data Structure', () => {
   });
 });
 
+describe('Country Data Consistency', () => {
+  const countries = Object.entries(countryData);
+  const expectedFields = ['name', 'alpha3', 'callingCode', 'flag'];
+
+  test('should have data for at least 190 countries', () => {
+    expect(countries.length).toBeGreaterThan(190);
+  });
+
+  test('should have consistent field structure across all countries', () => {
+    countries.forEach(([code, data]) => {
+      expectedFields.forEach(field => {
+        expect(data).toHaveProperty(field);
+      });
+    });
+  });
+
+  test('should not have undefined or null values', () => {
+    countries.forEach(([code, data]) => {
+      expectedFields.forEach(field => {
+        expect(data[field]).toBeDefined();
+        expect(data[field]).not.toBeNull();
+      });
+    });
+  });
+
+  test('should have valid format for specific fields', () => {
+    countries.forEach(([code, data]) => {
+      // Alpha3 code should be 3 uppercase letters
+      expect(data.alpha3).toMatch(/^[A-Z]{3}$/);
+      
+      // Calling code should start with + and contain only numbers
+      expect(data.callingCode).toMatch(/^\+\d+$/);
+      
+      // Flag should be a string with exactly 2 emoji characters
+      expect(data.flag.length).toBe(4);
+      
+      // Country name should be a non-empty string
+      expect(data.name.length).toBeGreaterThan(0);
+    });
+  });
+});
+
 describe('getCountryName', () => {
   test('should return correct country name for valid code', () => {
     expect(getCountryName(validCode)).toBe('United States of America');

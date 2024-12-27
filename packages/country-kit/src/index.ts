@@ -36,7 +36,7 @@ export const countryData: {
   AI: {
     name: "Anguilla",
     alpha3: "AIA",
-    callingCode: "+1-264",
+    callingCode: "+1264",
     flag: getFlag("AI"),
   },
   AL: {
@@ -72,7 +72,7 @@ export const countryData: {
   AS: {
     name: "American Samoa",
     alpha3: "ASM",
-    callingCode: "+1-684",
+    callingCode: "+1684",
     flag: getFlag("AS"),
   },
   AT: {
@@ -114,7 +114,7 @@ export const countryData: {
   BB: {
     name: "Barbados",
     alpha3: "BRB",
-    callingCode: "+1-246",
+    callingCode: "+1246",
     flag: getFlag("BB"),
   },
   BD: {
@@ -168,7 +168,7 @@ export const countryData: {
   BM: {
     name: "Bermuda",
     alpha3: "BMU",
-    callingCode: "+1-441",
+    callingCode: "+1441",
     flag: getFlag("BM"),
   },
   BN: {
@@ -198,7 +198,7 @@ export const countryData: {
   BS: {
     name: "Bahamas",
     alpha3: "BHS",
-    callingCode: "+1-242",
+    callingCode: "+1242",
     flag: getFlag("BS"),
   },
   BT: {
@@ -352,7 +352,7 @@ export const countryData: {
   DO: {
     name: "Dominican Republic",
     alpha3: "DOM",
-    callingCode: "+1-809",
+    callingCode: "+1809",
     flag: getFlag("DO"),
   },
   DZ: {
@@ -439,7 +439,7 @@ export const countryData: {
   GD: {
     name: "Grenada",
     alpha3: "GRD",
-    callingCode: "+1-473",
+    callingCode: "+1473",
     flag: getFlag("GD"),
   },
   GE: {
@@ -523,7 +523,7 @@ export const countryData: {
   GU: {
     name: "Guam",
     alpha3: "GUM",
-    callingCode: "+1-671",
+    callingCode: "+1671",
     flag: getFlag("GU"),
   },
   GW: {
@@ -628,7 +628,7 @@ export const countryData: {
   JM: {
     name: "Jamaica",
     alpha3: "JAM",
-    callingCode: "+1-876",
+    callingCode: "+1876",
     flag: getFlag("JM"),
   },
   JO: {
@@ -671,7 +671,7 @@ export const countryData: {
   KN: {
     name: "Saint Kitts and Nevis",
     alpha3: "KNA",
-    callingCode: "+1-869",
+    callingCode: "+1869",
     flag: getFlag("KN"),
   },
   KP: {
@@ -695,7 +695,7 @@ export const countryData: {
   KY: {
     name: "Cayman Islands",
     alpha3: "CYM",
-    callingCode: "+1-345",
+    callingCode: "+1345",
     flag: getFlag("KY"),
   },
   KZ: {
@@ -719,7 +719,7 @@ export const countryData: {
   LC: {
     name: "Saint Lucia",
     alpha3: "LCA",
-    callingCode: "+1-758",
+    callingCode: "+1758",
     flag: getFlag("LC"),
   },
   LI: {
@@ -840,7 +840,7 @@ export const countryData: {
   MP: {
     name: "Northern Mariana Islands",
     alpha3: "MNP",
-    callingCode: "+1-670",
+    callingCode: "+1670",
     flag: getFlag("MP"),
   },
   MQ: {
@@ -858,7 +858,7 @@ export const countryData: {
   MS: {
     name: "Montserrat",
     alpha3: "MSR",
-    callingCode: "+1-664",
+    callingCode: "+1664",
     flag: getFlag("MS"),
   },
   MT: {
@@ -1023,7 +1023,7 @@ export const countryData: {
   PR: {
     name: "Puerto Rico",
     alpha3: "PRI",
-    callingCode: "+1-787",
+    callingCode: "+1787",
     flag: getFlag("PR"),
   },
   PS: {
@@ -1197,7 +1197,7 @@ export const countryData: {
   SX: {
     name: "Sint Maarten (Dutch part)",
     alpha3: "SXM",
-    callingCode: "+1-721",
+    callingCode: "+1721",
     flag: getFlag("SX"),
   },
   SY: {
@@ -1215,7 +1215,7 @@ export const countryData: {
   TC: {
     name: "Turks and Caicos Islands",
     alpha3: "TCA",
-    callingCode: "+1-649",
+    callingCode: "+1649",
     flag: getFlag("TC"),
   },
   TD: { name: "Chad", alpha3: "TCD", callingCode: "+235", flag: getFlag("TD") },
@@ -1277,7 +1277,7 @@ export const countryData: {
   TT: {
     name: "Trinidad and Tobago",
     alpha3: "TTO",
-    callingCode: "+1-868",
+    callingCode: "+1868",
     flag: getFlag("TT"),
   },
   TV: {
@@ -1343,7 +1343,7 @@ export const countryData: {
   VC: {
     name: "Saint Vincent and the Grenadines",
     alpha3: "VCT",
-    callingCode: "+1-784",
+    callingCode: "+1784",
     flag: getFlag("VC"),
   },
   VE: {
@@ -1355,13 +1355,13 @@ export const countryData: {
   VG: {
     name: "Virgin Islands (British)",
     alpha3: "VGB",
-    callingCode: "+1-284",
+    callingCode: "+1284",
     flag: getFlag("VG"),
   },
   VI: {
     name: "Virgin Islands (U.S.)",
     alpha3: "VIR",
-    callingCode: "+1-340",
+    callingCode: "+1340",
     flag: getFlag("VI"),
   },
   VN: {
