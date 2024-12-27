@@ -1,5 +1,6 @@
 {
   "name": "country-kit",
+  "description": "A lightweight TypeScript library providing comprehensive country data including ISO codes, names, calling codes, and flag emojis.",
   "version": "1.0.0",
   "type": "module",
   "exports": {
@@ -13,8 +14,20 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
-    "dist"
+    "dist/**",
+     "README.md"
   ],
+  "keywords": [
+    "country code",
+    "iso country code",
+    "country calling code",
+    "country flag emoji"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thevipinmishra/country-kit.git",
+    "directory": "packages/country-kit"
+  },
   "scripts": {
     "build": "rslib build",
     "check": "biome check --write",
@@ -30,5 +43,6 @@
     "typescript": "^5.6.3",
     "vitest": "^2.1.8"
   },
-  "private": true
+  "author": "Vipin Mishra",
+  "license": "ISC"
 }
