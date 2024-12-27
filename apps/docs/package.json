@@ -1,0 +1,18 @@
+{
+  "name": "docs",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/tailwind": "^5.1.4",
+    "@fontsource-variable/space-grotesk": "^5.1.0",
+    "astro": "^5.1.1",
+    "country-kit": "workspace:*",
+    "tailwindcss": "^3.4.17"
+  }
+}

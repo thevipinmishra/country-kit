@@ -1,0 +1,15 @@
+{
+  "name": "country-kit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "package": "pnpm --filter country-kit",
+    "docs": "pnpm --filter docs",
+    "publish": "pnpm --filter country-kit run publish"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module"
+}
