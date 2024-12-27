@@ -1,10 +1,10 @@
 # country-kit
 
-A lightweight TypeScript library providing comprehensive country data including ISO codes, names, calling codes, and flag emojis.
+A lightweight TypeScript library providing comprehensive country data including ISO codes, names, calling codes, and flag emojis
 
 [![npm version](https://img.shields.io/npm/v/country-kit.svg)](https://www.npmjs.com/package/country-kit)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/country-kit)](https://bundlephobia.com/package/country-kit)
-[![license](https://img.shields.io/npm/l/country-kit.svg)](https://github.com/yourusername/country-kit/blob/main/LICENSE)
+[![license](https://img.shields.io/npm/l/country-kit.svg)](https://github.com/thevipinmishra/country-kit/blob/main/LICENSE)
 
 ## Features
 
@@ -15,6 +15,7 @@ A lightweight TypeScript library providing comprehensive country data including 
 - 📦 Zero dependencies
 - 🚀 Tree-shakeable
 - 💻 Full TypeScript support
+- 🌐 Works in both Browser and Node.js environments
 
 ## Installation
 
