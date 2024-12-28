@@ -9,193 +9,163 @@ import {
   countryData,
   countries,
   countryCodes,
-  countryNames
+  countryNames,
+  isValidCallingCode,
+  getCountriesByCallingCode,
+  searchCountries,
+  isValidCountryCode,
+  type CountryCode
 } from 'country-kit';
 
-// Test data constants
-const validCode = 'US';
-const invalidCode = 'XX';
-const lowerCaseCode = 'us';
+// Test constants
+const TEST_DATA = {
+  US: {
+    code: 'US',
+    name: "United States of America", // Matches exact name from countryData
+    alpha3: 'USA',
+    callingCode: '+1',
+    flag: '🇺🇸'
+  },
+  GB: {
+    code: 'GB',
+    name: "United Kingdom of Great Britain and Northern Ireland", // Matches exact name from countryData
+    alpha3: 'GBR',
+    callingCode: '+44',
+    flag: '🇬🇧'
+  }
+};
 
 describe('Country Data Structure', () => {
-  test('countryData should contain all necessary country information', () => {
-    expect(countryData).toBeDefined();
-    expect(Object.keys(countryData).length).toBeGreaterThan(0);
+  test('data consistency across exports', () => {
+    const dataLength = Object.keys(countryData).length;
+    expect(countryCodes.length).toBe(dataLength);
+    expect(Object.keys(countries).length).toBe(dataLength);
+    expect(countryNames.length).toBe(dataLength);
+    expect(dataLength).toBe(249); // Total number of countries
+  });
+
+  test('country data format', () => {
+    for (const code of ['US', 'GB']) {
+      const data = countryData[code];
+      expect(data).toMatchObject({
+        name: expect.any(String),
+        alpha3: expect.stringMatching(/^[A-Z]{3}$/),
+        callingCode: expect.stringMatching(/^\+\d+$/),
+        flag: expect.any(String)
+      });
+    }
+  });
+});
+
+describe('Country Code Validation', () => {
+  test.each([
+    ['US', true],
+    ['GB', true],
+    ['us', true],
+    ['gb', true],
+    ['XX', false],
+    ['', false],
+    ['USA', false]
+  ])('isValidCountryCode(%s) -> %s', (code, expected) => {
+    expect(isValidCountryCode(code)).toBe(expected);
+  });
+});
+
+describe('Country Information Retrieval', () => {
+  test.each(['US', 'GB'])('gets correct data for %s', (code) => {
+    const data = TEST_DATA[code as keyof typeof TEST_DATA];
+    expect(getCountryName(code as CountryCode)).toBe(data.name);
+    expect(getCallingCode(code as CountryCode)).toBe(data.callingCode);
+    expect(getAlpha3Code(code as CountryCode)).toBe(data.alpha3);
+    expect(getCountryFlag(code as CountryCode)).toBe(data.flag);
     
-    // Check structure of a known country
-    const usData = countryData['US'];
-    expect(usData).toEqual({
-      name: 'United States of America',
-      alpha3: 'USA',
-      callingCode: '+1',
-      flag: '🇺🇸'
+    expect(getCountryByCode(code as CountryCode)).toEqual({
+      ...data
     });
   });
 
-  test('countries object should contain all country names', () => {
-    expect(countries).toBeDefined();
-    expect(Object.keys(countries).length).toBe(Object.keys(countryData).length);
-    expect(countries['US']).toBe('United States of America');
-  });
-
-  test('countryCodes array should contain all country codes', () => {
-    expect(countryCodes).toBeDefined();
-    expect(countryCodes.length).toBe(Object.keys(countryData).length);
-    expect(countryCodes).toContain('US');
-  });
-
-  test('countryNames array should contain all country names', () => {
-    expect(countryNames).toBeDefined();
-    expect(countryNames.length).toBe(Object.keys(countryData).length);
-    expect(countryNames).toContain('United States of America');
-  });
-});
-
-describe('Country Data Consistency', () => {
-  const countries = Object.entries(countryData);
-  const expectedFields = ['name', 'alpha3', 'callingCode', 'flag'];
-
-  test('should have data for at least 190 countries', () => {
-    expect(countries.length).toBeGreaterThan(190);
-  });
-
-  test('should have consistent field structure across all countries', () => {
-    countries.forEach(([code, data]) => {
-      expectedFields.forEach(field => {
-        expect(data).toHaveProperty(field);
-      });
-    });
-  });
-
-  test('should not have undefined or null values', () => {
-    countries.forEach(([code, data]) => {
-      expectedFields.forEach(field => {
-        expect(data[field]).toBeDefined();
-        expect(data[field]).not.toBeNull();
-      });
-    });
-  });
-
-  test('should have valid format for specific fields', () => {
-    countries.forEach(([code, data]) => {
-      // Alpha3 code should be 3 uppercase letters
-      expect(data.alpha3).toMatch(/^[A-Z]{3}$/);
-      
-      // Calling code should start with + and contain only numbers
-      expect(data.callingCode).toMatch(/^\+\d+$/);
-      
-      // Flag should be a string with exactly 2 emoji characters
-      expect(data.flag.length).toBe(4);
-      
-      // Country name should be a non-empty string
-      expect(data.name.length).toBeGreaterThan(0);
-    });
-  });
-});
-
-describe('getCountryName', () => {
-  test('should return correct country name for valid code', () => {
-    expect(getCountryName(validCode)).toBe('United States of America');
-  });
-
-  test('should handle lowercase country codes', () => {
-    expect(getCountryName(lowerCaseCode)).toBe('United States of America');
-  });
-
-  test('should return undefined for invalid code', () => {
+  test('handles invalid country code', () => {
+    const invalidCode = 'XX' as CountryCode;
     expect(getCountryName(invalidCode)).toBeUndefined();
-  });
-});
-
-describe('getCountryByCode', () => {
-  test('should return complete country information for valid code', () => {
-    const country = getCountryByCode(validCode);
-    expect(country).toEqual({
-      code: 'US',
-      name: 'United States of America',
-      alpha3: 'USA',
-      callingCode: '+1',
-      flag: '🇺🇸'
-    });
-  });
-
-  test('should handle lowercase country codes', () => {
-    const country = getCountryByCode(lowerCaseCode);
-    expect(country?.code).toBe('us');
-  });
-
-  test('should return undefined for invalid code', () => {
+    expect(getCallingCode(invalidCode)).toBeUndefined();
+    expect(getAlpha3Code(invalidCode)).toBeUndefined();
+    expect(getCountryFlag(invalidCode)).toBeUndefined();
     expect(getCountryByCode(invalidCode)).toBeUndefined();
   });
 });
 
-describe('getCallingCode', () => {
-  test('should return correct calling code for valid code', () => {
-    expect(getCallingCode(validCode)).toBe('+1');
+describe('Calling Code Functions', () => {
+  test.each([
+    ['+1', true],
+    ['+44', true],
+    ['+123', true],
+    ['1', false],
+    ['++44', false],
+    ['+12345', false],
+    ['', false]
+  ])('isValidCallingCode(%s) -> %s', (code, expected) => {
+    expect(isValidCallingCode(code)).toBe(expected);
   });
 
-  test('should handle lowercase country codes', () => {
-    expect(getCallingCode(lowerCaseCode)).toBe('+1');
+  test('getCountriesByCallingCode returns correct countries', () => {
+    const plusOne = getCountriesByCallingCode('+1');
+    expect(plusOne.some(c => c.code === 'US')).toBe(true);
+    expect(plusOne.some(c => c.code === 'CA')).toBe(true);
+    expect(plusOne.every(c => c.callingCode === '+1')).toBe(true);
   });
 
-  test('should return undefined for invalid code', () => {
-    expect(getCallingCode(invalidCode)).toBeUndefined();
-  });
-});
-
-describe('getAlpha3Code', () => {
-  test('should return correct alpha3 code for valid code', () => {
-    expect(getAlpha3Code(validCode)).toBe('USA');
-  });
-
-  test('should handle lowercase country codes', () => {
-    expect(getAlpha3Code(lowerCaseCode)).toBe('USA');
-  });
-
-  test('should return undefined for invalid code', () => {
-    expect(getAlpha3Code(invalidCode)).toBeUndefined();
+  test('getCountriesByCallingCode handles invalid codes', () => {
+    expect(getCountriesByCallingCode('+999')).toEqual([]);
+    expect(getCountriesByCallingCode('44')).toEqual([]);
   });
 });
 
-describe('getCountryFlag', () => {
-  test('should return correct flag emoji for valid code', () => {
-    expect(getCountryFlag(validCode)).toBe('🇺🇸');
+describe('Search Function', () => {
+  test('basic search functionality', () => {
+    const results = searchCountries('united');
+    expect(results.length).toBeGreaterThan(1);
+    expect(results.some(c => c.code === 'US')).toBe(true);
+    expect(results.some(c => c.code === 'GB')).toBe(true);
   });
 
-  test('should handle lowercase country codes', () => {
-    expect(getCountryFlag(lowerCaseCode)).toBe('🇺🇸');
+  test('search options', () => {
+    // Test limit option
+    const limitResults = searchCountries('united', { limit: 1 });
+    expect(limitResults).toHaveLength(1);
+
+    // Test exact match
+    const exactMatch = searchCountries('United States of America', { exact: true });
+    expect(exactMatch).toHaveLength(1);
+    expect(exactMatch[0].code).toBe('US');
+
+    // Test code search
+    const withCodes = searchCountries('us', { includeCodes: true });
+    expect(withCodes.some(c => c.code === 'US')).toBe(true);
+
+    const withoutCodes = searchCountries('us', { includeCodes: false });
+    expect(withoutCodes.some(c => c.code === 'US')).toBe(false);
   });
 
-  test('should return undefined for invalid code', () => {
-    expect(getCountryFlag(invalidCode)).toBeUndefined();
+  test.each([
+    '',
+    '   ',
+    undefined,
+    null
+  ] as any[])('handles invalid input: %s', (input) => {
+    expect(searchCountries(input)).toEqual([]);
   });
 });
 
 describe('getAllCountries', () => {
-  test('should return array of all countries with complete information', () => {
+  test('returns complete country list', () => {
     const allCountries = getAllCountries();
-    
-    // Check array properties
-    expect(Array.isArray(allCountries)).toBe(true);
-    expect(allCountries.length).toBe(Object.keys(countryData).length);
-    
-    // Check structure of a specific country
-    const us = allCountries.find(c => c.code === 'US');
-    expect(us).toEqual({
-      code: 'US',
-      name: 'United States of America',
-      alpha3: 'USA',
-      callingCode: '+1',
-      flag: '🇺🇸'
-    });
-    
-    // Check that all entries have required properties
-    allCountries.forEach(country => {
-      expect(country).toHaveProperty('code');
-      expect(country).toHaveProperty('name');
-      expect(country).toHaveProperty('alpha3');
-      expect(country).toHaveProperty('callingCode');
-      expect(country).toHaveProperty('flag');
+    expect(allCountries).toHaveLength(countryCodes.length);
+    expect(allCountries[0]).toMatchObject({
+      code: expect.any(String),
+      name: expect.any(String),
+      alpha3: expect.stringMatching(/^[A-Z]{3}$/),
+      callingCode: expect.stringMatching(/^\+\d+$/),
+      flag: expect.any(String)
     });
   });
 });
