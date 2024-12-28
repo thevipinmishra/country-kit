@@ -11,8 +11,12 @@
   "dependencies": {
     "@astrojs/tailwind": "^5.1.4",
     "@fontsource-variable/space-grotesk": "^5.1.0",
+    "@fontsource/space-mono": "^5.1.1",
     "astro": "^5.1.1",
     "country-kit": "workspace:*",
     "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.15"
   }
 }

@@ -1,22 +1,226 @@
 ---
 import '@fontsource-variable/space-grotesk';
+import '@fontsource/space-mono';
+import { Code } from 'astro:components';
+
+const description = "A lightweight TypeScript library providing ISO country data and utilities for working with country codes, names, calling codes and flags";
+const title = "country-kit documentation";
+const url = "https://www.npmjs.com/package/country-kit";
 ---
 
-<html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Docs</title>
-    </head>
-    <body class="min-h-dvh bg-stone-950 text-gray-50 selection:bg-violet-900">
-        <section class="container space-y-10 py-10">
-           <div class="space-y-4">
-            <h2 class="font-bold text-4xl">country-kit</h2>
-            <p class="text-gray-300">
-                country-kit is a collection of data and utilities to help you build your next project with iso country data.
-            </p>
-           </div>
+        <title>{title}</title>
 
-           <p class="text-gray-400">Documentation is WIP.</p>
-        </section>
+        <!-- Primary Meta Tags -->
+        <meta name="title" content={title}>
+        <meta name="description" content={description}>
+        <meta name="keywords" content="country codes, ISO 3166, TypeScript, country data, country flags, calling codes">
+        <meta name="author" content="Your Name">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content={url}>
+        <meta property="og:title" content={title}>
+        <meta property="og:description" content={description}>
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content={url}>
+        <meta property="twitter:title" content={title}>
+        <meta property="twitter:description" content={description}>
+
+        <!-- Favicon -->
+        <link rel="canonical" href={url}>
+
+        <!-- JSON-LD -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "SoftwareSourceCode",
+                "name": "country-kit",
+                "description": "A lightweight TypeScript library providing ISO country data and utilities for working with country codes, names, calling codes and flags",
+                "programmingLanguage": "TypeScript",
+                "url": "https://www.npmjs.com/package/country-kit",
+                "author": {
+                    "@type": "Person",
+                    "name": "Vipin Mishra"
+                },
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "USD"
+                }
+            }
+        </script>
+    </head>
+    <body class="min-h-dvh bg-stone-50 text-stone-900 font-sans">
+        <nav class="py-4 bg-stone-100 border-b border-stone-200 mb-8">
+            <div class="container">
+                <h1 class="text-2xl font-bold">country-kit</h1>
+            </div>
+        </nav>
+
+        <main class="container prose prose-stone prose-base lg:prose-lg mx-auto">
+            <section>
+                <h2 id="introduction">Introduction</h2>
+                <p>
+                    country-kit is a lightweight TypeScript library providing ISO country data and utilities for working with country codes, names, calling codes and flags.
+                </p>
+
+                <div>
+                    <h3 id="features">Features</h3>
+                    <ul>
+                        <li>Zero dependencies</li>
+                        <li>TypeScript support</li>
+                        <li>ISO 3166-1 alpha-2 and alpha-3 codes</li>
+                        <li>Country names and flags</li>
+                        <li>International calling codes</li>
+                        <li>Search and validation utilities</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2 id="installation">Installation</h2>
+                <Code code={`npm install country-kit`} lang="bash" theme="vesper" />
+            </section>
+
+            <section>
+                <h2 id="usage">Usage</h2>
+
+                <div>
+                    <h3 id="basic-usage">Basic Usage</h3>
+                    <Code  code={`import { getCountryByCode, searchCountries } from 'country-kit';
+
+// Get country details
+const usa = getCountryByCode('US');
+// => { code: 'US', name: 'United States', alpha3: 'USA', callingCode: '+1', flag: '🇺🇸' }
+
+// Search countries
+const results = searchCountries('united');
+// => [{ code: 'US', name: 'United States'... }, { code: 'GB', name: 'United Kingdom'... }]`} lang="typescript" theme="vesper" />
+                </div>
+
+                <div>
+                    <h3 id="available-functions">Available Functions</h3>
+                    <ul>
+                        <li>
+                            <h4 id="get-country-by-code">getCountryByCode(code: CountryCode)</h4>
+                            <p>Returns complete country information for a given ISO 3166-1 alpha-2 code.</p>
+                            <Code code={`const country = getCountryByCode('GB');
+// => { 
+//   code: 'GB',
+//   name: 'United Kingdom',
+//   alpha3: 'GBR',
+//   callingCode: '+44',
+//   flag: '🇬🇧'
+// }`} lang="typescript" theme="vesper" />
+                        </li>
+
+                        <li>
+                            <h4 id="get-country-name">getCountryName(code: CountryCode)</h4>
+                            <p>Returns the country name for a given country code.</p>
+                            <Code code={`const name = getCountryName('US'); // => 'United States'`} lang="typescript" theme="vesper" />
+                        </li>
+
+                        <li>
+                            <h4 id="get-alpha3-code">getAlpha3Code(code: CountryCode)</h4>
+                            <p>Returns the ISO 3166-1 alpha-3 code for a country.</p>
+                            <Code code={`const alpha3 = getAlpha3Code('US'); // => 'USA'`} lang="typescript" theme="vesper" />
+                        </li>
+
+                        <li>
+                            <h4 id="get-calling-code">getCallingCode(code: CountryCode)</h4>
+                            <p>Gets the international calling code for a country.</p>
+                            <Code code={`const callingCode = getCallingCode('US'); // => '+1'`} lang="typescript" theme="vesper" />
+                        </li>
+
+                        <li>
+                            <h4 id="get-country-flag">getCountryFlag(code: CountryCode)</h4>
+                            <p>Returns the flag emoji for a country.</p>
+                            <Code code={`const flag = getCountryFlag('JP'); // => '🇯🇵'`} lang="typescript" theme="vesper" />
+                        </li>
+
+                        <li>
+                            <h4 id="search-countries">searchCountries(query?: string, options?: CountrySearchOptions)</h4>
+                            <p>Search countries by name or code with configurable options.</p>
+                            <Code code={`// Basic search
+const results = searchCountries('united');
+
+// With options
+const exactMatch = searchCountries('united', { 
+  exact: true,
+  limit: 2,
+  includeCodes: true 
+});`} lang="typescript" theme="vesper" />
+                        </li>
+
+                        <li>
+                            <h4 id="get-all-countries">getAllCountries()</h4>
+                            <p>Returns an array of all available countries with complete information.</p>
+                            <Code code={`const allCountries = getAllCountries();
+// => [
+//   { code: 'AD', name: 'Andorra', ... },
+//   { code: 'AE', name: 'United Arab Emirates', ... },
+//   ...
+// ]`} lang="typescript" theme="vesper" />
+                        </li>
+
+                        <li>
+                            <h4 id="is-valid-country-code">isValidCountryCode(code: string)</h4>
+                            <p>Validates if a string is a valid ISO 3166-1 alpha-2 country code.</p>
+                            <Code code={`isValidCountryCode('US'); // => true
+isValidCountryCode('XX'); // => false
+isValidCountryCode(''); // => false`} lang="typescript" theme="vesper" />
+                        </li>
+
+                        <li>
+                            <h4 id="is-valid-calling-code">isValidCallingCode(callingCode: string)</h4>
+                            <p>Validates if a string matches the format of an international calling code.</p>
+                            <Code code={`isValidCallingCode('+1'); // => true
+isValidCallingCode('44'); // => false
+isValidCallingCode('+12345'); // => false`} lang="typescript" theme="vesper" />
+                        </li>
+
+                        <li>
+                            <h4 id="get-countries-by-calling-code">getCountriesByCallingCode(callingCode: string)</h4>
+                            <p>Returns all countries that share a specific calling code.</p>
+                            <Code code={`const countries = getCountriesByCallingCode('+1');
+// Returns countries like US, Canada, etc. that use +1`} lang="typescript" theme="vesper" />
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2 id="types">Types</h2>
+                <Code code={`type CountryCode = string; // ISO 3166-1 alpha-2 code
+
+interface Country {
+    code: CountryCode;  // ISO 3166-1 alpha-2 code
+    name: string;       // Official country name
+    alpha3: string;     // ISO 3166-1 alpha-3 code
+    callingCode: string; // International calling code with + prefix
+    flag: string;       // Unicode flag emoji
+}
+
+interface CountrySearchOptions {
+    limit?: number;         // Maximum number of results to return
+    exact?: boolean;        // Whether to match exactly (default: false)
+    includeCodes?: boolean; // Whether to search by country codes as well (default: true)
+}`} lang="typescript" theme="vesper" />
+            </section>
+
+            <footer>
+                <p>
+                    View the <a href="https://github.com/your-username/country-kit">source code on GitHub</a>
+                </p>
+            </footer>
+        </main>
     </body>
 </html>
+
+
