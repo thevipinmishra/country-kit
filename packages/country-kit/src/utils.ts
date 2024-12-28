@@ -1,5 +1,5 @@
 import { countryCodes, countryData } from ".";
-import { Country, CountryCode } from "./types";
+import { Country, CountryCode, CountrySearchOptions } from "./types";
 
 /**
  * Validates if the provided string is a valid ISO 3166-1 alpha-2 country code
@@ -82,17 +82,6 @@ export const getCountryByCode = (code: CountryCode): Country | undefined => {
   };
 };
 
-/**
- * Search options for country search
- */
-export interface CountrySearchOptions {
-  /** Maximum number of results to return */
-  limit?: number;
-  /** Whether to match exactly (default: false) */
-  exact?: boolean;
-  /** Whether to search by country codes (alpha-2, alpha-3) as well (default: true) */
-  includeCodes?: boolean;
-}
 
 /**
  * Searches for countries by name or code using a case-insensitive match

@@ -1442,6 +1442,11 @@ export {
   searchCountries,
   isValidCountryCode,
   isValidCallingCode,
-  getCountriesByCallingCode
+  getCountriesByCallingCode,
 } from "./utils";
-export {type Country, type CountryCode} from './types'
+export {
+  type Country,
+  type CountryCode,
+  type CountryData,
+  type CountrySearchOptions,
+} from "./types";

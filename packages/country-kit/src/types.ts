@@ -23,3 +23,15 @@ export interface CountryData {
   /** Unicode flag emoji */
   flag: string;
 }
+
+/**
+ * Search options for country search
+ */
+export interface CountrySearchOptions {
+    /** Maximum number of results to return */
+    limit?: number;
+    /** Whether to match exactly (default: false) */
+    exact?: boolean;
+    /** Whether to search by country codes (alpha-2, alpha-3) as well (default: true) */
+    includeCodes?: boolean;
+  }
