@@ -6,7 +6,9 @@
   "scripts": {
     "package": "pnpm --filter country-kit",
     "docs": "pnpm --filter docs",
-    "publish": "pnpm --filter country-kit run publish"
+    "build-package": "pnpm --filter country-kit run build",
+    "publish": "pnpm --filter country-kit run publish",
+    "build-docs": "pnpm run build-package && pnpm --filter docs run build"
   },
   "keywords": [],
   "author": "",
