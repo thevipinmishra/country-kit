@@ -1439,5 +1439,9 @@ export {
   getCountryByCode,
   getCountryFlag,
   getCountryName,
+  searchCountries,
+  isValidCountryCode,
+  isValidCallingCode,
+  getCountriesByCallingCode
 } from "./utils";
 export {type Country, type CountryCode} from './types'
