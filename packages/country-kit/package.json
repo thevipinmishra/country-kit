@@ -1,7 +1,7 @@
 {
   "name": "country-kit",
   "description": "A lightweight TypeScript library providing comprehensive country data including ISO codes, names, calling codes, and flag emojis.",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "type": "module",
   "exports": {
     ".": {
@@ -37,6 +37,7 @@
     "url": "https://github.com/thevipinmishra/country-kit.git",
     "directory": "packages/country-kit"
   },
+  "homepage": "https://country-kit.vercel.app/",
   "scripts": {
     "build": "rslib build",
     "check": "biome check --write",
