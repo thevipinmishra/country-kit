@@ -18,10 +18,19 @@
      "README.md"
   ],
   "keywords": [
-    "country code",
-    "iso country code",
-    "country calling code",
-    "country flag emoji"
+    "country",
+    "countries",
+    "country-codes",
+    "iso-codes",
+    "country-data",
+    "country-flags",
+    "country-calling-codes",
+    "flag-emoji",
+    "country-list",
+    "international",
+    "iso-3166",
+    "typescript",
+    "nodejs"
   ],
   "repository": {
     "type": "git",
