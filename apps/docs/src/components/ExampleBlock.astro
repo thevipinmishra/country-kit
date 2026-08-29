@@ -1,0 +1,68 @@
+---
+import { Code } from 'astro:components';
+
+interface Props {
+  id: string;
+  kicker: string;
+  title: string;
+  description: string;
+  apis: string;
+  reactCode: string;
+  vueCode: string;
+}
+
+const { id, kicker, title, description, apis, reactCode, vueCode } = Astro.props;
+---
+
+<section id={id} class="example-block scroll-mt-24">
+  <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--accent)]">{kicker}</p>
+  <h2 class="mt-2 text-3xl font-semibold tracking-tight">{title}</h2>
+  <p class="mt-3 max-w-2xl text-[var(--muted)]">{description}</p>
+  <p class="mt-2 font-mono text-xs text-[var(--muted)]">{apis}</p>
+
+  <div class="mt-5 flex flex-wrap gap-1" role="tablist" aria-label="Framework">
+    <button type="button" class="example-tab is-active" data-fw="react" role="tab" aria-selected="true">React</button>
+    <button type="button" class="example-tab" data-fw="vue" role="tab" aria-selected="false">Vue</button>
+  </div>
+
+  <div class="mt-4 grid min-w-0 gap-4 lg:grid-cols-2">
+    <div class="min-w-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--card)] p-4 shadow-sm sm:p-5">
+      <p class="mb-3 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-[var(--muted)]">Live preview</p>
+      <div data-fw-panel="react">
+        <slot name="react" />
+      </div>
+      <div data-fw-panel="vue" hidden>
+        <slot name="vue" />
+      </div>
+    </div>
+    <div class="ck-code min-w-0 self-start">
+      <div data-fw-panel="react">
+        <Code code={reactCode} lang="tsx" theme="vesper" />
+      </div>
+      <div data-fw-panel="vue" hidden>
+        <Code code={vueCode} lang="vue" theme="vesper" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.example-block').forEach((block) => {
+    const buttons = block.querySelectorAll('[data-fw]');
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const framework = button.getAttribute('data-fw');
+        buttons.forEach((item) => {
+          const active = item === button;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', String(active));
+        });
+        block.querySelectorAll('[data-fw-panel]').forEach((panel) => {
+          const hidden = panel.getAttribute('data-fw-panel') !== framework;
+          if (hidden) panel.setAttribute('hidden', '');
+          else panel.removeAttribute('hidden');
+        });
+      });
+    });
+  });
+</script>

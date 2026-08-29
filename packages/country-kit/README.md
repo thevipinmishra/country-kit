@@ -141,24 +141,51 @@ interface Country {
 
 ## Examples
 
-Live widgets for each of these live on the [examples page](https://country-kit.vercel.app/examples/).
+Live React and Vue islands (with copy-paste snippets) are on the [examples page](https://country-kit.vercel.app/examples/).
 
 ### Signup: country of residence
 
 Persist the ISO alpha-2 code. Show the common name. Hide territories.
 
-```typescript
+```tsx
+import { useMemo, useState } from 'react';
+import { getCountry, getCountrySelectOptions } from 'country-kit';
+
+export function ResidenceSelect() {
+  const options = useMemo(
+    () => getCountrySelectOptions({ independent: true }),
+    [],
+  );
+  const [code, setCode] = useState('FR');
+  const country = getCountry(code);
+
+  return (
+    <select value={code} onChange={(e) => setCode(e.target.value)}>
+      {options.map((o) => (
+        <option key={o.value} value={o.value}>{o.label}</option>
+      ))}
+    </select>
+  );
+}
+```
+
+```vue
+<script setup lang="ts">
+import { computed, ref } from 'vue';
 import { getCountry, getCountrySelectOptions } from 'country-kit';
 
 const options = getCountrySelectOptions({ independent: true });
+const code = ref('FR');
+const country = computed(() => getCountry(code.value));
+</script>
 
-select.innerHTML = options
-  .map((o) => `<option value="${o.value}">${o.label}</option>`)
-  .join('');
-
-const country = getCountry(select.value);
-profile.countryCode = country?.code;       // 'FR'
-profile.displayName = country?.commonName; // 'France'
+<template>
+  <select v-model="code">
+    <option v-for="o in options" :key="o.value" :value="o.value">
+      {{ o.label }}
+    </option>
+  </select>
+</template>
 ```
 
 ### Checkout: phone prefix
@@ -198,16 +225,26 @@ order.shipToLabel = results[0].commonName;
 
 ### Profile flag
 
-```typescript
-import { getCountry, getCountryFlag, getFlagSvgUrl } from 'country-kit';
-import { getFlagSvg } from 'country-kit/flags'; // optional, larger entry
+```tsx
+import { getCountryFlag, getFlagSvgUrl } from 'country-kit';
 
-const user = getCountry(profile.countryCode);
-<img src={getFlagSvgUrl(user.code)} alt={`Flag of ${user.commonName}`} />;
-<img src={getFlagSvgUrl(user.code, { ratio: '1x1' })} alt="" />;
-getCountryFlag(user.code); // '🇯🇵'
-// Offline: element.innerHTML = getFlagSvg(user.code);
+<img src={getFlagSvgUrl('JP')} alt="Japan" />
+<img src={getFlagSvgUrl('JP', { ratio: '1x1' })} alt="" />
+getCountryFlag('JP'); // '🇯🇵'
 ```
+
+```vue
+<script setup lang="ts">
+import { getCountryFlag, getFlagSvgUrl } from 'country-kit';
+</script>
+
+<template>
+  <img :src="getFlagSvgUrl('JP')" alt="Japan" />
+  <img :src="getFlagSvgUrl('JP', { ratio: '1x1' })" alt="" />
+</template>
+```
+
+Offline inline markup (optional, larger entry): `import { getFlagSvg } from 'country-kit/flags'`.
 
 ### Country from a hostname or email
 

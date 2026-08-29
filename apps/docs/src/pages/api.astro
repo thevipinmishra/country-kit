@@ -42,88 +42,30 @@ const groups = [
     ],
   },
 ];
----
 
-<Layout title="API" description="Complete country-kit API: lookups, search, flags, calling codes, TLDs, currencies, and types.">
-  <section class="container py-12">
-    <h1 class="text-4xl font-bold tracking-tight">API reference</h1>
-    <p class="mt-3 max-w-2xl text-[var(--muted)]">
-      The core package stays small. Import <code class="font-mono text-sm">country-kit/flags</code> only when you need inline SVG markup.
-    </p>
-
-    <div class="mt-8 rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-      <Code
-        code={`import { getCountry, getFlagSvgUrl, searchCountries } from 'country-kit';
+const snippetIntro = `import { getCountry, getFlagSvgUrl, searchCountries } from 'country-kit';
 import { getFlagSvg } from 'country-kit/flags';
 
 const japan = getCountry('JP');
 getFlagSvgUrl('JP');     // CDN SVG
-getFlagSvg('JP');        // inline <svg>…</svg>
+getFlagSvg('JP');        // inline SVG markup
 searchCountries('uk');   // United Kingdom
-searchCountries('.uk');  // same, via IANA TLD`}
-        lang="typescript"
-        theme="vesper"
-      />
-    </div>
+searchCountries('.uk');  // same, via IANA TLD`;
 
-    {groups.map((group) => (
-      <div class="mt-12">
-        <h2 class="text-2xl font-bold">{group.title}</h2>
-        <div class="mt-4 overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--card)]">
-          <table class="w-full text-left text-sm">
-            <tbody>
-              {group.items.map(([name, detail]) => (
-                <tr class="border-b border-[var(--line)] last:border-0">
-                  <th class="w-[40%] px-4 py-3 align-top font-mono text-xs font-medium">{name}</th>
-                  <td class="px-4 py-3 text-[var(--muted)]">{detail}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    ))}
-
-    <h2 class="mt-12 text-2xl font-bold">Recipes</h2>
-    <p class="mt-3 max-w-2xl text-[var(--muted)]">
-      Live widgets for signup, checkout, shipping, and validation live on the <a class="underline underline-offset-4 hover:text-[var(--ink)]" href="/examples">examples</a> page. The snippets below are the same APIs.
-    </p>
-    <div class="mt-4 grid gap-6 lg:grid-cols-2">
-      <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-        <h3 class="font-bold">Independent-country select</h3>
-        <div class="mt-3">
-          <Code
-            code={`import { getCountrySelectOptions } from 'country-kit';
+const snippetSelect = `import { getCountrySelectOptions } from 'country-kit';
 
 const options = getCountrySelectOptions({ independent: true });
 // { value: 'FR', label: '🇫🇷 France', dialCode: '+33',
-//   flag: '🇫🇷', flagSvgUrl: 'https://…/fr.svg' }`}
-            lang="typescript"
-            theme="vesper"
-          />
-        </div>
-      </div>
-      <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-        <h3 class="font-bold">Phone prefix vs E.164</h3>
-        <div class="mt-3">
-          <Code
-            code={`import { getCallingCode, getDialCode } from 'country-kit';
+//   flag: '🇫🇷', flagSvgUrl: 'https://…/fr.svg' }`;
+
+const snippetPhone = `import { getCallingCode, getDialCode } from 'country-kit';
 
 getCallingCode('AI'); // '+1'     ITU-T E.164
 getDialCode('AI');    // '+1264'  +1 and Anguilla NPA
 
-// US and Canada stay +1 (no single NPA)`}
-            lang="typescript"
-            theme="vesper"
-          />
-        </div>
-      </div>
-    </div>
+// US and Canada stay +1 (no single NPA)`;
 
-    <h2 class="mt-12 text-2xl font-bold">Country shape</h2>
-    <div class="mt-4 rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-      <Code
-        code={`interface Country {
+const snippetCountry = `interface Country {
   code: CountryCode;          // 'AD' | 'AE' | … 249 assigned
   name: string;               // ISO English short name
   commonName: string;
@@ -140,13 +82,63 @@ getDialCode('AI');    // '+1264'  +1 and Anguilla NPA
   currencies: readonly string[];
   flag: string;               // emoji
   nanpAreaCodes?: readonly string[];
-}`}
-        lang="typescript"
-        theme="vesper"
-      />
+}`;
+---
+
+<Layout title="API" description="Complete country-kit API: lookups, search, flags, calling codes, TLDs, currencies, and types.">
+  <section class="container min-w-0 py-12">
+    <h1 class="text-4xl font-semibold tracking-tight">API reference</h1>
+    <p class="mt-3 max-w-2xl text-[var(--muted)]">
+      The core package stays small. Import <code class="font-mono text-sm">country-kit/flags</code> only when you need inline SVG markup.
+    </p>
+
+    <div class="ck-code mt-8">
+      <Code code={snippetIntro} lang="typescript" theme="vesper" />
     </div>
 
-    <h2 class="mt-12 text-2xl font-bold">Breaking changes in 2.0</h2>
+    {groups.map((group) => (
+      <div class="mt-12 min-w-0">
+        <h2 class="text-2xl font-semibold">{group.title}</h2>
+        <div class="mt-4 min-w-0 overflow-x-auto rounded-2xl border border-[var(--line)] bg-[var(--card)]">
+          <table class="w-full min-w-[28rem] text-left text-sm">
+            <tbody>
+              {group.items.map(([name, detail]) => (
+                <tr class="border-b border-[var(--line)] last:border-0">
+                  <th class="w-[42%] px-4 py-3 align-top font-mono text-xs font-medium">{name}</th>
+                  <td class="px-4 py-3 text-[var(--muted)]">{detail}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    ))}
+
+    <h2 class="mt-12 text-2xl font-semibold">Recipes</h2>
+    <p class="mt-3 max-w-2xl text-[var(--muted)]">
+      Live React and Vue widgets live on the <a class="underline underline-offset-4 hover:text-[var(--ink)]" href="/examples">examples</a> page. The snippets below are the same APIs.
+    </p>
+    <div class="mt-4 grid min-w-0 gap-6 lg:grid-cols-2">
+      <div class="min-w-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--card)]">
+        <h3 class="px-5 pt-5 font-semibold">Independent-country select</h3>
+        <div class="ck-code mt-3 rounded-none border-0 border-t">
+          <Code code={snippetSelect} lang="typescript" theme="vesper" />
+        </div>
+      </div>
+      <div class="min-w-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--card)]">
+        <h3 class="px-5 pt-5 font-semibold">Phone prefix vs E.164</h3>
+        <div class="ck-code mt-3 rounded-none border-0 border-t">
+          <Code code={snippetPhone} lang="typescript" theme="vesper" />
+        </div>
+      </div>
+    </div>
+
+    <h2 class="mt-12 text-2xl font-semibold">Country shape</h2>
+    <div class="ck-code mt-4">
+      <Code code={snippetCountry} lang="typescript" theme="vesper" />
+    </div>
+
+    <h2 class="mt-12 text-2xl font-semibold">Breaking changes in 2.0</h2>
     <ul class="mt-4 list-disc space-y-2 pl-5 text-[var(--muted)]">
       <li><code class="font-mono text-sm text-[var(--ink)]">getCallingCode('AI')</code> is <code class="font-mono text-sm text-[var(--ink)]">+1</code>. Use <code class="font-mono text-sm text-[var(--ink)]">getDialCode</code> for <code class="font-mono text-sm text-[var(--ink)]">+1264</code>.</li>
       <li><code class="font-mono text-sm text-[var(--ink)]">isValidCallingCode</code> accepts 1–3 digit E.164 codes, not concatenated NPAs.</li>

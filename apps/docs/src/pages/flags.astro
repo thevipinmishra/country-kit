@@ -10,32 +10,40 @@ const flags = getAllCountries({ sortBy: 'commonName' }).map((country) => ({
   svg: getFlagSvgUrl(country.code) ?? '',
   svgSquare: getFlagSvgUrl(country.code, { ratio: '1x1' }) ?? '',
 }));
+
+const snippetCdn = `import { getFlagSvgUrl } from 'country-kit';
+
+<img src={getFlagSvgUrl('JP')} alt="Japan" />
+<img src={getFlagSvgUrl('JP', { ratio: '1x1' })} alt="" />
+// jsDelivr · flag-icons@${FLAG_ICONS_VERSION} · flags/4x3/jp.svg`;
+
+const snippetInline = `import { getFlagSvg } from 'country-kit/flags';
+
+element.innerHTML = getFlagSvg('JP');
+// 4×3 SVG markup, works offline`;
 ---
 
 <Layout title="Flags" description="Official Wikipedia SVG flags for every ISO 3166-1 alpha-2 code, plus Unicode emoji.">
-  <section class="container py-12">
-    <h1 class="text-4xl font-bold tracking-tight">Official SVG flags</h1>
+  <section class="container min-w-0 py-12">
+    <h1 class="text-4xl font-semibold tracking-tight">Official SVG flags</h1>
     <p class="mt-3 max-w-2xl text-[var(--muted)]">
       ISO 3166 does not publish flag artwork. country-kit uses the <a class="underline underline-offset-4" href="https://github.com/lipis/flag-icons">flag-icons</a> SVGs (MIT), which are the Wikipedia/Wikimedia drawings of each national flag — the usual public-source set keyed by ISO 3166-1 alpha-2. Pinned at flag-icons@{FLAG_ICONS_VERSION}.
     </p>
 
-    <div class="mt-8 grid gap-6 lg:grid-cols-2">
-      <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-        <h2 class="font-bold">CDN URL (tiny core bundle)</h2>
-        <p class="mt-1 mb-3 text-sm text-[var(--muted)]">Use this in almost every app. The core package only stores the versioned URL pattern.</p>
-        <Code code={`import { getFlagSvgUrl } from 'country-kit';
-
-<img src={getFlagSvgUrl('JP')} alt="Japan" />
-<img src={getFlagSvgUrl('JP', { ratio: '1x1' })} alt="" />
-// jsDelivr · flag-icons@${FLAG_ICONS_VERSION} · flags/4x3/jp.svg`} lang="typescript" theme="vesper" />
+    <div class="mt-8 grid min-w-0 gap-6 lg:grid-cols-2">
+      <div class="min-w-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--card)]">
+        <h2 class="px-5 pt-5 font-semibold">CDN URL (tiny core bundle)</h2>
+        <p class="mt-1 mb-3 px-5 text-sm text-[var(--muted)]">Use this in almost every app. The core package only stores the versioned URL pattern.</p>
+        <div class="ck-code rounded-none border-0 border-t">
+          <Code code={snippetCdn} lang="tsx" theme="vesper" />
+        </div>
       </div>
-      <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-        <h2 class="font-bold">Inline SVG (optional entry)</h2>
-        <p class="mt-1 mb-3 text-sm text-[var(--muted)]">Import <code class="font-mono text-xs">country-kit/flags</code> only when you need offline markup. It is a separate, larger bundle.</p>
-        <Code code={`import { getFlagSvg } from 'country-kit/flags';
-
-element.innerHTML = getFlagSvg('JP');
-// 4×3 SVG markup, works offline`} lang="typescript" theme="vesper" />
+      <div class="min-w-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--card)]">
+        <h2 class="px-5 pt-5 font-semibold">Inline SVG (optional entry)</h2>
+        <p class="mt-1 mb-3 px-5 text-sm text-[var(--muted)]">Import <code class="font-mono text-xs">country-kit/flags</code> only when you need offline markup. It is a separate, larger bundle.</p>
+        <div class="ck-code rounded-none border-0 border-t">
+          <Code code={snippetInline} lang="typescript" theme="vesper" />
+        </div>
       </div>
     </div>
 
@@ -44,7 +52,7 @@ element.innerHTML = getFlagSvg('JP');
         id="flag-q"
         type="search"
         placeholder="Filter flags…"
-        class="min-w-[16rem] flex-1 rounded-xl border border-[var(--line)] bg-white px-4 py-2.5 outline-none ring-[var(--accent)] focus:ring-2"
+        class="w-full min-w-0 flex-1 rounded-xl border border-[var(--line)] bg-white px-4 py-2.5 outline-none ring-[var(--accent)] focus:ring-2"
       />
       <label class="flex items-center gap-2 text-sm">
         <input id="flag-ratio" type="checkbox" class="accent-[var(--accent)]" />

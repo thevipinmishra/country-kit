@@ -9,7 +9,7 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
   <section class="ck-grid-bg border-b border-[var(--line)]">
     <div class="container py-14 lg:py-20">
       <p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">v2 · 249 ISO 3166-1 codes · zero dependencies</p>
-      <h1 class="max-w-3xl text-4xl font-bold leading-tight tracking-tight lg:text-6xl">
+      <h1 class="max-w-3xl text-4xl font-semibold leading-tight tracking-tight lg:text-6xl">
         Official country data for TypeScript.
       </h1>
       <p class="mt-5 max-w-2xl text-lg text-[var(--muted)]">
@@ -20,8 +20,10 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
         <a href="/explorer" class="rounded-full border border-[var(--ink)]/20 px-5 py-2.5 text-sm font-medium hover:border-[var(--ink)]">Explore 249 countries</a>
         <a href="/api" class="rounded-full border border-[var(--ink)]/20 px-5 py-2.5 text-sm font-medium hover:border-[var(--ink)]">API reference</a>
       </div>
-      <div class="mt-8 max-w-xl">
-        <Code code={`npm install country-kit`} lang="bash" theme="vesper" />
+      <div class="mt-8 max-w-xl min-w-0">
+        <div class="ck-code">
+          <Code code={`npm install country-kit`} lang="bash" theme="vesper" />
+        </div>
       </div>
     </div>
   </section>
@@ -29,7 +31,7 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
   <section class="container py-12">
     <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h2 class="text-2xl font-bold">Live playground</h2>
+        <h2 class="text-2xl font-semibold">Live playground</h2>
         <p class="mt-1 text-[var(--muted)]">Search official names, common names, aliases, alpha-2/3, numeric codes, dial prefixes, IANA TLDs, currencies, or capitals.</p>
       </div>
       <p class="font-mono text-xs text-[var(--muted)]">searchCountries(query)</p>
@@ -47,8 +49,8 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
       ))}
     </div>
 
-    <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
-      <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-4 shadow-sm lg:p-6">
+    <div class="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <div class="min-w-0 rounded-2xl border border-[var(--line)] bg-[var(--card)] p-4 shadow-sm lg:p-6">
         <label for="q" class="mb-2 block text-sm font-medium">Search</label>
         <input
           id="q"
@@ -60,12 +62,12 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
         />
         <ul id="results" class="mt-4 divide-y divide-[var(--line)]"></ul>
       </div>
-      <aside id="detail" class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm"></aside>
+      <aside id="detail" class="min-w-0 rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm"></aside>
     </div>
   </section>
 
   <section class="container pb-16">
-    <h2 class="text-2xl font-bold">What you get</h2>
+    <h2 class="text-2xl font-semibold">What you get</h2>
     <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {[
         ['ISO 3166-1', 'All 249 assigned alpha-2, alpha-3, and numeric codes, with official English short names.'],
@@ -76,7 +78,7 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
         ['Type-safe', 'CountryCode is a union of every assigned alpha-2 code. Zero runtime dependencies.'],
       ].map(([title, body]) => (
         <article class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-          <h3 class="font-bold">{title}</h3>
+          <h3 class="font-semibold">{title}</h3>
           <p class="mt-2 text-sm text-[var(--muted)]">{body}</p>
         </article>
       ))}
@@ -104,7 +106,7 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
         <img src="${url}" alt="Flag of ${country.commonName}" />
       </div>
       <p class="mt-4 font-mono text-xs text-[var(--muted)]">${country.code} · ${country.alpha3} · ${country.numeric}</p>
-      <h3 class="mt-1 text-xl font-bold">${country.commonName}</h3>
+      <h3 class="mt-1 text-xl font-semibold">${country.commonName}</h3>
       <p class="text-sm text-[var(--muted)]">${country.name}</p>
       <dl class="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
         <dt class="text-[var(--muted)]">Calling</dt><dd class="font-mono">${country.callingCode}</dd>

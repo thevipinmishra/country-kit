@@ -1,630 +1,159 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Code } from 'astro:components';
-import { listCurrencies, listRegions } from 'country-kit';
+import ExampleBlock from '../components/ExampleBlock.astro';
+import { snippets } from '../examples/snippets';
+import ResidenceSelectReact from '../components/react/ResidenceSelect';
+import PhoneFieldReact from '../components/react/PhoneField';
+import CountryTypeaheadReact from '../components/react/CountryTypeahead';
+import ProfileFlagReact from '../components/react/ProfileFlag';
+import HostLookupReact from '../components/react/HostLookup';
+import CodeValidatorReact from '../components/react/CodeValidator';
+import ResidenceSelectVue from '../components/vue/ResidenceSelect.vue';
+import PhoneFieldVue from '../components/vue/PhoneField.vue';
+import CountryTypeaheadVue from '../components/vue/CountryTypeahead.vue';
+import ProfileFlagVue from '../components/vue/ProfileFlag.vue';
+import HostLookupVue from '../components/vue/HostLookup.vue';
+import CodeValidatorVue from '../components/vue/CodeValidator.vue';
 
-const regions = listRegions();
-const currencies = listCurrencies();
 const toc = [
-  ['#residence', 'Country of residence'],
-  ['#phone', 'Phone number'],
-  ['#search', 'Address search'],
-  ['#profile', 'Profile flag'],
-  ['#tld', 'Hostname / email TLD'],
-  ['#currency', 'Currency coverage'],
-  ['#shipping', 'Shipping region'],
-  ['#validate', 'Form validation'],
+  ['#residence', 'Residence'],
+  ['#phone', 'Phone'],
+  ['#search', 'Ship-to'],
+  ['#profile', 'Flags'],
+  ['#tld', 'Hostname'],
+  ['#validate', 'Validate'],
 ];
-
-const snippetResidence = `import {
-  getCountry,
-  getCountrySelectOptions,
-} from 'country-kit';
-
-const options = getCountrySelectOptions({ independent: true });
-
-select.innerHTML = options
-  .map((o) => '<option value="' + o.value + '">' + o.label + '</option>')
-  .join('');
-
-select.addEventListener('change', () => {
-  const country = getCountry(select.value);
-  // persist country.code (ISO alpha-2), not the label
-  profile.countryCode = country.code;
-  profile.displayName = country.commonName;
-});`;
-
-const snippetPhone = `import {
-  getCallingCode,
-  getCountriesByCallingCode,
-  getDialCode,
-  searchCountries,
-} from 'country-kit';
-
-const [match] = searchCountries(query, { limit: 1 });
-const prefix = getDialCode(match.code);      // '+1264' Anguilla
-const e164 = getCallingCode(match.code);     // '+1'     ITU-T
-
-// Reverse lookup when the user pasted +1264
-getCountriesByCallingCode('+1264');          // [Anguilla]
-getCountriesByCallingCode('+1');             // US, CA, AI, …`;
-
-const snippetSearch = `import { searchCountries } from 'country-kit';
-
-const results = searchCountries(query, { limit: 6 });
-// 'uk'      → United Kingdom first (alias)
-// 'Vietnam' → Viet Nam
-// '.uk'     → United Kingdom (IANA)
-// 'TRY'     → Türkiye
-// 'Paris'   → France
-
-const selected = results[0];
-order.shipTo = selected.code;           // 'GB'
-order.shipToLabel = selected.commonName;`;
-
-const snippetProfile = `import { getCountry, getCountryFlag, getFlagSvgUrl } from 'country-kit';
-import { getFlagSvg } from 'country-kit/flags'; // optional
-
-const user = getCountry(profile.countryCode);
-const wide = getFlagSvgUrl(user.code);                 // 4×3 CDN
-const square = getFlagSvgUrl(user.code, { ratio: '1x1' });
-const emoji = getCountryFlag(user.code);               // 🇯🇵
-
-<img src={wide} alt={'Flag of ' + user.commonName} />
-// Offline: element.innerHTML = getFlagSvg(user.code);`;
-
-const snippetTld = `import { getCountryByTld } from 'country-kit';
-
-function countryFromHost(value: string) {
-  const host = value.includes('@')
-    ? value.split('@').pop()!
-    : value.replace(/^https?:\\/\\//, '').split(/[/?#]/)[0];
-  const tld = '.' + host.split('.').pop();
-  return getCountryByTld(tld); // '.uk' → GB, '.com' → undefined
-}
-
-countryFromHost('https://www.gov.uk'); // United Kingdom
-countryFromHost('ada@bund.de');        // Germany`;
-
-const snippetCurrency = `import {
-  getCountriesByCurrency,
-  listCurrencies,
-} from 'country-kit';
-
-listCurrencies(); // ['AED', 'AFN', …]
-
-const euro = getCountriesByCurrency('EUR');
-const usd = getCountriesByCurrency('usd'); // case-insensitive
-
-pricing.enabledMarkets = euro.map((c) => c.code);`;
-
-const snippetShipping = `import {
-  getAllCountries,
-  getIndependentCountries,
-  listRegions,
-} from 'country-kit';
-
-listRegions(); // Africa, Americas, Asia, Europe, Oceania
-
-const europe = getAllCountries({
-  region: 'Europe',
-  independent: true,
-  sortBy: 'commonName',
-});
-
-const sovereign = getIndependentCountries(); // 195`;
-
-const snippetValidate = `import {
-  getCountry,
-  isValidCallingCode,
-  isValidCountryCode,
-  type CountryCode,
-} from 'country-kit';
-
-function parseCountry(raw: string): CountryCode | undefined {
-  if (isValidCountryCode(raw)) return raw; // typed as CountryCode
-  return getCountry(raw)?.code;            // USA / 840 → US
-}
-
-parseCountry('GB');  // 'GB'
-parseCountry('XK');  // undefined (user-assigned)
-isValidCallingCode('+44');   // true
-isValidCallingCode('+1264'); // false (NANP NPA, not E.164)`;
 ---
 
 <Layout
   title="Examples"
-  description="Practical country-kit examples: signup selects, phone pickers, address search, SVG flags, TLD lookup, currency coverage, and ISO validation."
+  description="React and Vue examples for country-kit: signup selects, phone pickers, address search, SVG flags, TLD lookup, and ISO validation."
 >
   <section class="ck-grid-bg border-b border-[var(--line)]">
-    <div class="container py-14 lg:py-16">
-      <p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">Real-world API</p>
-      <h1 class="max-w-3xl text-4xl font-bold leading-tight tracking-tight lg:text-5xl">
+    <div class="container py-12 lg:py-16">
+      <p class="mb-3 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--accent)]">
+        React · Vue islands
+      </p>
+      <h1 class="max-w-3xl text-4xl font-semibold leading-tight lg:text-5xl">
         Examples you can paste into a form.
       </h1>
       <p class="mt-4 max-w-2xl text-lg text-[var(--muted)]">
-        Each block is a common product surface — signup, checkout, profile, analytics — wired to the same functions you import from <code class="font-mono text-sm">country-kit</code>. Try the widget, then copy the snippet.
+        Each block is a product surface with a live React island, a live Vue island, and the snippet beside it. Switch tabs to compare.
       </p>
       <nav class="mt-8 flex flex-wrap gap-2">
         {toc.map(([href, label]) => (
-          <a href={href} class="rounded-full border border-[var(--line)] bg-[var(--card)] px-3 py-1.5 text-sm hover:border-[var(--ink)]">{label}</a>
+          <a
+            href={href}
+            class="rounded-full border border-[var(--line)] bg-[var(--card)] px-3 py-1.5 text-sm hover:border-[var(--ink)]"
+          >
+            {label}
+          </a>
         ))}
       </nav>
     </div>
   </section>
 
-  <div class="container space-y-24 py-16">
-    <section id="residence" class="scroll-mt-24">
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">Signup / KYC</p>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight">Country of residence</h2>
-      <p class="mt-3 max-w-2xl text-[var(--muted)]">
-        Independent-country dropdown for “where do you live?”. Official ISO names stay on the record; the label uses <code class="font-mono text-sm">commonName</code>. Territories stay out of the list via <code class="font-mono text-sm">independent: true</code>.
-      </p>
-      <div class="mt-8 grid gap-6 lg:grid-cols-2">
-        <form class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm" id="residence-form">
-          <label for="residence-select" class="mb-2 block text-sm font-medium">Country of residence</label>
-          <div class="flex items-center gap-3">
-            <span id="residence-flag" class="flag-frame h-8 w-11 shrink-0"></span>
-            <select id="residence-select" class="min-w-0 flex-1 rounded-xl border border-[var(--line)] bg-white px-3 py-2.5 outline-none ring-[var(--accent)] focus:ring-2"></select>
-          </div>
-          <dl id="residence-meta" class="mt-5 grid grid-cols-2 gap-x-3 gap-y-2 text-sm"></dl>
-        </form>
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-          <Code code={snippetResidence} lang="typescript" theme="vesper" />
-        </div>
+  <div class="container space-y-20 py-12 sm:py-16">
+    <ExampleBlock
+      id="residence"
+      kicker="Signup / KYC"
+      title="Country of residence"
+      description="Independent-country dropdown. Persist the ISO alpha-2 code; show the common name. Territories stay out via independent: true."
+      apis="getCountrySelectOptions · getCountry"
+      reactCode={snippets.residence.react}
+      vueCode={snippets.residence.vue}
+    >
+      <div slot="react">
+        <ResidenceSelectReact client:idle />
       </div>
-    </section>
+      <div slot="vue">
+        <ResidenceSelectVue client:idle />
+      </div>
+    </ExampleBlock>
 
-    <section id="phone" class="scroll-mt-24">
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">Checkout / 2FA</p>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight">Phone number with dial prefix</h2>
-      <p class="mt-3 max-w-2xl text-[var(--muted)]">
-        Show <code class="font-mono text-sm">dialCode</code> in the picker (<code class="font-mono text-sm">+1264</code> for Anguilla). Store the ISO country and the national number; keep <code class="font-mono text-sm">callingCode</code> when you need the official E.164 country code (<code class="font-mono text-sm">+1</code> for every NANP member).
-      </p>
-      <div class="mt-8 grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm">
-          <label for="phone-q" class="mb-2 block text-sm font-medium">Find a country</label>
-          <input id="phone-q" type="search" placeholder="Anguilla, +1, United States…" class="w-full rounded-xl border border-[var(--line)] bg-white px-4 py-2.5 outline-none ring-[var(--accent)] focus:ring-2" />
-          <ul id="phone-hits" class="mt-3 max-h-40 overflow-auto divide-y divide-[var(--line)]"></ul>
-          <div class="mt-4 flex flex-wrap items-end gap-3">
-            <div>
-              <p class="mb-1 text-xs text-[var(--muted)]">Prefix</p>
-              <p id="phone-prefix" class="font-mono text-lg font-medium">+1</p>
-            </div>
-            <div class="min-w-[12rem] flex-1">
-              <label for="phone-national" class="mb-1 block text-xs text-[var(--muted)]">National number</label>
-              <input id="phone-national" inputmode="tel" placeholder="5550100" class="w-full rounded-xl border border-[var(--line)] bg-white px-3 py-2 outline-none ring-[var(--accent)] focus:ring-2" />
-            </div>
-          </div>
-          <dl id="phone-meta" class="mt-5 grid grid-cols-2 gap-x-3 gap-y-2 text-sm"></dl>
-        </div>
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-          <Code code={snippetPhone} lang="typescript" theme="vesper" />
-        </div>
+    <ExampleBlock
+      id="phone"
+      kicker="Checkout / 2FA"
+      title="Phone number with dial prefix"
+      description="Show dialCode in the picker (+1264 for Anguilla). Keep callingCode when you need the official E.164 country code (+1 for every NANP member)."
+      apis="searchCountries · getDialCode · getCallingCode"
+      reactCode={snippets.phone.react}
+      vueCode={snippets.phone.vue}
+    >
+      <div slot="react">
+        <PhoneFieldReact client:idle />
       </div>
-    </section>
+      <div slot="vue">
+        <PhoneFieldVue client:idle />
+      </div>
+    </ExampleBlock>
 
-    <section id="search" class="scroll-mt-24">
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">Address / shipping</p>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight">Typeahead country field</h2>
-      <p class="mt-3 max-w-2xl text-[var(--muted)]">
-        Ranked search over official names, common names, aliases (<code class="font-mono text-sm">UK</code>, <code class="font-mono text-sm">Vietnam</code>), alpha-2/3, numeric, TLDs, currencies, and capitals. Persist <code class="font-mono text-sm">code</code>, display <code class="font-mono text-sm">commonName</code>.
-      </p>
-      <div class="mt-8 grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm">
-          <label for="search-q" class="mb-2 block text-sm font-medium">Ship to</label>
-          <input id="search-q" type="search" value="uk" autocomplete="off" class="w-full rounded-xl border border-[var(--line)] bg-white px-4 py-2.5 outline-none ring-[var(--accent)] focus:ring-2" />
-          <ul id="search-hits" class="mt-3 divide-y divide-[var(--line)]"></ul>
-          <p id="search-picked" class="mt-4 text-sm text-[var(--muted)]"></p>
-        </div>
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-          <Code code={snippetSearch} lang="typescript" theme="vesper" />
-        </div>
+    <ExampleBlock
+      id="search"
+      kicker="Address / shipping"
+      title="Typeahead country field"
+      description="Ranked search over official names, common names, aliases (UK, Vietnam), codes, TLDs, currencies, and capitals."
+      apis="searchCountries"
+      reactCode={snippets.search.react}
+      vueCode={snippets.search.vue}
+    >
+      <div slot="react">
+        <CountryTypeaheadReact client:idle />
       </div>
-    </section>
+      <div slot="vue">
+        <CountryTypeaheadVue client:idle />
+      </div>
+    </ExampleBlock>
 
-    <section id="profile" class="scroll-mt-24">
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">Profile / locale</p>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight">Flag on a user card</h2>
-      <p class="mt-3 max-w-2xl text-[var(--muted)]">
-        Use <code class="font-mono text-sm">getFlagSvgUrl</code> in the core bundle (CDN Wikipedia SVG). Import <code class="font-mono text-sm">country-kit/flags</code> only when you need offline inline markup. Emoji is fine for compact lists.
-      </p>
-      <div class="mt-8 grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm">
-          <label for="profile-code" class="mb-2 block text-sm font-medium">ISO alpha-2</label>
-          <input id="profile-code" value="JP" maxlength="2" class="w-24 rounded-xl border border-[var(--line)] bg-white px-3 py-2 font-mono uppercase outline-none ring-[var(--accent)] focus:ring-2" />
-          <article id="profile-card" class="mt-5 flex items-center gap-4 rounded-xl border border-[var(--line)] bg-white p-4"></article>
-        </div>
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-          <Code code={snippetProfile} lang="typescript" theme="vesper" />
-        </div>
+    <ExampleBlock
+      id="profile"
+      kicker="Profile / locale"
+      title="Flag on a user card"
+      description="CDN Wikipedia SVGs stay in the tiny core bundle. Import country-kit/flags only when you need offline inline markup."
+      apis="getFlagSvgUrl · getCountryFlag · getCountry"
+      reactCode={snippets.flag.react}
+      vueCode={snippets.flag.vue}
+    >
+      <div slot="react">
+        <ProfileFlagReact client:idle />
       </div>
-    </section>
+      <div slot="vue">
+        <ProfileFlagVue client:idle />
+      </div>
+    </ExampleBlock>
 
-    <section id="tld" class="scroll-mt-24">
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">Growth / support</p>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight">Country from a hostname or email</h2>
-      <p class="mt-3 max-w-2xl text-[var(--muted)]">
-        IANA ccTLDs map to ISO alpha-2 except the UK: <code class="font-mono text-sm">bbc.co.uk</code> is <code class="font-mono text-sm">GB</code>, not <code class="font-mono text-sm">.gb</code>. Generic TLDs like <code class="font-mono text-sm">.com</code> are not countries.
-      </p>
-      <div class="mt-8 grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm">
-          <label for="tld-input" class="mb-2 block text-sm font-medium">Website or email</label>
-          <input id="tld-input" value="https://www.gov.uk/help" class="w-full rounded-xl border border-[var(--line)] bg-white px-4 py-2.5 outline-none ring-[var(--accent)] focus:ring-2" />
-          <div class="mt-3 flex flex-wrap gap-2">
-            {['bbc.co.uk', 'shop.example.jp', 'ada@bund.de', 'https://npmjs.com'].map((sample) => (
-              <button type="button" data-tld={sample} class="tld-chip rounded-full border border-[var(--line)] bg-white px-3 py-1 text-sm hover:border-[var(--ink)]">{sample}</button>
-            ))}
-          </div>
-          <div id="tld-out" class="mt-5 text-sm"></div>
-        </div>
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-          <Code code={snippetTld} lang="typescript" theme="vesper" />
-        </div>
+    <ExampleBlock
+      id="tld"
+      kicker="Growth / support"
+      title="Country from a hostname or email"
+      description="IANA ccTLDs map to ISO alpha-2 except the UK: gov.uk is GB, not .gb. Generic TLDs like .com are not countries."
+      apis="getCountryByTld"
+      reactCode={snippets.tld.react}
+      vueCode={snippets.tld.vue}
+    >
+      <div slot="react">
+        <HostLookupReact client:idle />
       </div>
-    </section>
+      <div slot="vue">
+        <HostLookupVue client:idle />
+      </div>
+    </ExampleBlock>
 
-    <section id="currency" class="scroll-mt-24">
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">Billing / FX</p>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight">Where a currency is used</h2>
-      <p class="mt-3 max-w-2xl text-[var(--muted)]">
-        ISO 4217 alphabetic codes. Useful for “show EUR prices in these countries” or “USD is legal tender here too” (Ecuador, El Salvador, …).
-      </p>
-      <div class="mt-8 grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm">
-          <label for="currency-select" class="mb-2 block text-sm font-medium">ISO 4217 code</label>
-          <select id="currency-select" class="w-full rounded-xl border border-[var(--line)] bg-white px-3 py-2.5">
-            {currencies.map((code) => (
-              <option value={code} selected={code === 'EUR'}>{code}</option>
-            ))}
-          </select>
-          <p id="currency-count" class="mt-3 font-mono text-xs text-[var(--muted)]"></p>
-          <ul id="currency-list" class="mt-3 flex flex-wrap gap-2"></ul>
-        </div>
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-          <Code code={snippetCurrency} lang="typescript" theme="vesper" />
-        </div>
+    <ExampleBlock
+      id="validate"
+      kicker="API / webhooks"
+      title="Validate a country code"
+      description="isValidCountryCode is a type guard for assigned alpha-2 codes. getCountry also accepts alpha-3 and UN numeric. Kosovo XK is rejected on purpose."
+      apis="isValidCountryCode · getCountry · isValidCallingCode"
+      reactCode={snippets.validate.react}
+      vueCode={snippets.validate.vue}
+    >
+      <div slot="react">
+        <CodeValidatorReact client:idle />
       </div>
-    </section>
-
-    <section id="shipping" class="scroll-mt-24">
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">Logistics</p>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight">Shipping zone by UN region</h2>
-      <p class="mt-3 max-w-2xl text-[var(--muted)]">
-        Filter with official UN M49 region names, then optionally drop territories. Antarctica and Taiwan have no UN region — they will not appear in a regional zone.
-      </p>
-      <div class="mt-8 grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm">
-          <div class="flex flex-wrap gap-3">
-            <label class="flex-1">
-              <span class="mb-1 block text-sm font-medium">Region</span>
-              <select id="zone-region" class="w-full rounded-xl border border-[var(--line)] bg-white px-3 py-2.5">
-                {regions.map((region) => (
-                  <option value={region} selected={region === 'Europe'}>{region}</option>
-                ))}
-              </select>
-            </label>
-            <label class="flex items-end gap-2 pb-2 text-sm">
-              <input id="zone-ind" type="checkbox" checked class="accent-[var(--accent)]" />
-              Independent only
-            </label>
-          </div>
-          <p id="zone-count" class="mt-3 font-mono text-xs text-[var(--muted)]"></p>
-          <ul id="zone-list" class="mt-3 max-h-56 overflow-auto divide-y divide-[var(--line)] text-sm"></ul>
-        </div>
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-          <Code code={snippetShipping} lang="typescript" theme="vesper" />
-        </div>
+      <div slot="vue">
+        <CodeValidatorVue client:idle />
       </div>
-    </section>
-
-    <section id="validate" class="scroll-mt-24">
-      <p class="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">API / webhooks</p>
-      <h2 class="mt-2 text-3xl font-bold tracking-tight">Validate a country code from input</h2>
-      <p class="mt-3 max-w-2xl text-[var(--muted)]">
-        <code class="font-mono text-sm">isValidCountryCode</code> is a type guard for assigned alpha-2 codes. <code class="font-mono text-sm">getCountry</code> also accepts alpha-3 and UN numeric. Kosovo <code class="font-mono text-sm">XK</code> is rejected on purpose — it is not ISO 3166-1 assigned.
-      </p>
-      <div class="mt-8 grid gap-6 lg:grid-cols-2">
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm">
-          <label for="validate-input" class="mb-2 block text-sm font-medium">Code from a query param or webhook</label>
-          <input id="validate-input" value="USA" class="w-full rounded-xl border border-[var(--line)] bg-white px-4 py-2.5 font-mono outline-none ring-[var(--accent)] focus:ring-2" />
-          <div class="mt-3 flex flex-wrap gap-2">
-            {['US', 'usa', '840', 'GB', 'XK', 'XX'].map((sample) => (
-              <button type="button" data-code={sample} class="validate-chip rounded-full border border-[var(--line)] bg-white px-3 py-1 font-mono text-sm hover:border-[var(--ink)]">{sample}</button>
-            ))}
-          </div>
-          <pre id="validate-out" class="mt-5 overflow-x-auto rounded-xl bg-[#161412] p-4 font-mono text-xs text-[#f4efe6]"></pre>
-        </div>
-        <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-          <Code code={snippetValidate} lang="typescript" theme="vesper" />
-        </div>
-      </div>
-    </section>
+    </ExampleBlock>
   </div>
 </Layout>
-
-<script>
-  import {
-    getAllCountries,
-    getCallingCode,
-    getCountriesByCurrency,
-    getCountry,
-    getCountryByTld,
-    getCountryFlag,
-    getCountrySelectOptions,
-    getDialCode,
-    getFlagSvgUrl,
-    isValidCallingCode,
-    isValidCountryCode,
-    searchCountries,
-    type Country,
-  } from 'country-kit';
-
-  const escapeHtml = (value: string) =>
-    value.replace(/[&<>"']/g, (char) => {
-      const map: Record<string, string> = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#39;',
-      };
-      return map[char] ?? char;
-    });
-
-  const flagImg = (code: string, className: string) => {
-    const url = getFlagSvgUrl(code) ?? '';
-    return `<span class="flag-frame ${className}"><img src="${url}" alt="" /></span>`;
-  };
-
-  const dl = (rows: Array<[string, string]>) =>
-    rows
-      .map(
-        ([k, v]) =>
-          `<dt class="text-[var(--muted)]">${k}</dt><dd class="font-mono">${v}</dd>`,
-      )
-      .join('');
-
-  const residenceSelect = document.querySelector<HTMLSelectElement>('#residence-select');
-  const residenceFlag = document.querySelector('#residence-flag');
-  const residenceMeta = document.querySelector('#residence-meta');
-  const residenceOptions = getCountrySelectOptions({ independent: true });
-  if (residenceSelect) {
-    residenceSelect.innerHTML = residenceOptions
-      .map((option) => `<option value="${option.value}">${option.label}</option>`)
-      .join('');
-    residenceSelect.value = 'FR';
-    const paintResidence = () => {
-      const country = getCountry(residenceSelect.value);
-      if (!country) return;
-      if (residenceFlag) residenceFlag.innerHTML = `<img src="${getFlagSvgUrl(country.code)}" alt="" />`;
-      if (residenceMeta) {
-        residenceMeta.innerHTML = dl([
-          ['ISO name', country.name],
-          ['Stored code', country.code],
-          ['Alpha-3', country.alpha3],
-          ['TLD', country.tld ?? '—'],
-          ['Currency', country.currencies.join(', ') || '—'],
-          ['Capital', country.capital ?? '—'],
-        ]);
-      }
-    };
-    residenceSelect.addEventListener('change', paintResidence);
-    paintResidence();
-  }
-
-  const phoneQ = document.querySelector<HTMLInputElement>('#phone-q');
-  const phoneHits = document.querySelector('#phone-hits');
-  const phonePrefix = document.querySelector('#phone-prefix');
-  const phoneNational = document.querySelector<HTMLInputElement>('#phone-national');
-  const phoneMeta = document.querySelector('#phone-meta');
-  let phoneCountry: Country | undefined = getCountry('US');
-
-  const paintPhone = () => {
-    if (!phoneCountry) return;
-    const national = (phoneNational?.value ?? '').replace(/\D/g, '');
-    const prefix = getDialCode(phoneCountry.code) ?? '';
-    const calling = getCallingCode(phoneCountry.code) ?? '';
-    if (phonePrefix) phonePrefix.textContent = prefix;
-    if (phoneMeta) {
-      phoneMeta.innerHTML = dl([
-        ['Country', `${phoneCountry.commonName} (${phoneCountry.code})`],
-        ['Display', `${prefix}${national || '…'}`],
-        ['E.164 country', calling],
-        ['NANP NPAs', phoneCountry.nanpAreaCodes?.join(', ') ?? '—'],
-      ]);
-    }
-  };
-
-  const paintPhoneHits = () => {
-    if (!phoneHits) return;
-    const matches = searchCountries(phoneQ?.value || 'united', { limit: 5 });
-    phoneHits.innerHTML = matches
-      .map(
-        (country, index) => `<li>
-          <button type="button" data-i="${index}" class="flex w-full items-center gap-2 px-1 py-2 text-left text-sm hover:bg-stone-50">
-            ${flagImg(country.code, 'h-5 w-7 shrink-0')}
-            <span class="flex-1 truncate">${country.commonName}</span>
-            <span class="font-mono text-xs text-[var(--muted)]">${country.dialCode}</span>
-          </button>
-        </li>`,
-      )
-      .join('');
-    phoneHits.querySelectorAll<HTMLButtonElement>('button').forEach((button) => {
-      button.addEventListener('click', () => {
-        phoneCountry = matches[Number(button.dataset.i)];
-        paintPhone();
-      });
-    });
-  };
-  phoneQ?.addEventListener('input', paintPhoneHits);
-  phoneNational?.addEventListener('input', paintPhone);
-  paintPhoneHits();
-  paintPhone();
-
-  const searchQ = document.querySelector<HTMLInputElement>('#search-q');
-  const searchHits = document.querySelector('#search-hits');
-  const searchPicked = document.querySelector('#search-picked');
-  const paintSearch = () => {
-    if (!searchHits) return;
-    const matches = searchCountries(searchQ?.value ?? '', { limit: 6 });
-    searchHits.innerHTML = matches
-      .map(
-        (country, index) => `<li>
-          <button type="button" data-i="${index}" class="flex w-full items-center gap-2 px-1 py-2 text-left text-sm hover:bg-stone-50">
-            ${flagImg(country.code, 'h-5 w-7 shrink-0')}
-            <span class="min-w-0 flex-1">
-              <span class="block truncate font-medium">${country.commonName}</span>
-              <span class="font-mono text-xs text-[var(--muted)]">${country.name}</span>
-            </span>
-            <span class="font-mono text-xs">${country.code}</span>
-          </button>
-        </li>`,
-      )
-      .join('');
-    const pick = (country: Country) => {
-      if (searchPicked) {
-        searchPicked.textContent = `Persist ${country.code} · show “${country.commonName}” · ship with ${country.dialCode}`;
-      }
-    };
-    searchHits.querySelectorAll<HTMLButtonElement>('button').forEach((button) => {
-      button.addEventListener('click', () => {
-        const country = matches[Number(button.dataset.i)];
-        if (country) pick(country);
-      });
-    });
-    if (matches[0]) pick(matches[0]);
-    else if (searchPicked) searchPicked.textContent = 'No match.';
-  };
-  searchQ?.addEventListener('input', paintSearch);
-  paintSearch();
-
-  const profileCode = document.querySelector<HTMLInputElement>('#profile-code');
-  const profileCard = document.querySelector('#profile-card');
-  const paintProfile = () => {
-    if (!profileCard) return;
-    const country = getCountry(profileCode?.value ?? '');
-    if (!country) {
-      profileCard.innerHTML = '<p class="text-sm text-[var(--muted)]">Not an assigned ISO code.</p>';
-      return;
-    }
-    const wide = getFlagSvgUrl(country.code) ?? '';
-    const square = getFlagSvgUrl(country.code, { ratio: '1x1' }) ?? '';
-    profileCard.innerHTML = `
-      ${flagImg(country.code, 'h-12 w-16')}
-      <img src="${square}" alt="" class="h-12 w-12 rounded-full border border-[var(--line)] object-cover" />
-      <div>
-        <p class="font-bold">${country.commonName} ${getCountryFlag(country.code)}</p>
-        <p class="font-mono text-xs text-[var(--muted)]">${country.code} · ${wide.split('/').slice(-2).join('/')}</p>
-      </div>`;
-  };
-  profileCode?.addEventListener('input', paintProfile);
-  paintProfile();
-
-  const tldInput = document.querySelector<HTMLInputElement>('#tld-input');
-  const tldOut = document.querySelector('#tld-out');
-  const hostFrom = (value: string) => {
-    const trimmed = value.trim();
-    const withoutScheme = trimmed.includes('@')
-      ? (trimmed.split('@').pop() ?? '')
-      : trimmed.replace(/^https?:\/\//i, '');
-    return withoutScheme.split(/[/?#]/)[0].replace(/^www\./i, '');
-  };
-  const paintTld = () => {
-    if (!tldOut) return;
-    const host = hostFrom(tldInput?.value ?? '');
-    const label = host.split('.').pop();
-    const tld = label ? `.${label.toLowerCase()}` : '';
-    const country = tld ? getCountryByTld(tld) : undefined;
-    if (!host) {
-      tldOut.innerHTML = '<p class="text-[var(--muted)]">Enter a host or email.</p>';
-      return;
-    }
-    if (!country) {
-      tldOut.innerHTML = `<p>Host <span class="font-mono">${escapeHtml(host)}</span> ends in <span class="font-mono">${escapeHtml(tld)}</span> — not an IANA country-code TLD.</p>`;
-      return;
-    }
-    tldOut.innerHTML = `<div class="flex items-center gap-3">${flagImg(country.code, 'h-8 w-11')}
-      <div><p class="font-medium">${escapeHtml(country.commonName)}</p>
-      <p class="font-mono text-xs text-[var(--muted)]">${escapeHtml(tld)} → ${country.code} (${escapeHtml(country.name)})</p></div></div>`;
-  };
-  tldInput?.addEventListener('input', paintTld);
-  document.querySelectorAll<HTMLButtonElement>('.tld-chip').forEach((button) => {
-    button.addEventListener('click', () => {
-      if (!tldInput) return;
-      tldInput.value = button.dataset.tld ?? '';
-      paintTld();
-    });
-  });
-  paintTld();
-
-  const currencySelect = document.querySelector<HTMLSelectElement>('#currency-select');
-  const currencyCount = document.querySelector('#currency-count');
-  const currencyList = document.querySelector('#currency-list');
-  const paintCurrency = () => {
-    const code = currencySelect?.value ?? 'EUR';
-    const matches = getCountriesByCurrency(code);
-    if (currencyCount) currencyCount.textContent = `${matches.length} territories use ${code}`;
-    if (currencyList) {
-      currencyList.innerHTML = matches
-        .map(
-          (country) =>
-            `<li class="flex items-center gap-1.5 rounded-full border border-[var(--line)] bg-white px-2 py-1 text-xs">${flagImg(country.code, 'h-4 w-5')} ${country.commonName}</li>`,
-        )
-        .join('');
-    }
-  };
-  currencySelect?.addEventListener('change', paintCurrency);
-  paintCurrency();
-
-  const zoneRegion = document.querySelector<HTMLSelectElement>('#zone-region');
-  const zoneInd = document.querySelector<HTMLInputElement>('#zone-ind');
-  const zoneCount = document.querySelector('#zone-count');
-  const zoneList = document.querySelector('#zone-list');
-  const paintZone = () => {
-    const region = zoneRegion?.value ?? 'Europe';
-    const matches = getAllCountries({
-      region,
-      independent: zoneInd?.checked ? true : undefined,
-      sortBy: 'commonName',
-    });
-    if (zoneCount) zoneCount.textContent = `${matches.length} destinations`;
-    if (zoneList) {
-      zoneList.innerHTML = matches
-        .map(
-          (country) =>
-            `<li class="flex items-center gap-2 py-1.5">${flagImg(country.code, 'h-4 w-6')} <span class="flex-1">${country.commonName}</span><span class="font-mono text-xs text-[var(--muted)]">${country.code}</span></li>`,
-        )
-        .join('');
-    }
-  };
-  zoneRegion?.addEventListener('change', paintZone);
-  zoneInd?.addEventListener('change', paintZone);
-  paintZone();
-
-  const validateInput = document.querySelector<HTMLInputElement>('#validate-input');
-  const validateOut = document.querySelector('#validate-out');
-  const paintValidate = () => {
-    const raw = validateInput?.value.trim() ?? '';
-    const alpha2 = isValidCountryCode(raw);
-    const country = getCountry(raw);
-    const payload = {
-      input: raw,
-      isValidCountryCode: alpha2,
-      resolved: country
-        ? { code: country.code, commonName: country.commonName, numeric: country.numeric }
-        : null,
-      isValidCallingCode: isValidCallingCode(raw.startsWith('+') ? raw : `+${raw}`),
-    };
-    if (validateOut) validateOut.textContent = JSON.stringify(payload, null, 2);
-  };
-  validateInput?.addEventListener('input', paintValidate);
-  document.querySelectorAll<HTMLButtonElement>('.validate-chip').forEach((button) => {
-    button.addEventListener('click', () => {
-      if (!validateInput) return;
-      validateInput.value = button.dataset.code ?? '';
-      paintValidate();
-    });
-  });
-  paintValidate();
-</script>

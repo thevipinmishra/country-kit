@@ -5,11 +5,16 @@ export default {
     extend: {
       container: {
         center: true,
-        padding: "1.5rem",
+        padding: {
+          DEFAULT: "1rem",
+          sm: "1.5rem",
+          lg: "2rem",
+        },
       },
       fontFamily: {
-        sans: ["Space Grotesk Variable", "sans-serif"],
-        mono: ["Space Mono", "monospace"],
+        sans: ["Source Sans 3 Variable", "Source Sans 3", "ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["Source Serif 4 Variable", "Source Serif 4", "ui-serif", "Georgia", "serif"],
+        mono: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "monospace"],
       },
     },
   },

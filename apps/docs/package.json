@@ -9,14 +9,22 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "4.2.1",
     "@astrojs/tailwind": "^5.1.4",
-    "@fontsource-variable/space-grotesk": "^5.1.0",
-    "@fontsource/space-mono": "^5.1.1",
+    "@astrojs/vue": "5.0.9",
+    "@fontsource-variable/source-sans-3": "^5.3.0",
+    "@fontsource-variable/source-serif-4": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
     "astro": "^5.1.1",
     "country-kit": "workspace:*",
-    "tailwindcss": "^3.4.17"
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwindcss": "^3.4.17",
+    "vue": "3.5.13"
   },
   "devDependencies": {
-    "@tailwindcss/typography": "^0.5.15"
+    "@tailwindcss/typography": "^0.5.15",
+    "@types/react": "18.3.18",
+    "@types/react-dom": "18.3.5"
   }
 }
