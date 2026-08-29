@@ -1,6 +1,6 @@
 # country-kit
 
-Official ISO 3166-1 country data for TypeScript — codes, names, ITU-T E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, Unicode flag emojis, and Wikipedia SVG flags.
+ISO 3166-1 country data for TypeScript: codes, names, ITU-T E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, Unicode flag emojis, and Wikipedia SVG flags.
 
 [![npm version](https://img.shields.io/npm/v/country-kit.svg)](https://www.npmjs.com/package/country-kit)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/country-kit)](https://bundlephobia.com/package/country-kit)
@@ -12,7 +12,7 @@ Official ISO 3166-1 country data for TypeScript — codes, names, ITU-T E.164 ca
 - Zero runtime dependencies
 - Common names, search aliases, NANP area codes, Unicode flags, Wikipedia SVG flags
 
-Docs: [playground](https://country-kit.vercel.app/), [examples](https://country-kit.vercel.app/examples/), [API](https://country-kit.vercel.app/api/).
+Docs: [playground](https://country-kit.vercel.app/), [examples](https://country-kit.vercel.app/examples/), [API](https://country-kit.vercel.app/api/), [changelog](https://country-kit.vercel.app/changelog/).
 
 ## Data sources
 
@@ -20,7 +20,7 @@ Docs: [playground](https://country-kit.vercel.app/), [examples](https://country-
 | --- | --- | --- |
 | `code`, `alpha3`, `name` | ISO 3166-1 | All **249** officially assigned codes. `name` is the ISO English short name. |
 | `numeric`, `region`, `subregion` | UN M49 | Numeric codes are identical to ISO 3166-1 numeric. Antarctica and Taiwan have no UN region. |
-| `callingCode` | ITU-T E.164 | Country calling codes only (1–3 digits). NANP members are `+1`, not `+1` plus an area code. |
+| `callingCode` | ITU-T E.164 | Country calling codes only (1-3 digits). NANP members are `+1`. Area codes live on `nanpAreaCodes`. |
 | `nanpAreaCodes` | NANP | Area codes for territories that share `+1`. |
 | `independent` | ISO 3166 | Independent-territory flag (195 yes). |
 | `tld` | IANA | Country-code TLD. **`GB` is `.uk`**, not `.gb`. |
@@ -29,7 +29,7 @@ Docs: [playground](https://country-kit.vercel.app/), [examples](https://country-
 | `flag` | Unicode UTS #51 | Derived from the alpha-2 code via regional indicator symbols. |
 | SVG flags | Wikimedia / flag-icons | Wikipedia SVG drawings, MIT, pinned to flag-icons 7.5.0. |
 
-Kosovo (`XK`) is **not** included: it is a user-assigned code, not an ISO 3166-1 assigned code.
+Kosovo (`XK`) is omitted. It is a user-assigned code, not an ISO 3166-1 assigned code.
 
 Regenerate the dataset with `pnpm generate` after updating files in `scripts/sources/`. Rebuild inline SVGs with `pnpm generate:flags`.
 
@@ -37,8 +37,8 @@ Regenerate the dataset with `pnpm generate` after updating files in `scripts/sou
 
 ```bash
 npm install country-kit
-# yarn add country-kit
 # pnpm add country-kit
+# yarn add country-kit
 ```
 
 ## Quick start
@@ -67,6 +67,27 @@ searchCountries('.uk');       // United Kingdom (IANA TLD)
 searchCountries('TRY');       // Türkiye (ISO 4217)
 ```
 
+## Upgrading from 1.x
+
+npm still publishes 1.1.0. This package is 2.0.0 in git. `npm install country-kit` will not get these breaks until 2.0.0 is published.
+
+**Who this hits.** Phone UIs that used `getCallingCode` as a dial prefix for NANP territories, and any call to `isValidCallingCode` with a concatenated NPA (`+1264`). Also anything that listened for `console.error` on a bad lookup.
+
+**Calling codes.** `getCallingCode('AI')` is `+1`. In 1.x it was `+1264`. Use `getDialCode` (or `nanpAreaCodes`) in a picker. Store `callingCode` when you want the ITU-T E.164 country code.
+
+```typescript
+getCallingCode('AI');        // '+1'
+getDialCode('AI');           // '+1264'
+isValidCallingCode('+1264'); // false
+isValidCallingCode('+1');    // true
+```
+
+**`Country` fields.** 2.0 adds `commonName`, `numeric`, `callingCodes`, `dialCode`, `region`, `subregion`, `independent`, `tld`, `capital`, and `currencies`. Existing 1.x fields remain. `callingCode` values for NANP members follow E.164 as above.
+
+**Invalid lookups** return `undefined`. They do not call `console.error`.
+
+Version-by-version notes: [CHANGELOG.md](./CHANGELOG.md), [docs changelog](https://country-kit.vercel.app/changelog/).
+
 ## API
 
 ### Lookup
@@ -78,7 +99,7 @@ searchCountries('TRY');       // Türkiye (ISO 4217)
 | `getCountryByAlpha3(alpha3)` | ISO 3166-1 alpha-3 |
 | `getCountryByNumeric(numeric)` | ISO 3166-1 numeric / UN M49 (`"840"` or `"84"`) |
 | `getCountryByTld(tld)` | IANA ccTLD (`".uk"` or `"uk"` → GB) |
-| `getCountryName(code)` | Official ISO English short name |
+| `getCountryName(code)` | ISO English short name |
 | `getCountryCommonName(code)` | Common English name |
 | `getAlpha3Code(code)` | Alpha-3 |
 | `getNumericCode(code)` | Numeric, zero-padded |
@@ -108,7 +129,7 @@ Search options: `limit`, `exact`, `includeCodes` (default `true`).
 
 ```typescript
 isValidCountryCode('US');   // true  (type guard for CountryCode)
-isValidCallingCode('+44');  // true  (E.164 format: + and 1–3 digits)
+isValidCallingCode('+44');  // true  (E.164: + and 1-3 digits)
 isValidCallingCode('+1264'); // false (that is +1 plus a NANP area code)
 ```
 
@@ -308,13 +329,6 @@ isValidCallingCode('+44');     // true
 isValidCallingCode('+1264');   // false (NANP area code, not E.164)
 ```
 
-## Breaking changes in 2.0
-
-- **Calling codes follow ITU-T E.164.** NANP territories such as Anguilla are `+1`, not `+1264`. Use `dialCode` or `nanpAreaCodes` when you need the area code for a phone picker.
-- **`isValidCallingCode`** accepts only 1–3 digit country codes (E.164), not concatenated NPAs.
-- **`Country`** includes `commonName`, `numeric`, `callingCodes`, `dialCode`, `region`, `subregion`, `independent`, `tld`, `capital`, and `currencies`.
-- Invalid lookups no longer write to `console.error`.
-
 ## Package layout
 
 ```
@@ -339,6 +353,6 @@ Import `country-kit/flags` only for inline SVG. The core package is the JSON dat
 
 ## License
 
-ISC — see [LICENSE](https://github.com/thevipinmishra/country-kit/blob/main/LICENSE).
+ISC. See [LICENSE](https://github.com/thevipinmishra/country-kit/blob/main/LICENSE).
 
 SVG flags are MIT (flag-icons / Wikipedia). See `scripts/sources/flag-icons.LICENSE`.

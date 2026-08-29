@@ -1,17 +1,26 @@
 {
-  "name": "country-kit",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "country-kit-monorepo",
+  "private": true,
+  "version": "2.0.0",
+  "description": "Workspace for the country-kit npm package and its docs site.",
+  "type": "module",
   "scripts": {
     "package": "pnpm --filter country-kit",
     "docs": "pnpm --filter docs",
+    "test": "pnpm --filter country-kit test",
     "build-package": "pnpm --filter country-kit run build",
-    "publish": "pnpm --filter country-kit run publish",
-    "build-docs": "pnpm run build-package && pnpm --filter docs run build"
+    "build-docs": "pnpm run build-package && pnpm --filter docs run build",
+    "dev:docs": "pnpm --filter docs dev",
+    "publish": "pnpm --filter country-kit run publish"
   },
   "keywords": [],
-  "author": "",
+  "author": "Vipin Mishra",
   "license": "ISC",
-  "type": "module"
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }

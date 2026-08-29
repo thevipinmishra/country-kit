@@ -6,7 +6,7 @@ import {
   countryCodeSet,
   countryData,
 } from './data';
-import { type FlagUrlOptions, buildFlagUrl } from './flag-urls';
+import { buildFlagUrl, type FlagUrlOptions } from './flag-urls';
 import { getFlag as buildFlag } from './flags';
 import type {
   Country,

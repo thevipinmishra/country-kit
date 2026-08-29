@@ -38,6 +38,8 @@ const square = computed(() =>
         <p class="truncate font-mono text-xs text-[var(--muted)]">{{ wide }}</p>
       </div>
     </div>
-    <p v-else class="mt-4 text-sm text-[var(--muted)]">Not an assigned ISO code.</p>
+    <p v-else class="mt-4 text-sm text-[var(--muted)]">
+      Not an assigned ISO 3166-1 code. Try JP or US. XK is not included.
+    </p>
   </div>
 </template>

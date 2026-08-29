@@ -8,6 +8,7 @@ import {
   countryCodes,
   countryData,
   countryNames,
+  FLAG_ICONS_VERSION,
   getAllCountries,
   getAlpha3Code,
   getCallingCode,
@@ -28,6 +29,7 @@ import {
   getCountrySelectOptions,
   getCountryTld,
   getDialCode,
+  getFlag,
   getFlagSvgUrl,
   getIndependentCountries,
   getNumericCode,
@@ -357,5 +359,96 @@ describe('SVG flags', () => {
     expect(svg).toMatch(/^<svg /);
     expect(svg).toContain('viewBox');
     expect(getFlagSvg('xx')).toBeUndefined();
+    expect(getFlagSvg('')).toBeUndefined();
+  });
+});
+
+describe('Edge cases', () => {
+  test('getFlag and FLAG_ICONS_VERSION', () => {
+    expect(getFlag('US')).toBe('🇺🇸');
+    expect(getFlag('jp')).toBe(getCountryFlag('JP'));
+    expect(FLAG_ICONS_VERSION).toBe('7.5.0');
+  });
+
+  test('getFlagSvgUrl accepts flagcdn', () => {
+    expect(getFlagSvgUrl('US', { source: 'flagcdn' })).toBe(
+      'https://flagcdn.com/us.svg',
+    );
+    expect(getFlagSvgUrl('US', { source: 'flagcdn', ratio: '1x1' })).toBe(
+      'https://flagcdn.com/w160/us.png',
+    );
+  });
+
+  test('lookups trim whitespace and reject empty input', () => {
+    expect(getCountry('  us  ')?.code).toBe('US');
+    expect(getCountryByAlpha3(' usa ')?.code).toBe('US');
+    expect(isValidCountryCode('  gb  ')).toBe(true);
+    expect(getCountry('')).toBeUndefined();
+    expect(getCountryByAlpha3('')).toBeUndefined();
+    expect(getCountryByNumeric('')).toBeUndefined();
+    expect(getCountryName('XX')).toBeUndefined();
+    expect(getCountryTld('XX')).toBeUndefined();
+    expect(getCountryCapital('XX')).toBeUndefined();
+    expect(getCountryCurrencies('XX')).toBeUndefined();
+    expect(getDialCode('XX')).toBeUndefined();
+  });
+
+  test('TLD lookup edges', () => {
+    expect(getCountryByTld('  .UK  ')?.code).toBe('GB');
+    expect(getCountryByTld('.gb')).toBeUndefined();
+    expect(getCountryByTld('')).toBeUndefined();
+    expect(getCountryByTld('...')).toBeUndefined();
+  });
+
+  test('currency and calling-code edges', () => {
+    expect(getCountriesByCurrency('')).toEqual([]);
+    expect(getCountriesByCurrency('US')).toEqual([]);
+    expect(getCountriesByCurrency('euro')).toEqual([]);
+    expect(getCountriesByCallingCode('44').some((c) => c.code === 'GB')).toBe(
+      true,
+    );
+    expect(getCountriesByCallingCode('+')).toEqual([]);
+    expect(getCountriesBySubregion('Atlantis')).toEqual([]);
+    expect(getCountriesByRegion('Atlantis')).toEqual([]);
+  });
+
+  test('Antarctica, Taiwan, and Palestine special cases', () => {
+    expect(getCountry('AQ')?.region).toBeNull();
+    expect(getCountry('TW')?.region).toBeNull();
+    expect(getCountry('AQ')?.currencies).toEqual([]);
+    expect(getCountry('PS')?.currencies).toEqual([]);
+    expect(getCountry('AQ')?.independent).toBe(false);
+  });
+
+  test('getAllCountries filters, sorts, and copies', () => {
+    const copy = getAllCountries();
+    copy.pop();
+    expect(getAllCountries()).toHaveLength(249);
+
+    const byCode = getAllCountries({ sortBy: 'code' });
+    expect(byCode[0].code).toBe('AD');
+
+    const territories = getAllCountries({ independent: false });
+    expect(territories.every((c) => !c.independent)).toBe(true);
+    expect(territories.some((c) => c.code === 'PR')).toBe(true);
+
+    const northern = getAllCountries({ subregion: 'Northern Europe' });
+    expect(northern.some((c) => c.code === 'GB')).toBe(true);
+    expect(northern.every((c) => c.subregion === 'Northern Europe')).toBe(true);
+  });
+
+  test('searchCountries exact and includeCodes', () => {
+    expect(searchCountries('US', { exact: true })[0].code).toBe('US');
+    expect(searchCountries('united', { exact: true })).toEqual([]);
+    expect(searchCountries('USA', { exact: true })[0].code).toBe('US');
+    expect(listRegions()).toEqual([
+      'Africa',
+      'Americas',
+      'Asia',
+      'Europe',
+      'Oceania',
+    ]);
+    expect(countries.US).toBe(getCountryName('US'));
+    expect(getCountrySelectOptions()[0].value).toMatch(/^[A-Z]{2}$/);
   });
 });

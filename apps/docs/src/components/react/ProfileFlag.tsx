@@ -39,7 +39,9 @@ export default function ProfileFlag() {
           </div>
         </div>
       ) : (
-        <p className="mt-4 text-sm text-[var(--muted)]">Not an assigned ISO code.</p>
+        <p className="mt-4 text-sm text-[var(--muted)]">
+          Not an assigned ISO 3166-1 code. Try JP or US. XK is not included.
+        </p>
       )}
     </div>
   );

@@ -32,21 +32,27 @@ export default function PhoneField() {
         placeholder="Anguilla, +1, United States…"
       />
       <ul className="ck-hits">
-        {matches.map((item) => (
-          <li key={item.code}>
-            <button
-              type="button"
-              className={`ck-hit ${country?.code === item.code ? 'is-active' : ''}`}
-              onClick={() => setPicked(item)}
-            >
-              <FlagThumb code={item.code} className="h-5 w-7 shrink-0" />
-              <span className="min-w-0 flex-1 truncate">{item.commonName}</span>
-              <span className="font-mono text-xs text-[var(--muted)]">
-                {item.dialCode}
-              </span>
-            </button>
+        {matches.length ? (
+          matches.map((item) => (
+            <li key={item.code}>
+              <button
+                type="button"
+                className={`ck-hit ${country?.code === item.code ? 'is-active' : ''}`}
+                onClick={() => setPicked(item)}
+              >
+                <FlagThumb code={item.code} className="h-5 w-7 shrink-0" />
+                <span className="min-w-0 flex-1 truncate">{item.commonName}</span>
+                <span className="font-mono text-xs text-[var(--muted)]">
+                  {item.dialCode}
+                </span>
+              </button>
+            </li>
+          ))
+        ) : (
+          <li className="ck-empty">
+            No countries match. Try a name, ISO code, or calling prefix such as +1.
           </li>
-        ))}
+        )}
       </ul>
       <div className="ck-row mt-4">
         <p className="shrink-0 font-mono text-lg">{prefix || '—'}</p>

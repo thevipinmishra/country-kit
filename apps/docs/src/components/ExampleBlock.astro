@@ -1,5 +1,5 @@
 ---
-import { Code } from 'astro:components';
+import CodeBlock from './CodeBlock.astro';
 
 interface Props {
   id: string;
@@ -11,6 +11,10 @@ interface Props {
 }
 
 const { id, title, description, apis, reactCode, vueCode } = Astro.props;
+const reactTab = `${id}-tab-react`;
+const vueTab = `${id}-tab-vue`;
+const reactPanel = `${id}-panel-react`;
+const vuePanel = `${id}-panel-vue`;
 ---
 
 <section id={id} class="example-block scroll-mt-24">
@@ -19,26 +23,44 @@ const { id, title, description, apis, reactCode, vueCode } = Astro.props;
   <p class="mt-2 font-mono text-xs text-[var(--muted)]">{apis}</p>
 
   <div class="mt-4 flex flex-wrap gap-1" role="tablist" aria-label="Framework">
-    <button type="button" class="example-tab is-active" data-fw="react" role="tab" aria-selected="true">React</button>
-    <button type="button" class="example-tab" data-fw="vue" role="tab" aria-selected="false">Vue</button>
+    <button
+      type="button"
+      id={reactTab}
+      class="example-tab is-active"
+      data-fw="react"
+      role="tab"
+      aria-selected="true"
+      aria-controls={reactPanel}
+      tabindex="0">React</button
+    >
+    <button
+      type="button"
+      id={vueTab}
+      class="example-tab"
+      data-fw="vue"
+      role="tab"
+      aria-selected="false"
+      aria-controls={vuePanel}
+      tabindex="-1">Vue</button
+    >
   </div>
 
   <div class="mt-4 grid min-w-0 gap-4 lg:grid-cols-2">
     <div class="min-w-0 overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--card)] p-4 sm:p-5">
       <p class="mb-3 font-mono text-xs text-[var(--muted)]">Preview</p>
-      <div data-fw-panel="react">
+      <div id={reactPanel} data-fw-panel="react" role="tabpanel" aria-labelledby={reactTab}>
         <slot name="react" />
       </div>
-      <div data-fw-panel="vue" hidden>
+      <div id={vuePanel} data-fw-panel="vue" role="tabpanel" aria-labelledby={vueTab} hidden>
         <slot name="vue" />
       </div>
     </div>
-    <div class="ck-code min-w-0 self-start">
+    <div class="min-w-0 self-start">
       <div data-fw-panel="react">
-        <Code code={reactCode} lang="tsx" theme="vesper" />
+        <CodeBlock code={reactCode} lang="tsx" />
       </div>
       <div data-fw-panel="vue" hidden>
-        <Code code={vueCode} lang="vue" theme="vesper" />
+        <CodeBlock code={vueCode} lang="vue" />
       </div>
     </div>
   </div>
@@ -46,20 +68,35 @@ const { id, title, description, apis, reactCode, vueCode } = Astro.props;
 
 <script>
   document.querySelectorAll('.example-block').forEach((block) => {
-    const buttons = block.querySelectorAll('[data-fw]');
+    const buttons = [...block.querySelectorAll<HTMLButtonElement>('[data-fw]')];
+
+    function activate(button: HTMLButtonElement) {
+      const framework = button.getAttribute('data-fw');
+      buttons.forEach((item) => {
+        const active = item === button;
+        item.classList.toggle('is-active', active);
+        item.setAttribute('aria-selected', String(active));
+        item.tabIndex = active ? 0 : -1;
+      });
+      block.querySelectorAll('[data-fw-panel]').forEach((panel) => {
+        const hidden = panel.getAttribute('data-fw-panel') !== framework;
+        if (hidden) panel.setAttribute('hidden', '');
+        else panel.removeAttribute('hidden');
+      });
+      button.focus();
+    }
+
     buttons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const framework = button.getAttribute('data-fw');
-        buttons.forEach((item) => {
-          const active = item === button;
-          item.classList.toggle('is-active', active);
-          item.setAttribute('aria-selected', String(active));
-        });
-        block.querySelectorAll('[data-fw-panel]').forEach((panel) => {
-          const hidden = panel.getAttribute('data-fw-panel') !== framework;
-          if (hidden) panel.setAttribute('hidden', '');
-          else panel.removeAttribute('hidden');
-        });
+      button.addEventListener('click', () => activate(button));
+      button.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+        event.preventDefault();
+        const index = buttons.indexOf(button);
+        const next =
+          event.key === 'ArrowRight'
+            ? buttons[(index + 1) % buttons.length]
+            : buttons[(index - 1 + buttons.length) % buttons.length];
+        if (next) activate(next);
       });
     });
   });

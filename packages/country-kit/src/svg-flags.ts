@@ -1,9 +1,5 @@
 import flagSvgsJson from './data/flag-svgs.json';
-import {
-  FLAG_ICONS_VERSION,
-  type FlagUrlOptions,
-  buildFlagUrl,
-} from './flag-urls';
+import { buildFlagUrl, type FlagUrlOptions } from './flag-urls';
 
 const FLAG_SVGS = flagSvgsJson as Record<string, string>;
 

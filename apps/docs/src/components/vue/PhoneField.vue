@@ -51,6 +51,9 @@ function onQuery(value: string) {
           <span class="font-mono text-xs text-[var(--muted)]">{{ item.dialCode }}</span>
         </button>
       </li>
+      <li v-if="!matches.length" class="ck-empty">
+        No countries match. Try a name, ISO code, or calling prefix such as +1.
+      </li>
     </ul>
     <div class="ck-row mt-4">
       <p class="shrink-0 font-mono text-lg">{{ prefix || '—' }}</p>

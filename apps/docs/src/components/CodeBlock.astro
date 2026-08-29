@@ -1,0 +1,80 @@
+---
+import { Code } from 'astro:components';
+
+interface Props {
+  code: string;
+  lang: 'bash' | 'typescript' | 'tsx' | 'vue';
+  class?: string;
+}
+
+const { code, lang, class: className } = Astro.props;
+---
+
+<div class:list={['ck-code', className]}>
+  <div class="ck-code-bar">
+    <button type="button" class="ck-copy" data-copy aria-label="Copy code">
+      <span data-copy-label>Copy</span>
+    </button>
+    <span class="sr-only" data-copy-live role="status"></span>
+  </div>
+  <Code code={code} lang={lang} theme="vesper" />
+</div>
+
+<script>
+  const RESET_MS = 2000;
+
+  async function copyText(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      /* fall through to execCommand */
+    }
+    const input = document.createElement('textarea');
+    input.value = text;
+    input.setAttribute('readonly', '');
+    input.setAttribute('aria-hidden', 'true');
+    input.style.cssText =
+      'position:fixed;top:1px;left:1px;width:1px;height:1px;padding:0;border:0;opacity:0';
+    document.body.append(input);
+    input.focus();
+    input.select();
+    input.setSelectionRange(0, input.value.length);
+    let ok = false;
+    try {
+      ok = document.execCommand('copy');
+    } finally {
+      input.remove();
+    }
+    return ok;
+  }
+
+  function bind(block: Element) {
+    if (!(block instanceof HTMLElement) || block.dataset.copyReady) return;
+    const button = block.querySelector<HTMLButtonElement>('[data-copy]');
+    const pre = block.querySelector('pre');
+    const label = block.querySelector('[data-copy-label]');
+    const live = block.querySelector('[data-copy-live]');
+    if (!button || !pre || !label || !live) return;
+    block.dataset.copyReady = '1';
+
+    let token = 0;
+    button.addEventListener('click', async () => {
+      window.focus();
+      const ok = await copyText(pre.textContent ?? '');
+      if (!ok) return;
+      const current = ++token;
+      label.textContent = 'Copied';
+      button.setAttribute('aria-label', 'Copied');
+      live.textContent = 'Copied';
+      window.setTimeout(() => {
+        if (current !== token) return;
+        label.textContent = 'Copy';
+        button.setAttribute('aria-label', 'Copy code');
+        live.textContent = '';
+      }, RESET_MS);
+    });
+  }
+
+  document.querySelectorAll('.ck-code').forEach(bind);
+</script>

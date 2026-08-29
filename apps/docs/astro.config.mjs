@@ -1,10 +1,14 @@
 // @ts-check
 import react from '@astrojs/react';
-import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 import vue from '@astrojs/vue';
+import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   site: 'https://country-kit.vercel.app',
-  integrations: [tailwind({ applyBaseStyles: false }), react(), vue()],
+  integrations: [react(), vue(), sitemap()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

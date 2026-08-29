@@ -12,14 +12,20 @@ interface Props {
   description?: string;
 }
 
-const {
-  title = 'country-kit',
-  description = 'ISO 3166-1 country data for TypeScript: codes, names, E.164 calling codes, UN M49 regions, and SVG flags.',
-} = Astro.props;
+const SITE = 'https://country-kit.vercel.app';
+const DEFAULT_DESCRIPTION =
+  'ISO 3166-1 country data for TypeScript: codes, names, E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, and SVG flags.';
+
+const { title = 'country-kit', description = DEFAULT_DESCRIPTION } = Astro.props;
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
-const canonical =
-  path === '/' ? 'https://country-kit.vercel.app/' : `https://country-kit.vercel.app${path}/`;
+const canonical = path === '/' ? `${SITE}/` : `${SITE}${path}/`;
+const pageTitle =
+  title === 'country-kit'
+    ? 'country-kit: ISO 3166-1 country codes, flags, and calling codes'
+    : `${title} · country-kit`;
+const ogTitle = title === 'country-kit' ? 'country-kit' : `${title} · country-kit`;
+
 const links = [
   { href: '/', label: 'Playground' },
   { href: '/examples', label: 'Examples' },
@@ -27,12 +33,33 @@ const links = [
   { href: '/flags', label: 'Flags' },
   { href: '/api', label: 'API' },
   { href: '/data', label: 'Data' },
+  { href: '/changelog', label: 'Changelog' },
 ];
 
-const pageTitle =
-  title === 'country-kit'
-    ? 'country-kit — ISO 3166-1 country data for TypeScript'
-    : `${title} · country-kit`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'country-kit',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Node.js',
+  softwareVersion: '2.0.0',
+  description: DEFAULT_DESCRIPTION,
+  url: SITE,
+  downloadUrl: 'https://www.npmjs.com/package/country-kit',
+  installUrl: 'https://www.npmjs.com/package/country-kit',
+  codeRepository: 'https://github.com/thevipinmishra/country-kit',
+  license: 'https://opensource.org/licenses/ISC',
+  programmingLanguage: ['TypeScript', 'JavaScript'],
+  author: {
+    '@type': 'Person',
+    name: 'Vipin Mishra',
+  },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+};
 ---
 
 <!doctype html>
@@ -42,11 +69,21 @@ const pageTitle =
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#1c1917" />
+    <meta name="theme-color" content="#12110f" />
+    <meta name="color-scheme" content="light" />
     <link rel="canonical" href={canonical} />
-    <meta property="og:title" content={title === 'country-kit' ? 'country-kit' : `${title} · country-kit`} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="country-kit" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={ogTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={ogTitle} />
+    <meta name="twitter:description" content={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <a
@@ -54,10 +91,10 @@ const pageTitle =
       class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2"
       >Skip to content</a
     >
-    <header class="sticky top-0 z-40 border-b border-stone-800/80 bg-[#161412] text-[#f4efe6]">
+    <header class="sticky top-0 z-40 border-b border-white/10 bg-[var(--header)] text-[var(--header-fg)] pt-[env(safe-area-inset-top)]">
       <div class="container flex h-14 items-center justify-between gap-3">
         <a href="/" class="text-[0.95rem] font-semibold tracking-tight">country-kit</a>
-        <nav class="hidden min-w-0 items-center gap-1 text-sm lg:flex" aria-label="Primary">
+        <nav class="hidden min-w-0 items-center gap-1 text-sm xl:flex" aria-label="Primary">
           {links.map((link) => (
             <a
               href={link.href}
@@ -65,7 +102,7 @@ const pageTitle =
               class:list={[
                 'rounded-md px-2.5 py-1.5',
                 path === link.href
-                  ? 'bg-[#f4efe6] text-[#161412]'
+                  ? 'bg-[var(--header-fg)] text-[var(--header)]'
                   : 'text-stone-300 hover:bg-white/10 hover:text-white',
               ]}
             >
@@ -81,7 +118,7 @@ const pageTitle =
         <button
           type="button"
           id="nav-toggle"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20 text-[#f4efe6] lg:hidden"
+          class="inline-flex h-11 w-11 items-center justify-center rounded-md border border-white/20 text-[var(--header-fg)] xl:hidden"
           aria-expanded="false"
           aria-controls="nav-panel"
           aria-label="Open menu"
@@ -106,18 +143,23 @@ const pageTitle =
         <a href="https://github.com/thevipinmishra/country-kit">GitHub</a>
       </div>
     </nav>
-    <div id="content" class="min-w-0 overflow-x-clip">
+    <main id="content" class="min-w-0 overflow-x-clip">
       <slot />
-    </div>
+    </main>
     <footer class="mt-16 border-t border-[var(--line)] py-8 text-sm text-[var(--muted)]">
-      <div class="container flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-        <p>ISO 3166-1, UN M49, ITU-T E.164, IANA, ISO 4217</p>
-        <p>
-          <a class="underline decoration-stone-400 underline-offset-4 hover:text-[var(--ink)]" href="https://www.npmjs.com/package/country-kit"
-            >npm</a
-          >
-          · ISC
-        </p>
+      <div class="container flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
+        <div class="max-w-xl">
+          <p>ISO 3166-1, UN M49, ITU-T E.164, IANA, ISO 4217</p>
+          <p class="mt-1">249 assigned codes. Kosovo (XK) is not included.</p>
+        </div>
+        <nav aria-label="Footer" class="flex flex-wrap gap-x-4 gap-y-2">
+          <a class="underline decoration-stone-400 underline-offset-4 hover:text-[var(--ink)]" href="/changelog">Changelog</a>
+          <a class="underline decoration-stone-400 underline-offset-4 hover:text-[var(--ink)]" href="/api">API</a>
+          <a class="underline decoration-stone-400 underline-offset-4 hover:text-[var(--ink)]" href="/examples">Examples</a>
+          <a class="underline decoration-stone-400 underline-offset-4 hover:text-[var(--ink)]" href="https://www.npmjs.com/package/country-kit">npm</a>
+          <a class="underline decoration-stone-400 underline-offset-4 hover:text-[var(--ink)]" href="https://github.com/thevipinmishra/country-kit">GitHub</a>
+          <span>ISC</span>
+        </nav>
       </div>
     </footer>
     <script>
@@ -126,6 +168,8 @@ const pageTitle =
       const backdrop = document.querySelector('#nav-backdrop');
       const iconOpen = document.querySelector('#nav-icon-open');
       const iconClose = document.querySelector('#nav-icon-close');
+      const content = document.querySelector('#content');
+      const footer = document.querySelector('footer');
 
       function setOpen(open: boolean) {
         panel?.toggleAttribute('hidden', !open);
@@ -135,6 +179,13 @@ const pageTitle =
         iconOpen?.classList.toggle('hidden', open);
         iconClose?.classList.toggle('hidden', !open);
         document.body.classList.toggle('nav-open', open);
+        if (content) content.inert = open;
+        if (footer) footer.inert = open;
+        if (open) {
+          panel?.querySelector('a')?.focus();
+        } else {
+          (toggle as HTMLButtonElement | null)?.focus();
+        }
       }
 
       toggle?.addEventListener('click', () => {
@@ -148,7 +199,7 @@ const pageTitle =
         if (event.key === 'Escape') setOpen(false);
       });
       window.addEventListener('resize', () => {
-        if (window.matchMedia('(min-width: 1024px)').matches) setOpen(false);
+        if (window.matchMedia('(min-width: 1280px)').matches) setOpen(false);
       });
     </script>
   </body>

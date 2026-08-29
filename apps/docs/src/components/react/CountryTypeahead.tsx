@@ -24,24 +24,30 @@ export default function CountryTypeahead() {
         autoComplete="off"
       />
       <ul className="ck-hits">
-        {matches.map((item) => (
-          <li key={item.code}>
-            <button
-              type="button"
-              className={`ck-hit ${selected?.code === item.code ? 'is-active' : ''}`}
-              onClick={() => setCode(item.code)}
-            >
-              <FlagThumb code={item.code} className="h-5 w-7 shrink-0" />
-              <span className="min-w-0 flex-1 truncate">{item.commonName}</span>
-              <span className="font-mono text-xs">{item.code}</span>
-            </button>
+        {matches.length ? (
+          matches.map((item) => (
+            <li key={item.code}>
+              <button
+                type="button"
+                className={`ck-hit ${selected?.code === item.code ? 'is-active' : ''}`}
+                onClick={() => setCode(item.code)}
+              >
+                <FlagThumb code={item.code} className="h-5 w-7 shrink-0" />
+                <span className="min-w-0 flex-1 truncate">{item.commonName}</span>
+                <span className="font-mono text-xs">{item.code}</span>
+              </button>
+            </li>
+          ))
+        ) : (
+          <li className="ck-empty">
+            No countries match. Try a name, ISO code, TLD, or currency.
           </li>
-        ))}
+        )}
       </ul>
       <p className="mt-3 text-sm text-[var(--muted)]">
         {selected
-          ? `Persist ${selected.code} · show “${selected.commonName}”`
-          : 'No match.'}
+          ? `Persist ${selected.code} · show "${selected.commonName}"`
+          : 'No match. Try a name, ISO code, or TLD.'}
       </p>
     </div>
   );
