@@ -1,0 +1,80 @@
+---
+import '@fontsource-variable/space-grotesk';
+import '@fontsource/space-mono';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'country-kit',
+  description = 'Official ISO 3166-1 country data for TypeScript — codes, names, E.164 calling codes, UN M49 regions, and Wikipedia SVG flags.',
+} = Astro.props;
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonical = path === '/' ? 'https://country-kit.vercel.app/' : `https://country-kit.vercel.app${path}/`;
+const links = [
+  { href: '/', label: 'Playground' },
+  { href: '/explorer', label: 'Explorer' },
+  { href: '/flags', label: 'Flags' },
+  { href: '/api', label: 'API' },
+  { href: '/data', label: 'Data' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title === 'country-kit' ? 'country-kit — official country data for TypeScript' : `${title} · country-kit`}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#161412" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title === 'country-kit' ? 'country-kit' : `${title} · country-kit`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body class="min-h-dvh font-sans antialiased">
+    <a href="#content" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-white focus:px-3 focus:py-2">Skip to content</a>
+    <header class="sticky top-0 z-40 border-b border-stone-800/80 bg-[#161412] text-[#f4efe6]">
+      <div class="container flex flex-wrap items-center justify-between gap-3 py-3">
+        <a href="/" class="text-lg font-bold tracking-tight">country-kit</a>
+        <nav class="flex flex-wrap items-center gap-1 text-sm">
+          {links.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                'rounded-full px-3 py-1.5 transition-colors',
+                path === link.href
+                  ? 'bg-[#f4efe6] text-[#161412]'
+                  : 'text-stone-300 hover:bg-white/10 hover:text-white',
+              ]}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="https://github.com/thevipinmishra/country-kit"
+            class="rounded-full px-3 py-1.5 text-stone-300 hover:bg-white/10 hover:text-white"
+            >GitHub</a
+          >
+        </nav>
+      </div>
+    </header>
+    <div id="content">
+      <slot />
+    </div>
+    <footer class="mt-16 border-t border-[var(--line)] py-8 text-sm text-[var(--muted)]">
+      <div class="container flex flex-wrap items-center justify-between gap-3">
+        <p>ISO 3166-1 · UN M49 · ITU-T E.164 · Wikipedia SVG flags</p>
+        <p>
+          <a class="underline decoration-stone-400 underline-offset-4 hover:text-[var(--ink)]" href="https://www.npmjs.com/package/country-kit">npm</a>
+          · ISC license
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

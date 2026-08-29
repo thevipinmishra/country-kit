@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #161412;
+  --muted: #5c564e;
+  --paper: #f4efe6;
+  --card: #fffcf7;
+  --line: #e4dccf;
+  --accent: #0b6b52;
+  --accent-2: #c45c26;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.ck-grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(22 20 18 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(22 20 18 / 0.04) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+.flag-frame {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 1px 0 rgb(22 20 18 / 0.06);
+}
+
+.flag-frame img,
+.flag-frame svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

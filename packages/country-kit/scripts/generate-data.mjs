@@ -130,6 +130,21 @@ const iso = JSON.parse(
 const seedCalling = JSON.parse(
   fs.readFileSync(path.join(sources, 'legacy-calling-codes.json'), 'utf8'),
 );
+const extras = JSON.parse(
+  fs.readFileSync(path.join(sources, 'iso-extras.json'), 'utf8'),
+);
+
+/**
+ * Corrections on top of datasets/country-codes (stale capitals, missing ISO 4217,
+ * and IANA ccTLDs that were copied from a parent territory).
+ */
+const EXTRA_OVERRIDES = {
+  TR: { currencies: ['TRY'] },
+  KZ: { capital: 'Astana' },
+  BL: { tld: '.bl' },
+  MF: { tld: '.mf' },
+  GS: { currencies: ['GBP'] },
+};
 
 if (iso.length !== 249) {
   throw new Error(`Expected 249 ISO 3166-1 assigned codes, got ${iso.length}`);
@@ -154,10 +169,14 @@ const countries = iso
     const code = row['alpha-2'];
     const name = row.name;
     const callingCode = toE164(code, seedCalling[code]);
-    const extra = EXTRA_CALLING_CODES[code] ?? [];
+    const extra = {
+      ...(extras[code] ?? {}),
+      ...(EXTRA_OVERRIDES[code] ?? {}),
+    };
+    const extraCalling = EXTRA_CALLING_CODES[code] ?? [];
     const callingCodes = [
       callingCode,
-      ...extra.filter((c) => c !== callingCode),
+      ...extraCalling.filter((c) => c !== callingCode),
     ];
     const nanpAreaCodes = NANP_AREA_CODES[code];
     const region = row.region || null;
@@ -173,6 +192,10 @@ const countries = iso
       callingCodes,
       region,
       subregion,
+      independent: Boolean(extra.independent),
+      tld: extra.tld ?? null,
+      capital: extra.capital ?? null,
+      currencies: extra.currencies ?? [],
       aliases: ALIASES[code] ?? [],
     };
 
@@ -194,6 +217,34 @@ if (extraSeed.length) {
   throw new Error(
     `Calling-code seed has unknown ISO codes: ${extraSeed.join(', ')}`,
   );
+}
+
+const missingExtras = codes.filter((c) => !extras[c]);
+if (missingExtras.length) {
+  throw new Error(`Missing ISO extras for: ${missingExtras.join(', ')}`);
+}
+
+const tldOwners = new Map();
+for (const country of countries) {
+  if (country.tld) {
+    if (tldOwners.has(country.tld)) {
+      throw new Error(
+        `Duplicate TLD ${country.tld}: ${tldOwners.get(country.tld)} and ${country.code}`,
+      );
+    }
+    tldOwners.set(country.tld, country.code);
+  }
+  const expectedTld = `.${country.code.toLowerCase()}`;
+  if (country.tld && country.tld !== expectedTld && country.code !== 'GB') {
+    throw new Error(
+      `${country.code} TLD is ${country.tld}, expected ${expectedTld} (or .uk for GB)`,
+    );
+  }
+  for (const currency of country.currencies) {
+    if (!/^[A-Z]{3}$/.test(currency)) {
+      throw new Error(`${country.code} has invalid ISO 4217 code: ${currency}`);
+    }
+  }
 }
 
 const outDir = path.join(pkgRoot, 'src/data');

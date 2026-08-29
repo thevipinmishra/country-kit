@@ -8,6 +8,7 @@ export default defineConfig({
   test: {},
   resolve: {
     alias: {
+      'country-kit/flags': path.join(root, 'src/svg-flags.ts'),
       'country-kit': path.join(root, 'src/index.ts'),
     },
   },

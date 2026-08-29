@@ -1,258 +1,168 @@
 ---
-import '@fontsource-variable/space-grotesk';
-import '@fontsource/space-mono';
+import Layout from '../layouts/Layout.astro';
 import { Code } from 'astro:components';
 
-const description = "A lightweight TypeScript library providing ISO country data and utilities for working with country codes, names, calling codes and flags";
-const title = "country-kit documentation";
-const url = "https://www.npmjs.com/package/country-kit";
+const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris'];
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{title}</title>
+<Layout title="Playground" description="Try country-kit in the browser: search ISO names, aliases, codes, calling prefixes, TLDs, and currencies.">
+  <section class="ck-grid-bg border-b border-[var(--line)]">
+    <div class="container py-14 lg:py-20">
+      <p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">v2 · 249 ISO 3166-1 codes · zero dependencies</p>
+      <h1 class="max-w-3xl text-4xl font-bold leading-tight tracking-tight lg:text-6xl">
+        Official country data for TypeScript.
+      </h1>
+      <p class="mt-5 max-w-2xl text-lg text-[var(--muted)]">
+        ISO 3166-1 names and codes, ITU-T E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, and Wikipedia SVG flags — one small static package.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/explorer" class="rounded-full bg-[var(--ink)] px-5 py-2.5 text-sm font-medium text-[var(--paper)] hover:bg-black">Explore 249 countries</a>
+        <a href="/flags" class="rounded-full border border-[var(--ink)]/20 px-5 py-2.5 text-sm font-medium hover:border-[var(--ink)]">SVG flags</a>
+        <a href="/api" class="rounded-full border border-[var(--ink)]/20 px-5 py-2.5 text-sm font-medium hover:border-[var(--ink)]">API reference</a>
+      </div>
+      <div class="mt-8 max-w-xl">
+        <Code code={`npm install country-kit`} lang="bash" theme="vesper" />
+      </div>
+    </div>
+  </section>
 
-        <!-- Primary Meta Tags -->
-        <meta name="title" content={title}>
-        <meta name="description" content={description}>
-        <meta name="keywords" content="country codes, ISO 3166, TypeScript, country data, country flags, calling codes">
-        <meta name="author" content="Your Name">
+  <section class="container py-12">
+    <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+      <div>
+        <h2 class="text-2xl font-bold">Live playground</h2>
+        <p class="mt-1 text-[var(--muted)]">Search official names, common names, aliases, alpha-2/3, numeric codes, dial prefixes, IANA TLDs, currencies, or capitals.</p>
+      </div>
+      <p class="font-mono text-xs text-[var(--muted)]">searchCountries(query)</p>
+    </div>
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website">
-        <meta property="og:url" content={url}>
-        <meta property="og:title" content={title}>
-        <meta property="og:description" content={description}>
+    <div class="mb-4 flex flex-wrap gap-2" id="chips">
+      {samples.map((sample) => (
+        <button
+          type="button"
+          data-q={sample}
+          class="rounded-full border border-[var(--line)] bg-white px-3 py-1 text-sm hover:border-[var(--ink)]"
+        >
+          {sample}
+        </button>
+      ))}
+    </div>
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:url" content={url}>
-        <meta property="twitter:title" content={title}>
-        <meta property="twitter:description" content={description}>
+    <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+      <div class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-4 shadow-sm lg:p-6">
+        <label for="q" class="mb-2 block text-sm font-medium">Search</label>
+        <input
+          id="q"
+          type="search"
+          value="united"
+          autocomplete="off"
+          placeholder="UK, Vietnam, +1, 840, .uk, TRY, Paris…"
+          class="w-full rounded-xl border border-[var(--line)] bg-white px-4 py-3 outline-none ring-[var(--accent)] focus:ring-2"
+        />
+        <ul id="results" class="mt-4 divide-y divide-[var(--line)]"></ul>
+      </div>
+      <aside id="detail" class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm"></aside>
+    </div>
+  </section>
 
-        <!-- Favicon -->
-        <link rel="canonical" href={url}>
+  <section class="container pb-16">
+    <h2 class="text-2xl font-bold">What you get</h2>
+    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {[
+        ['ISO 3166-1', 'All 249 assigned alpha-2, alpha-3, and numeric codes, with official English short names.'],
+        ['ITU-T E.164', 'Country calling codes only. NANP territories are +1, with area codes stored separately.'],
+        ['UN M49 regions', 'Filter Europe, Caribbean, Polynesia, and the rest of the official UN geoscheme.'],
+        ['IANA + ISO 4217', 'ccTLDs (GB is .uk) and alphabetic currency codes, plus conventional capitals.'],
+        ['SVG flags', 'Wikipedia/Wikimedia SVGs via flag-icons (MIT), as a CDN URL or inline markup.'],
+        ['Type-safe', 'CountryCode is a union of every assigned alpha-2 code. Zero runtime dependencies.'],
+      ].map(([title, body]) => (
+        <article class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
+          <h3 class="font-bold">{title}</h3>
+          <p class="mt-2 text-sm text-[var(--muted)]">{body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>
 
-        <!-- JSON-LD -->
-        <script type="application/ld+json">
-            {
-                "@context": "https://schema.org",
-                "@type": "SoftwareSourceCode",
-                "name": "country-kit",
-                "description": "A lightweight TypeScript library providing ISO country data and utilities for working with country codes, names, calling codes and flags",
-                "programmingLanguage": "TypeScript",
-                "url": "https://www.npmjs.com/package/country-kit",
-                "author": {
-                    "@type": "Person",
-                    "name": "Vipin Mishra"
-                },
-                "offers": {
-                    "@type": "Offer",
-                    "price": "0",
-                    "priceCurrency": "USD"
-                }
-            }
-        </script>
-    </head>
-    <body class="min-h-dvh bg-stone-50 text-stone-900 font-sans">
-        <nav class="py-4 bg-stone-100 border-b border-stone-200 mb-8">
-            <div class="container">
-                <h1 class="text-2xl font-bold">country-kit</h1>
-            </div>
-        </nav>
+<script>
+  import {
+    getFlagSvgUrl,
+    searchCountries,
+    type Country,
+  } from 'country-kit';
 
-        <main class="container prose prose-stone prose-base lg:prose-lg mx-auto">
-            <section>
-                <h2 id="introduction">Introduction</h2>
-                <p>
-                    country-kit is a zero-dependency TypeScript library of official ISO 3166-1 country data: assigned codes and English short names, UN M49 regions, ITU-T E.164 calling codes, and Unicode flag emojis.
-                </p>
+  const input = document.querySelector<HTMLInputElement>('#q');
+  const list = document.querySelector<HTMLUListElement>('#results');
+  const detail = document.querySelector<HTMLElement>('#detail');
+  const chips = document.querySelector('#chips');
 
-                <div class="flex gap-2 flex-wrap">
-                    <a href="https://www.npmjs.com/package/country-kit">
-                        <img src="https://img.shields.io/npm/v/country-kit.svg" alt="npm version" />
-                    </a>
-                    <a href="https://bundlephobia.com/package/country-kit">
-                        <img src="https://img.shields.io/bundlephobia/minzip/country-kit" alt="bundle size" />
-                    </a>
-                    <a href="https://github.com/thevipinmishra/country-kit/blob/main/LICENSE">
-                        <img src="https://img.shields.io/npm/l/country-kit.svg" alt="license" />
-                    </a>
-                    <a href="https://www.typescriptlang.org/">
-                        <img src="https://img.shields.io/badge/TypeScript-Ready-blue.svg" alt="TypeScript" />
-                    </a>
-                </div>
+  function renderDetail(country: Country) {
+    if (!detail) return;
+    const url = getFlagSvgUrl(country.code) ?? '';
+    detail.innerHTML = `
+      <div class="flag-frame aspect-[4/3] w-full">
+        <img src="${url}" alt="Flag of ${country.commonName}" />
+      </div>
+      <p class="mt-4 font-mono text-xs text-[var(--muted)]">${country.code} · ${country.alpha3} · ${country.numeric}</p>
+      <h3 class="mt-1 text-xl font-bold">${country.commonName}</h3>
+      <p class="text-sm text-[var(--muted)]">${country.name}</p>
+      <dl class="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
+        <dt class="text-[var(--muted)]">Calling</dt><dd class="font-mono">${country.callingCode}</dd>
+        <dt class="text-[var(--muted)]">Dial prefix</dt><dd class="font-mono">${country.dialCode}</dd>
+        <dt class="text-[var(--muted)]">TLD</dt><dd class="font-mono">${country.tld ?? '—'}</dd>
+        <dt class="text-[var(--muted)]">Capital</dt><dd>${country.capital ?? '—'}</dd>
+        <dt class="text-[var(--muted)]">Currency</dt><dd class="font-mono">${country.currencies.join(', ') || '—'}</dd>
+        <dt class="text-[var(--muted)]">Region</dt><dd>${country.region ?? '—'}</dd>
+        <dt class="text-[var(--muted)]">Independent</dt><dd>${country.independent ? 'yes' : 'territory'}</dd>
+        <dt class="text-[var(--muted)]">Subregion</dt><dd>${country.subregion ?? '—'}</dd>
+      </dl>
+    `;
+  }
 
-                <div>
-                    <h3 id="features">Features</h3>
-                    <ul>
-                        <li>All 249 ISO 3166-1 assigned codes (alpha-2, alpha-3, numeric)</li>
-                        <li>Official ISO English short names plus common names and search aliases</li>
-                        <li>ITU-T E.164 country calling codes (NANP area codes stored separately)</li>
-                        <li>UN M49 regions and sub-regions</li>
-                        <li>Unicode flag emojis from regional indicator symbols</li>
-                        <li>Zero dependencies, TypeScript-first API</li>
-                    </ul>
-                </div>
-            </section>
+  function render(query: string) {
+    if (!list) return;
+    const matches = searchCountries(query, { limit: 8 });
+    if (!matches.length) {
+      list.innerHTML = '<li class="px-1 py-6 text-sm text-[var(--muted)]">No matches. Try an ISO name, alias, code, TLD, or currency.</li>';
+      if (detail) detail.innerHTML = '<p class="text-sm text-[var(--muted)]">No matches.</p>';
+      return;
+    }
+    list.innerHTML = matches
+      .map((country, index) => {
+        const url = getFlagSvgUrl(country.code) ?? '';
+        return `<li>
+          <button type="button" data-index="${index}" class="flex w-full items-center gap-3 px-1 py-3 text-left hover:bg-stone-50">
+            <span class="flag-frame h-6 w-8 shrink-0"><img src="${url}" alt="" /></span>
+            <span class="min-w-0 flex-1">
+              <span class="block truncate font-medium">${country.commonName}</span>
+              <span class="block font-mono text-xs text-[var(--muted)]">${country.code} · ${country.dialCode}</span>
+            </span>
+            <span>${country.flag}</span>
+          </button>
+        </li>`;
+      })
+      .join('');
 
-            <section>
-                <h2 id="installation">Installation</h2>
-                <Code code={`npm install country-kit`} lang="bash" theme="vesper" />
-            </section>
+    list.querySelectorAll<HTMLButtonElement>('button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const country = matches[Number(button.dataset.index)];
+        if (country) renderDetail(country);
+      });
+    });
 
-            <section>
-                <h2 id="usage">Usage</h2>
+    renderDetail(matches[0]);
+  }
 
-                <div>
-                    <h3 id="basic-usage">Basic Usage</h3>
-                    <Code  code={`import { getCountry, searchCountries } from 'country-kit';
+  chips?.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement | null;
+    const button = target?.closest('button[data-q]');
+    const value = button?.getAttribute('data-q');
+    if (!value || !input) return;
+    input.value = value;
+    input.focus();
+    render(value);
+  });
 
-const usa = getCountry('US');
-// => {
-//   code: 'US',
-//   name: 'United States of America',
-//   commonName: 'United States',
-//   alpha3: 'USA',
-//   numeric: '840',
-//   callingCode: '+1',
-//   flag: '🇺🇸'
-// }
-
-searchCountries('uk');      // United Kingdom
-searchCountries('Vietnam'); // Viet Nam`} lang="typescript" theme="vesper" />
-                </div>
-
-                <div>
-                    <h3 id="available-functions">Available Functions</h3>
-                    <ul>
-                        <li>
-                            <h4 id="get-country-by-code">getCountryByCode(code: CountryCode)</h4>
-                            <p>Returns complete country information for a given ISO 3166-1 alpha-2 code.</p>
-                            <Code code={`const country = getCountryByCode('GB');
-// => {
-//   code: 'GB',
-//   name: 'United Kingdom of Great Britain and Northern Ireland',
-//   commonName: 'United Kingdom',
-//   alpha3: 'GBR',
-//   numeric: '826',
-//   callingCode: '+44',
-//   flag: '🇬🇧'
-// }`} lang="typescript" theme="vesper" />
-                        </li>
-
-                        <li>
-                            <h4 id="get-country-name">getCountryName(code: CountryCode)</h4>
-                            <p>Returns the country name for a given country code.</p>
-                            <Code code={`getCountryName('US');        // => 'United States of America'
-getCountryCommonName('US'); // => 'United States'`} lang="typescript" theme="vesper" />
-                        </li>
-
-                        <li>
-                            <h4 id="get-alpha3-code">getAlpha3Code(code: CountryCode)</h4>
-                            <p>Returns the ISO 3166-1 alpha-3 code for a country.</p>
-                            <Code code={`const alpha3 = getAlpha3Code('US'); // => 'USA'`} lang="typescript" theme="vesper" />
-                        </li>
-
-                        <li>
-                            <h4 id="get-calling-code">getCallingCode(code: CountryCode)</h4>
-                            <p>Gets the international calling code for a country.</p>
-                            <Code code={`getCallingCode('AI'); // => '+1'     ITU-T E.164
-getDialCode('AI');    // => '+1264'  +1 plus Anguilla NPA`} lang="typescript" theme="vesper" />
-                        </li>
-
-                        <li>
-                            <h4 id="get-country-flag">getCountryFlag(code: CountryCode)</h4>
-                            <p>Returns the flag emoji for a country.</p>
-                            <Code code={`const flag = getCountryFlag('JP'); // => '🇯🇵'`} lang="typescript" theme="vesper" />
-                        </li>
-
-                        <li>
-                            <h4 id="search-countries">searchCountries(query?: string, options?: CountrySearchOptions)</h4>
-                            <p>Search countries by name or code with configurable options.</p>
-                            <Code code={`// Basic search
-const results = searchCountries('united');
-
-// With options
-const exactMatch = searchCountries('united', { 
-  exact: true,
-  limit: 2,
-  includeCodes: true 
-});`} lang="typescript" theme="vesper" />
-                        </li>
-
-                        <li>
-                            <h4 id="get-all-countries">getAllCountries()</h4>
-                            <p>Returns an array of all available countries with complete information.</p>
-                            <Code code={`const allCountries = getAllCountries();
-// => [
-//   { code: 'AD', name: 'Andorra', ... },
-//   { code: 'AE', name: 'United Arab Emirates', ... },
-//   ...
-// ]`} lang="typescript" theme="vesper" />
-                        </li>
-
-                        <li>
-                            <h4 id="is-valid-country-code">isValidCountryCode(code: string)</h4>
-                            <p>Validates if a string is a valid ISO 3166-1 alpha-2 country code.</p>
-                            <Code code={`isValidCountryCode('US'); // => true
-isValidCountryCode('XX'); // => false
-isValidCountryCode(''); // => false`} lang="typescript" theme="vesper" />
-                        </li>
-
-                        <li>
-                            <h4 id="is-valid-calling-code">isValidCallingCode(callingCode: string)</h4>
-                            <p>Validates if a string matches the format of an international calling code.</p>
-                            <Code code={`isValidCallingCode('+1'); // => true
-isValidCallingCode('44'); // => false
-isValidCallingCode('+12345'); // => false`} lang="typescript" theme="vesper" />
-                        </li>
-
-                        <li>
-                            <h4 id="get-countries-by-calling-code">getCountriesByCallingCode(callingCode: string)</h4>
-                            <p>Returns all countries that share a specific calling code.</p>
-                            <Code code={`getCountriesByCallingCode('+1');    // US, CA, AI, and other NANP members
-getCountriesByCallingCode('+1264'); // Anguilla (NANP NPA lookup)`} lang="typescript" theme="vesper" />
-                        </li>
-                        <li>
-                            <h4 id="get-countries-by-region">getCountriesByRegion(region?: string)</h4>
-                            <p>Groups countries by UN M49 region, or returns one region.</p>
-                            <Code code={`getCountriesByRegion();          // { Europe: [...], Asia: [...], ... }
-getCountriesByRegion('Europe');`} lang="typescript" theme="vesper" />
-                        </li>
-                    </ul>
-                </div>
-            </section>
-
-            <section>
-                <h2 id="types">Types</h2>
-                <Code code={`type CountryCode = 'AD' | 'AE' | /* 249 assigned alpha-2 codes */;
-
-interface Country {
-    code: CountryCode;
-    name: string;            // ISO 3166-1 English short name
-    commonName: string;
-    alpha3: string;
-    numeric: string;
-    callingCode: string;     // ITU-T E.164
-    callingCodes: readonly string[];
-    dialCode: string;
-    region: string | null;
-    subregion: string | null;
-    flag: string;
-    nanpAreaCodes?: readonly string[];
-}`} lang="typescript" theme="vesper" />
-            </section>
-
-            <footer>
-                <p>
-                    View the <a href="https://github.com/thevipinmishra/country-kit">source code on GitHub</a>
-                </p>
-            </footer>
-        </main>
-    </body>
-</html>
-
-
+  input?.addEventListener('input', () => render(input.value));
+  render(input?.value ?? 'united');
+</script>

@@ -35,9 +35,17 @@ export interface Country {
   region: string | null;
   /** UN M49 sub-region, or null */
   subregion: string | null;
+  /** ISO 3166 independent territory (true for sovereign states) */
+  independent: boolean;
+  /** IANA country-code TLD, including the leading dot (`".uk"` for GB) */
+  tld: string | null;
+  /** Common English capital city name, when one exists */
+  capital: string | null;
+  /** ISO 4217 alphabetic currency codes used in the territory */
+  currencies: readonly string[];
   /** Unicode flag emoji derived from the alpha-2 code */
   flag: string;
-  /** Optional NANP area codes when the E.164 country code is +1 */
+  /** Optional NANP area codes when the E.164 country code is `+1` */
   nanpAreaCodes?: readonly string[];
 }
 
@@ -52,6 +60,10 @@ export interface CountryData {
   dialCode: string;
   region: string | null;
   subregion: string | null;
+  independent: boolean;
+  tld: string | null;
+  capital: string | null;
+  currencies: readonly string[];
   flag: string;
   aliases: readonly string[];
   nanpAreaCodes?: readonly string[];
@@ -67,6 +79,10 @@ export interface CountryRecord {
   callingCodes: string[];
   region: string | null;
   subregion: string | null;
+  independent: boolean;
+  tld: string | null;
+  capital: string | null;
+  currencies: string[];
   aliases: string[];
   nanpAreaCodes?: string[];
 }
@@ -78,4 +94,19 @@ export interface CountrySearchOptions {
   exact?: boolean;
   /** Whether to search by country codes (alpha-2, alpha-3, numeric) as well (default: true) */
   includeCodes?: boolean;
+}
+
+export interface CountryListOptions {
+  region?: string;
+  subregion?: string;
+  independent?: boolean;
+  sortBy?: 'name' | 'commonName' | 'code' | 'dialCode';
+}
+
+export interface CountrySelectOption {
+  value: CountryCode;
+  label: string;
+  dialCode: string;
+  flag: string;
+  flagSvgUrl: string;
 }

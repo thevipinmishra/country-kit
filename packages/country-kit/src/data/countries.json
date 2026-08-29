@@ -9,6 +9,10 @@
     "callingCodes": ["+376"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".ad",
+    "capital": "Andorra la Vella",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -21,6 +25,10 @@
     "callingCodes": ["+971"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".ae",
+    "capital": "Abu Dhabi",
+    "currencies": ["AED"],
     "aliases": ["uae", "emirates"]
   },
   {
@@ -33,6 +41,10 @@
     "callingCodes": ["+93"],
     "region": "Asia",
     "subregion": "Southern Asia",
+    "independent": true,
+    "tld": ".af",
+    "capital": "Kabul",
+    "currencies": ["AFN"],
     "aliases": []
   },
   {
@@ -45,6 +57,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".ag",
+    "capital": "St. John's",
+    "currencies": ["XCD"],
     "aliases": [],
     "nanpAreaCodes": ["268"]
   },
@@ -58,6 +74,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".ai",
+    "capital": "The Valley",
+    "currencies": ["XCD"],
     "aliases": [],
     "nanpAreaCodes": ["264"]
   },
@@ -71,6 +91,10 @@
     "callingCodes": ["+355"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".al",
+    "capital": "Tirana",
+    "currencies": ["ALL"],
     "aliases": []
   },
   {
@@ -83,6 +107,10 @@
     "callingCodes": ["+374"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".am",
+    "capital": "Yerevan",
+    "currencies": ["AMD"],
     "aliases": []
   },
   {
@@ -95,6 +123,10 @@
     "callingCodes": ["+244"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".ao",
+    "capital": "Luanda",
+    "currencies": ["AOA"],
     "aliases": []
   },
   {
@@ -107,6 +139,10 @@
     "callingCodes": ["+672"],
     "region": null,
     "subregion": null,
+    "independent": false,
+    "tld": ".aq",
+    "capital": null,
+    "currencies": [],
     "aliases": []
   },
   {
@@ -119,6 +155,10 @@
     "callingCodes": ["+54"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".ar",
+    "capital": "Buenos Aires",
+    "currencies": ["ARS"],
     "aliases": []
   },
   {
@@ -131,6 +171,10 @@
     "callingCodes": ["+1"],
     "region": "Oceania",
     "subregion": "Polynesia",
+    "independent": false,
+    "tld": ".as",
+    "capital": "Pago Pago",
+    "currencies": ["USD"],
     "aliases": [],
     "nanpAreaCodes": ["684"]
   },
@@ -144,6 +188,10 @@
     "callingCodes": ["+43"],
     "region": "Europe",
     "subregion": "Western Europe",
+    "independent": true,
+    "tld": ".at",
+    "capital": "Vienna",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -156,6 +204,10 @@
     "callingCodes": ["+61"],
     "region": "Oceania",
     "subregion": "Australia and New Zealand",
+    "independent": true,
+    "tld": ".au",
+    "capital": "Canberra",
+    "currencies": ["AUD"],
     "aliases": []
   },
   {
@@ -168,6 +220,10 @@
     "callingCodes": ["+297"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".aw",
+    "capital": "Oranjestad",
+    "currencies": ["AWG"],
     "aliases": []
   },
   {
@@ -180,6 +236,10 @@
     "callingCodes": ["+358"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": false,
+    "tld": ".ax",
+    "capital": "Mariehamn",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -192,6 +252,10 @@
     "callingCodes": ["+994"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".az",
+    "capital": "Baku",
+    "currencies": ["AZN"],
     "aliases": []
   },
   {
@@ -204,6 +268,10 @@
     "callingCodes": ["+387"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".ba",
+    "capital": "Sarajevo",
+    "currencies": ["BAM"],
     "aliases": []
   },
   {
@@ -216,6 +284,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".bb",
+    "capital": "Bridgetown",
+    "currencies": ["BBD"],
     "aliases": [],
     "nanpAreaCodes": ["246"]
   },
@@ -229,6 +301,10 @@
     "callingCodes": ["+880"],
     "region": "Asia",
     "subregion": "Southern Asia",
+    "independent": true,
+    "tld": ".bd",
+    "capital": "Dhaka",
+    "currencies": ["BDT"],
     "aliases": []
   },
   {
@@ -241,6 +317,10 @@
     "callingCodes": ["+32"],
     "region": "Europe",
     "subregion": "Western Europe",
+    "independent": true,
+    "tld": ".be",
+    "capital": "Brussels",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -253,6 +333,10 @@
     "callingCodes": ["+226"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".bf",
+    "capital": "Ouagadougou",
+    "currencies": ["XOF"],
     "aliases": []
   },
   {
@@ -265,6 +349,10 @@
     "callingCodes": ["+359"],
     "region": "Europe",
     "subregion": "Eastern Europe",
+    "independent": true,
+    "tld": ".bg",
+    "capital": "Sofia",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -277,6 +365,10 @@
     "callingCodes": ["+973"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".bh",
+    "capital": "Manama",
+    "currencies": ["BHD"],
     "aliases": []
   },
   {
@@ -289,6 +381,10 @@
     "callingCodes": ["+257"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".bi",
+    "capital": "Gitega",
+    "currencies": ["BIF"],
     "aliases": []
   },
   {
@@ -301,6 +397,10 @@
     "callingCodes": ["+229"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".bj",
+    "capital": "Porto-Novo",
+    "currencies": ["XOF"],
     "aliases": []
   },
   {
@@ -313,6 +413,10 @@
     "callingCodes": ["+590"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".bl",
+    "capital": "Gustavia",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -325,6 +429,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Northern America",
+    "independent": false,
+    "tld": ".bm",
+    "capital": "Hamilton",
+    "currencies": ["BMD"],
     "aliases": [],
     "nanpAreaCodes": ["441"]
   },
@@ -338,6 +446,10 @@
     "callingCodes": ["+673"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".bn",
+    "capital": "Bandar Seri Begawan",
+    "currencies": ["BND"],
     "aliases": ["brunei"]
   },
   {
@@ -350,6 +462,10 @@
     "callingCodes": ["+591"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".bo",
+    "capital": "Sucre",
+    "currencies": ["BOB"],
     "aliases": ["bolivia"]
   },
   {
@@ -362,6 +478,10 @@
     "callingCodes": ["+599"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".bq",
+    "capital": null,
+    "currencies": ["USD"],
     "aliases": []
   },
   {
@@ -374,6 +494,10 @@
     "callingCodes": ["+55"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".br",
+    "capital": "Brasilia",
+    "currencies": ["BRL"],
     "aliases": []
   },
   {
@@ -386,6 +510,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".bs",
+    "capital": "Nassau",
+    "currencies": ["BSD"],
     "aliases": [],
     "nanpAreaCodes": ["242"]
   },
@@ -399,6 +527,10 @@
     "callingCodes": ["+975"],
     "region": "Asia",
     "subregion": "Southern Asia",
+    "independent": true,
+    "tld": ".bt",
+    "capital": "Thimphu",
+    "currencies": ["INR", "BTN"],
     "aliases": []
   },
   {
@@ -411,6 +543,10 @@
     "callingCodes": ["+47"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".bv",
+    "capital": null,
+    "currencies": ["NOK"],
     "aliases": []
   },
   {
@@ -423,6 +559,10 @@
     "callingCodes": ["+267"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".bw",
+    "capital": "Gaborone",
+    "currencies": ["BWP"],
     "aliases": []
   },
   {
@@ -435,6 +575,10 @@
     "callingCodes": ["+375"],
     "region": "Europe",
     "subregion": "Eastern Europe",
+    "independent": true,
+    "tld": ".by",
+    "capital": "Minsk",
+    "currencies": ["BYN"],
     "aliases": []
   },
   {
@@ -447,6 +591,10 @@
     "callingCodes": ["+501"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".bz",
+    "capital": "Belmopan",
+    "currencies": ["BZD"],
     "aliases": []
   },
   {
@@ -459,6 +607,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Northern America",
+    "independent": true,
+    "tld": ".ca",
+    "capital": "Ottawa",
+    "currencies": ["CAD"],
     "aliases": []
   },
   {
@@ -471,6 +623,10 @@
     "callingCodes": ["+61"],
     "region": "Oceania",
     "subregion": "Australia and New Zealand",
+    "independent": false,
+    "tld": ".cc",
+    "capital": "West Island",
+    "currencies": ["AUD"],
     "aliases": []
   },
   {
@@ -483,6 +639,10 @@
     "callingCodes": ["+243"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".cd",
+    "capital": "Kinshasa",
+    "currencies": ["CDF"],
     "aliases": ["drc", "congo-kinshasa", "democratic republic of congo"]
   },
   {
@@ -495,6 +655,10 @@
     "callingCodes": ["+236"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".cf",
+    "capital": "Bangui",
+    "currencies": ["XAF"],
     "aliases": []
   },
   {
@@ -507,6 +671,10 @@
     "callingCodes": ["+242"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".cg",
+    "capital": "Brazzaville",
+    "currencies": ["XAF"],
     "aliases": ["congo-brazzaville"]
   },
   {
@@ -519,6 +687,10 @@
     "callingCodes": ["+41"],
     "region": "Europe",
     "subregion": "Western Europe",
+    "independent": true,
+    "tld": ".ch",
+    "capital": "Bern",
+    "currencies": ["CHF"],
     "aliases": []
   },
   {
@@ -531,6 +703,10 @@
     "callingCodes": ["+225"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".ci",
+    "capital": "Yamoussoukro",
+    "currencies": ["XOF"],
     "aliases": ["cote d'ivoire", "ivory coast"]
   },
   {
@@ -543,6 +719,10 @@
     "callingCodes": ["+682"],
     "region": "Oceania",
     "subregion": "Polynesia",
+    "independent": false,
+    "tld": ".ck",
+    "capital": "Avarua",
+    "currencies": ["NZD"],
     "aliases": []
   },
   {
@@ -555,6 +735,10 @@
     "callingCodes": ["+56"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".cl",
+    "capital": "Santiago",
+    "currencies": ["CLP"],
     "aliases": []
   },
   {
@@ -567,6 +751,10 @@
     "callingCodes": ["+237"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".cm",
+    "capital": "Yaounde",
+    "currencies": ["XAF"],
     "aliases": []
   },
   {
@@ -579,6 +767,10 @@
     "callingCodes": ["+86"],
     "region": "Asia",
     "subregion": "Eastern Asia",
+    "independent": true,
+    "tld": ".cn",
+    "capital": "Beijing",
+    "currencies": ["CNY"],
     "aliases": []
   },
   {
@@ -591,6 +783,10 @@
     "callingCodes": ["+57"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".co",
+    "capital": "Bogota",
+    "currencies": ["COP"],
     "aliases": []
   },
   {
@@ -603,6 +799,10 @@
     "callingCodes": ["+506"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".cr",
+    "capital": "San Jose",
+    "currencies": ["CRC"],
     "aliases": []
   },
   {
@@ -615,6 +815,10 @@
     "callingCodes": ["+53"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".cu",
+    "capital": "Havana",
+    "currencies": ["CUP"],
     "aliases": []
   },
   {
@@ -627,6 +831,10 @@
     "callingCodes": ["+238"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".cv",
+    "capital": "Praia",
+    "currencies": ["CVE"],
     "aliases": ["cape verde"]
   },
   {
@@ -639,6 +847,10 @@
     "callingCodes": ["+599"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".cw",
+    "capital": "Willemstad",
+    "currencies": ["XCG"],
     "aliases": []
   },
   {
@@ -651,6 +863,10 @@
     "callingCodes": ["+61"],
     "region": "Oceania",
     "subregion": "Australia and New Zealand",
+    "independent": false,
+    "tld": ".cx",
+    "capital": "Flying Fish Cove",
+    "currencies": ["AUD"],
     "aliases": []
   },
   {
@@ -663,6 +879,10 @@
     "callingCodes": ["+357"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".cy",
+    "capital": "Nicosia",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -675,6 +895,10 @@
     "callingCodes": ["+420"],
     "region": "Europe",
     "subregion": "Eastern Europe",
+    "independent": true,
+    "tld": ".cz",
+    "capital": "Prague",
+    "currencies": ["CZK"],
     "aliases": ["czech republic"]
   },
   {
@@ -687,6 +911,10 @@
     "callingCodes": ["+49"],
     "region": "Europe",
     "subregion": "Western Europe",
+    "independent": true,
+    "tld": ".de",
+    "capital": "Berlin",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -699,6 +927,10 @@
     "callingCodes": ["+253"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".dj",
+    "capital": "Djibouti",
+    "currencies": ["DJF"],
     "aliases": []
   },
   {
@@ -711,6 +943,10 @@
     "callingCodes": ["+45"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": true,
+    "tld": ".dk",
+    "capital": "Copenhagen",
+    "currencies": ["DKK"],
     "aliases": []
   },
   {
@@ -723,6 +959,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".dm",
+    "capital": "Roseau",
+    "currencies": ["XCD"],
     "aliases": [],
     "nanpAreaCodes": ["767"]
   },
@@ -736,6 +976,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".do",
+    "capital": "Santo Domingo",
+    "currencies": ["DOP"],
     "aliases": [],
     "nanpAreaCodes": ["809", "829", "849"]
   },
@@ -749,6 +993,10 @@
     "callingCodes": ["+213"],
     "region": "Africa",
     "subregion": "Northern Africa",
+    "independent": true,
+    "tld": ".dz",
+    "capital": "Algiers",
+    "currencies": ["DZD"],
     "aliases": []
   },
   {
@@ -761,6 +1009,10 @@
     "callingCodes": ["+593"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".ec",
+    "capital": "Quito",
+    "currencies": ["USD"],
     "aliases": []
   },
   {
@@ -773,6 +1025,10 @@
     "callingCodes": ["+372"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": true,
+    "tld": ".ee",
+    "capital": "Tallinn",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -785,6 +1041,10 @@
     "callingCodes": ["+20"],
     "region": "Africa",
     "subregion": "Northern Africa",
+    "independent": true,
+    "tld": ".eg",
+    "capital": "Cairo",
+    "currencies": ["EGP"],
     "aliases": []
   },
   {
@@ -797,6 +1057,10 @@
     "callingCodes": ["+212"],
     "region": "Africa",
     "subregion": "Northern Africa",
+    "independent": false,
+    "tld": ".eh",
+    "capital": "El-Aaiun",
+    "currencies": ["MAD"],
     "aliases": []
   },
   {
@@ -809,6 +1073,10 @@
     "callingCodes": ["+291"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".er",
+    "capital": "Asmara",
+    "currencies": ["ERN"],
     "aliases": []
   },
   {
@@ -821,6 +1089,10 @@
     "callingCodes": ["+34"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".es",
+    "capital": "Madrid",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -833,6 +1105,10 @@
     "callingCodes": ["+251"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".et",
+    "capital": "Addis Ababa",
+    "currencies": ["ETB"],
     "aliases": []
   },
   {
@@ -845,6 +1121,10 @@
     "callingCodes": ["+358"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": true,
+    "tld": ".fi",
+    "capital": "Helsinki",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -857,6 +1137,10 @@
     "callingCodes": ["+679"],
     "region": "Oceania",
     "subregion": "Melanesia",
+    "independent": true,
+    "tld": ".fj",
+    "capital": "Suva",
+    "currencies": ["FJD"],
     "aliases": []
   },
   {
@@ -869,6 +1153,10 @@
     "callingCodes": ["+500"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".fk",
+    "capital": "Stanley",
+    "currencies": ["FKP"],
     "aliases": ["malvinas"]
   },
   {
@@ -881,6 +1169,10 @@
     "callingCodes": ["+691"],
     "region": "Oceania",
     "subregion": "Micronesia",
+    "independent": true,
+    "tld": ".fm",
+    "capital": "Palikir",
+    "currencies": ["USD"],
     "aliases": ["micronesia"]
   },
   {
@@ -893,6 +1185,10 @@
     "callingCodes": ["+298"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": false,
+    "tld": ".fo",
+    "capital": "Torshavn",
+    "currencies": ["DKK"],
     "aliases": []
   },
   {
@@ -905,6 +1201,10 @@
     "callingCodes": ["+33"],
     "region": "Europe",
     "subregion": "Western Europe",
+    "independent": true,
+    "tld": ".fr",
+    "capital": "Paris",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -917,6 +1217,10 @@
     "callingCodes": ["+241"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".ga",
+    "capital": "Libreville",
+    "currencies": ["XAF"],
     "aliases": []
   },
   {
@@ -929,6 +1233,10 @@
     "callingCodes": ["+44"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": true,
+    "tld": ".uk",
+    "capital": "London",
+    "currencies": ["GBP"],
     "aliases": [
       "uk",
       "great britain",
@@ -948,6 +1256,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".gd",
+    "capital": "St. George's",
+    "currencies": ["XCD"],
     "aliases": [],
     "nanpAreaCodes": ["473"]
   },
@@ -961,6 +1273,10 @@
     "callingCodes": ["+995"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".ge",
+    "capital": "Tbilisi",
+    "currencies": ["GEL"],
     "aliases": []
   },
   {
@@ -973,6 +1289,10 @@
     "callingCodes": ["+594"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".gf",
+    "capital": "Cayenne",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -985,6 +1305,10 @@
     "callingCodes": ["+44"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": false,
+    "tld": ".gg",
+    "capital": "St Peter Port",
+    "currencies": ["GBP"],
     "aliases": []
   },
   {
@@ -997,6 +1321,10 @@
     "callingCodes": ["+233"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".gh",
+    "capital": "Accra",
+    "currencies": ["GHS"],
     "aliases": []
   },
   {
@@ -1009,6 +1337,10 @@
     "callingCodes": ["+350"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": false,
+    "tld": ".gi",
+    "capital": "Gibraltar",
+    "currencies": ["GIP"],
     "aliases": []
   },
   {
@@ -1021,6 +1353,10 @@
     "callingCodes": ["+299"],
     "region": "Americas",
     "subregion": "Northern America",
+    "independent": false,
+    "tld": ".gl",
+    "capital": "Nuuk",
+    "currencies": ["DKK"],
     "aliases": []
   },
   {
@@ -1033,6 +1369,10 @@
     "callingCodes": ["+220"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".gm",
+    "capital": "Banjul",
+    "currencies": ["GMD"],
     "aliases": []
   },
   {
@@ -1045,6 +1385,10 @@
     "callingCodes": ["+224"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".gn",
+    "capital": "Conakry",
+    "currencies": ["GNF"],
     "aliases": []
   },
   {
@@ -1057,6 +1401,10 @@
     "callingCodes": ["+590"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".gp",
+    "capital": "Basse-Terre",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1069,6 +1417,10 @@
     "callingCodes": ["+240"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".gq",
+    "capital": "Ciudad de la Paz",
+    "currencies": ["XAF"],
     "aliases": []
   },
   {
@@ -1081,6 +1433,10 @@
     "callingCodes": ["+30"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".gr",
+    "capital": "Athens",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1093,6 +1449,10 @@
     "callingCodes": ["+500"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".gs",
+    "capital": "Grytviken",
+    "currencies": ["GBP"],
     "aliases": []
   },
   {
@@ -1105,6 +1465,10 @@
     "callingCodes": ["+502"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".gt",
+    "capital": "Guatemala City",
+    "currencies": ["GTQ"],
     "aliases": []
   },
   {
@@ -1117,6 +1481,10 @@
     "callingCodes": ["+1"],
     "region": "Oceania",
     "subregion": "Micronesia",
+    "independent": false,
+    "tld": ".gu",
+    "capital": "Hagatna",
+    "currencies": ["USD"],
     "aliases": [],
     "nanpAreaCodes": ["671"]
   },
@@ -1130,6 +1498,10 @@
     "callingCodes": ["+245"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".gw",
+    "capital": "Bissau",
+    "currencies": ["XOF"],
     "aliases": []
   },
   {
@@ -1142,6 +1514,10 @@
     "callingCodes": ["+592"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".gy",
+    "capital": "Georgetown",
+    "currencies": ["GYD"],
     "aliases": []
   },
   {
@@ -1154,6 +1530,10 @@
     "callingCodes": ["+852"],
     "region": "Asia",
     "subregion": "Eastern Asia",
+    "independent": false,
+    "tld": ".hk",
+    "capital": "Hong Kong",
+    "currencies": ["HKD"],
     "aliases": []
   },
   {
@@ -1166,6 +1546,10 @@
     "callingCodes": ["+672"],
     "region": "Oceania",
     "subregion": "Australia and New Zealand",
+    "independent": false,
+    "tld": ".hm",
+    "capital": null,
+    "currencies": ["AUD"],
     "aliases": []
   },
   {
@@ -1178,6 +1562,10 @@
     "callingCodes": ["+504"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".hn",
+    "capital": "Tegucigalpa",
+    "currencies": ["HNL"],
     "aliases": []
   },
   {
@@ -1190,6 +1578,10 @@
     "callingCodes": ["+385"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".hr",
+    "capital": "Zagreb",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1202,6 +1594,10 @@
     "callingCodes": ["+509"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".ht",
+    "capital": "Port-au-Prince",
+    "currencies": ["HTG", "USD"],
     "aliases": []
   },
   {
@@ -1214,6 +1610,10 @@
     "callingCodes": ["+36"],
     "region": "Europe",
     "subregion": "Eastern Europe",
+    "independent": true,
+    "tld": ".hu",
+    "capital": "Budapest",
+    "currencies": ["HUF"],
     "aliases": []
   },
   {
@@ -1226,6 +1626,10 @@
     "callingCodes": ["+62"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".id",
+    "capital": "Jakarta",
+    "currencies": ["IDR"],
     "aliases": []
   },
   {
@@ -1238,6 +1642,10 @@
     "callingCodes": ["+353"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": true,
+    "tld": ".ie",
+    "capital": "Dublin",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1250,6 +1658,10 @@
     "callingCodes": ["+972"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".il",
+    "capital": "Jerusalem",
+    "currencies": ["ILS"],
     "aliases": []
   },
   {
@@ -1262,6 +1674,10 @@
     "callingCodes": ["+44"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": false,
+    "tld": ".im",
+    "capital": "Douglas",
+    "currencies": ["GBP"],
     "aliases": []
   },
   {
@@ -1274,6 +1690,10 @@
     "callingCodes": ["+91"],
     "region": "Asia",
     "subregion": "Southern Asia",
+    "independent": true,
+    "tld": ".in",
+    "capital": "New Delhi",
+    "currencies": ["INR"],
     "aliases": []
   },
   {
@@ -1286,6 +1706,10 @@
     "callingCodes": ["+246"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": false,
+    "tld": ".io",
+    "capital": "Diego Garcia",
+    "currencies": ["USD"],
     "aliases": []
   },
   {
@@ -1298,6 +1722,10 @@
     "callingCodes": ["+964"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".iq",
+    "capital": "Baghdad",
+    "currencies": ["IQD"],
     "aliases": []
   },
   {
@@ -1310,6 +1738,10 @@
     "callingCodes": ["+98"],
     "region": "Asia",
     "subregion": "Southern Asia",
+    "independent": true,
+    "tld": ".ir",
+    "capital": "Tehran",
+    "currencies": ["IRR"],
     "aliases": ["iran", "persia"]
   },
   {
@@ -1322,6 +1754,10 @@
     "callingCodes": ["+354"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": true,
+    "tld": ".is",
+    "capital": "Reykjavik",
+    "currencies": ["ISK"],
     "aliases": []
   },
   {
@@ -1334,6 +1770,10 @@
     "callingCodes": ["+39"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".it",
+    "capital": "Rome",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1346,6 +1786,10 @@
     "callingCodes": ["+44"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": false,
+    "tld": ".je",
+    "capital": "Saint Helier",
+    "currencies": ["GBP"],
     "aliases": []
   },
   {
@@ -1358,6 +1802,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".jm",
+    "capital": "Kingston",
+    "currencies": ["JMD"],
     "aliases": [],
     "nanpAreaCodes": ["876", "658"]
   },
@@ -1371,6 +1819,10 @@
     "callingCodes": ["+962"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".jo",
+    "capital": "Amman",
+    "currencies": ["JOD"],
     "aliases": []
   },
   {
@@ -1383,6 +1835,10 @@
     "callingCodes": ["+81"],
     "region": "Asia",
     "subregion": "Eastern Asia",
+    "independent": true,
+    "tld": ".jp",
+    "capital": "Tokyo",
+    "currencies": ["JPY"],
     "aliases": []
   },
   {
@@ -1395,6 +1851,10 @@
     "callingCodes": ["+254"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".ke",
+    "capital": "Nairobi",
+    "currencies": ["KES"],
     "aliases": []
   },
   {
@@ -1407,6 +1867,10 @@
     "callingCodes": ["+996"],
     "region": "Asia",
     "subregion": "Central Asia",
+    "independent": true,
+    "tld": ".kg",
+    "capital": "Bishkek",
+    "currencies": ["KGS"],
     "aliases": []
   },
   {
@@ -1419,6 +1883,10 @@
     "callingCodes": ["+855"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".kh",
+    "capital": "Phnom Penh",
+    "currencies": ["KHR"],
     "aliases": []
   },
   {
@@ -1431,6 +1899,10 @@
     "callingCodes": ["+686"],
     "region": "Oceania",
     "subregion": "Micronesia",
+    "independent": true,
+    "tld": ".ki",
+    "capital": "Tarawa",
+    "currencies": ["AUD"],
     "aliases": []
   },
   {
@@ -1443,6 +1915,10 @@
     "callingCodes": ["+269"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".km",
+    "capital": "Moroni",
+    "currencies": ["KMF"],
     "aliases": []
   },
   {
@@ -1455,6 +1931,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".kn",
+    "capital": "Basseterre",
+    "currencies": ["XCD"],
     "aliases": [],
     "nanpAreaCodes": ["869"]
   },
@@ -1468,6 +1948,10 @@
     "callingCodes": ["+850"],
     "region": "Asia",
     "subregion": "Eastern Asia",
+    "independent": true,
+    "tld": ".kp",
+    "capital": "Pyongyang",
+    "currencies": ["KPW"],
     "aliases": ["north korea", "dprk"]
   },
   {
@@ -1480,6 +1964,10 @@
     "callingCodes": ["+82"],
     "region": "Asia",
     "subregion": "Eastern Asia",
+    "independent": true,
+    "tld": ".kr",
+    "capital": "Seoul",
+    "currencies": ["KRW"],
     "aliases": ["south korea", "korea"]
   },
   {
@@ -1492,6 +1980,10 @@
     "callingCodes": ["+965"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".kw",
+    "capital": "Kuwait City",
+    "currencies": ["KWD"],
     "aliases": []
   },
   {
@@ -1504,6 +1996,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".ky",
+    "capital": "George Town",
+    "currencies": ["KYD"],
     "aliases": [],
     "nanpAreaCodes": ["345"]
   },
@@ -1517,6 +2013,10 @@
     "callingCodes": ["+7"],
     "region": "Asia",
     "subregion": "Central Asia",
+    "independent": true,
+    "tld": ".kz",
+    "capital": "Astana",
+    "currencies": ["KZT"],
     "aliases": []
   },
   {
@@ -1529,6 +2029,10 @@
     "callingCodes": ["+856"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".la",
+    "capital": "Vientiane",
+    "currencies": ["LAK"],
     "aliases": ["laos"]
   },
   {
@@ -1541,6 +2045,10 @@
     "callingCodes": ["+961"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".lb",
+    "capital": "Beirut",
+    "currencies": ["LBP"],
     "aliases": []
   },
   {
@@ -1553,6 +2061,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".lc",
+    "capital": "Castries",
+    "currencies": ["XCD"],
     "aliases": [],
     "nanpAreaCodes": ["758"]
   },
@@ -1566,6 +2078,10 @@
     "callingCodes": ["+423"],
     "region": "Europe",
     "subregion": "Western Europe",
+    "independent": true,
+    "tld": ".li",
+    "capital": "Vaduz",
+    "currencies": ["CHF"],
     "aliases": []
   },
   {
@@ -1578,6 +2094,10 @@
     "callingCodes": ["+94"],
     "region": "Asia",
     "subregion": "Southern Asia",
+    "independent": true,
+    "tld": ".lk",
+    "capital": "Colombo",
+    "currencies": ["LKR"],
     "aliases": []
   },
   {
@@ -1590,6 +2110,10 @@
     "callingCodes": ["+231"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".lr",
+    "capital": "Monrovia",
+    "currencies": ["LRD"],
     "aliases": []
   },
   {
@@ -1602,6 +2126,10 @@
     "callingCodes": ["+266"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".ls",
+    "capital": "Maseru",
+    "currencies": ["LSL", "ZAR"],
     "aliases": []
   },
   {
@@ -1614,6 +2142,10 @@
     "callingCodes": ["+370"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": true,
+    "tld": ".lt",
+    "capital": "Vilnius",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1626,6 +2158,10 @@
     "callingCodes": ["+352"],
     "region": "Europe",
     "subregion": "Western Europe",
+    "independent": true,
+    "tld": ".lu",
+    "capital": "Luxembourg",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1638,6 +2174,10 @@
     "callingCodes": ["+371"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": true,
+    "tld": ".lv",
+    "capital": "Riga",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1650,6 +2190,10 @@
     "callingCodes": ["+218"],
     "region": "Africa",
     "subregion": "Northern Africa",
+    "independent": true,
+    "tld": ".ly",
+    "capital": "Tripoli",
+    "currencies": ["LYD"],
     "aliases": []
   },
   {
@@ -1662,6 +2206,10 @@
     "callingCodes": ["+212"],
     "region": "Africa",
     "subregion": "Northern Africa",
+    "independent": true,
+    "tld": ".ma",
+    "capital": "Rabat",
+    "currencies": ["MAD"],
     "aliases": []
   },
   {
@@ -1674,6 +2222,10 @@
     "callingCodes": ["+377"],
     "region": "Europe",
     "subregion": "Western Europe",
+    "independent": true,
+    "tld": ".mc",
+    "capital": "Monaco",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1686,6 +2238,10 @@
     "callingCodes": ["+373"],
     "region": "Europe",
     "subregion": "Eastern Europe",
+    "independent": true,
+    "tld": ".md",
+    "capital": "Chisinau",
+    "currencies": ["MDL"],
     "aliases": ["moldova"]
   },
   {
@@ -1698,6 +2254,10 @@
     "callingCodes": ["+382"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".me",
+    "capital": "Podgorica",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1710,6 +2270,10 @@
     "callingCodes": ["+590"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".mf",
+    "capital": "Marigot",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1722,6 +2286,10 @@
     "callingCodes": ["+261"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".mg",
+    "capital": "Antananarivo",
+    "currencies": ["MGA"],
     "aliases": []
   },
   {
@@ -1734,6 +2302,10 @@
     "callingCodes": ["+692"],
     "region": "Oceania",
     "subregion": "Micronesia",
+    "independent": true,
+    "tld": ".mh",
+    "capital": "Majuro",
+    "currencies": ["USD"],
     "aliases": []
   },
   {
@@ -1746,6 +2318,10 @@
     "callingCodes": ["+389"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".mk",
+    "capital": "Skopje",
+    "currencies": ["MKD"],
     "aliases": []
   },
   {
@@ -1758,6 +2334,10 @@
     "callingCodes": ["+223"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".ml",
+    "capital": "Bamako",
+    "currencies": ["XOF"],
     "aliases": []
   },
   {
@@ -1770,6 +2350,10 @@
     "callingCodes": ["+95"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".mm",
+    "capital": "Nay Pyi Taw",
+    "currencies": ["MMK"],
     "aliases": ["burma"]
   },
   {
@@ -1782,6 +2366,10 @@
     "callingCodes": ["+976"],
     "region": "Asia",
     "subregion": "Eastern Asia",
+    "independent": true,
+    "tld": ".mn",
+    "capital": "Ulaanbaatar",
+    "currencies": ["MNT"],
     "aliases": []
   },
   {
@@ -1794,6 +2382,10 @@
     "callingCodes": ["+853"],
     "region": "Asia",
     "subregion": "Eastern Asia",
+    "independent": false,
+    "tld": ".mo",
+    "capital": "Macao",
+    "currencies": ["MOP"],
     "aliases": []
   },
   {
@@ -1806,6 +2398,10 @@
     "callingCodes": ["+1"],
     "region": "Oceania",
     "subregion": "Micronesia",
+    "independent": false,
+    "tld": ".mp",
+    "capital": "Saipan",
+    "currencies": ["USD"],
     "aliases": [],
     "nanpAreaCodes": ["670"]
   },
@@ -1819,6 +2415,10 @@
     "callingCodes": ["+596"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".mq",
+    "capital": "Fort-de-France",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1831,6 +2431,10 @@
     "callingCodes": ["+222"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".mr",
+    "capital": "Nouakchott",
+    "currencies": ["MRU"],
     "aliases": []
   },
   {
@@ -1843,6 +2447,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".ms",
+    "capital": "Plymouth",
+    "currencies": ["XCD"],
     "aliases": [],
     "nanpAreaCodes": ["664"]
   },
@@ -1856,6 +2464,10 @@
     "callingCodes": ["+356"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".mt",
+    "capital": "Valletta",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -1868,6 +2480,10 @@
     "callingCodes": ["+230"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".mu",
+    "capital": "Port Louis",
+    "currencies": ["MUR"],
     "aliases": []
   },
   {
@@ -1880,6 +2496,10 @@
     "callingCodes": ["+960"],
     "region": "Asia",
     "subregion": "Southern Asia",
+    "independent": true,
+    "tld": ".mv",
+    "capital": "Male",
+    "currencies": ["MVR"],
     "aliases": []
   },
   {
@@ -1892,6 +2512,10 @@
     "callingCodes": ["+265"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".mw",
+    "capital": "Lilongwe",
+    "currencies": ["MWK"],
     "aliases": []
   },
   {
@@ -1904,6 +2528,10 @@
     "callingCodes": ["+52"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".mx",
+    "capital": "Mexico City",
+    "currencies": ["MXN"],
     "aliases": []
   },
   {
@@ -1916,6 +2544,10 @@
     "callingCodes": ["+60"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".my",
+    "capital": "Kuala Lumpur",
+    "currencies": ["MYR"],
     "aliases": []
   },
   {
@@ -1928,6 +2560,10 @@
     "callingCodes": ["+258"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".mz",
+    "capital": "Maputo",
+    "currencies": ["MZN"],
     "aliases": []
   },
   {
@@ -1940,6 +2576,10 @@
     "callingCodes": ["+264"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".na",
+    "capital": "Windhoek",
+    "currencies": ["NAD", "ZAR"],
     "aliases": []
   },
   {
@@ -1952,6 +2592,10 @@
     "callingCodes": ["+687"],
     "region": "Oceania",
     "subregion": "Melanesia",
+    "independent": false,
+    "tld": ".nc",
+    "capital": "Noumea",
+    "currencies": ["XPF"],
     "aliases": []
   },
   {
@@ -1964,6 +2608,10 @@
     "callingCodes": ["+227"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".ne",
+    "capital": "Niamey",
+    "currencies": ["XOF"],
     "aliases": []
   },
   {
@@ -1976,6 +2624,10 @@
     "callingCodes": ["+672"],
     "region": "Oceania",
     "subregion": "Australia and New Zealand",
+    "independent": false,
+    "tld": ".nf",
+    "capital": "Kingston",
+    "currencies": ["AUD"],
     "aliases": []
   },
   {
@@ -1988,6 +2640,10 @@
     "callingCodes": ["+234"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".ng",
+    "capital": "Abuja",
+    "currencies": ["NGN"],
     "aliases": []
   },
   {
@@ -2000,6 +2656,10 @@
     "callingCodes": ["+505"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".ni",
+    "capital": "Managua",
+    "currencies": ["NIO"],
     "aliases": []
   },
   {
@@ -2012,6 +2672,10 @@
     "callingCodes": ["+31"],
     "region": "Europe",
     "subregion": "Western Europe",
+    "independent": true,
+    "tld": ".nl",
+    "capital": "Amsterdam",
+    "currencies": ["EUR"],
     "aliases": ["holland"]
   },
   {
@@ -2024,6 +2688,10 @@
     "callingCodes": ["+47"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": true,
+    "tld": ".no",
+    "capital": "Oslo",
+    "currencies": ["NOK"],
     "aliases": []
   },
   {
@@ -2036,6 +2704,10 @@
     "callingCodes": ["+977"],
     "region": "Asia",
     "subregion": "Southern Asia",
+    "independent": true,
+    "tld": ".np",
+    "capital": "Kathmandu",
+    "currencies": ["NPR"],
     "aliases": []
   },
   {
@@ -2048,6 +2720,10 @@
     "callingCodes": ["+674"],
     "region": "Oceania",
     "subregion": "Micronesia",
+    "independent": true,
+    "tld": ".nr",
+    "capital": "Yaren",
+    "currencies": ["AUD"],
     "aliases": []
   },
   {
@@ -2060,6 +2736,10 @@
     "callingCodes": ["+683"],
     "region": "Oceania",
     "subregion": "Polynesia",
+    "independent": false,
+    "tld": ".nu",
+    "capital": "Alofi",
+    "currencies": ["NZD"],
     "aliases": []
   },
   {
@@ -2072,6 +2752,10 @@
     "callingCodes": ["+64"],
     "region": "Oceania",
     "subregion": "Australia and New Zealand",
+    "independent": true,
+    "tld": ".nz",
+    "capital": "Wellington",
+    "currencies": ["NZD"],
     "aliases": []
   },
   {
@@ -2084,6 +2768,10 @@
     "callingCodes": ["+968"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".om",
+    "capital": "Muscat",
+    "currencies": ["OMR"],
     "aliases": []
   },
   {
@@ -2096,6 +2784,10 @@
     "callingCodes": ["+507"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".pa",
+    "capital": "Panama City",
+    "currencies": ["PAB", "USD"],
     "aliases": []
   },
   {
@@ -2108,6 +2800,10 @@
     "callingCodes": ["+51"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".pe",
+    "capital": "Lima",
+    "currencies": ["PEN"],
     "aliases": []
   },
   {
@@ -2120,6 +2816,10 @@
     "callingCodes": ["+689"],
     "region": "Oceania",
     "subregion": "Polynesia",
+    "independent": false,
+    "tld": ".pf",
+    "capital": "Papeete",
+    "currencies": ["XPF"],
     "aliases": []
   },
   {
@@ -2132,6 +2832,10 @@
     "callingCodes": ["+675"],
     "region": "Oceania",
     "subregion": "Melanesia",
+    "independent": true,
+    "tld": ".pg",
+    "capital": "Port Moresby",
+    "currencies": ["PGK"],
     "aliases": []
   },
   {
@@ -2144,6 +2848,10 @@
     "callingCodes": ["+63"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".ph",
+    "capital": "Manila",
+    "currencies": ["PHP"],
     "aliases": []
   },
   {
@@ -2156,6 +2864,10 @@
     "callingCodes": ["+92"],
     "region": "Asia",
     "subregion": "Southern Asia",
+    "independent": true,
+    "tld": ".pk",
+    "capital": "Islamabad",
+    "currencies": ["PKR"],
     "aliases": []
   },
   {
@@ -2168,6 +2880,10 @@
     "callingCodes": ["+48"],
     "region": "Europe",
     "subregion": "Eastern Europe",
+    "independent": true,
+    "tld": ".pl",
+    "capital": "Warsaw",
+    "currencies": ["PLN"],
     "aliases": []
   },
   {
@@ -2180,6 +2896,10 @@
     "callingCodes": ["+508"],
     "region": "Americas",
     "subregion": "Northern America",
+    "independent": false,
+    "tld": ".pm",
+    "capital": "Saint-Pierre",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -2192,6 +2912,10 @@
     "callingCodes": ["+64"],
     "region": "Oceania",
     "subregion": "Polynesia",
+    "independent": false,
+    "tld": ".pn",
+    "capital": "Adamstown",
+    "currencies": ["NZD"],
     "aliases": []
   },
   {
@@ -2204,6 +2928,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".pr",
+    "capital": "San Juan",
+    "currencies": ["USD"],
     "aliases": [],
     "nanpAreaCodes": ["787", "939"]
   },
@@ -2217,6 +2945,10 @@
     "callingCodes": ["+970"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": false,
+    "tld": ".ps",
+    "capital": "East Jerusalem",
+    "currencies": [],
     "aliases": ["palestine"]
   },
   {
@@ -2229,6 +2961,10 @@
     "callingCodes": ["+351"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".pt",
+    "capital": "Lisbon",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -2241,6 +2977,10 @@
     "callingCodes": ["+680"],
     "region": "Oceania",
     "subregion": "Micronesia",
+    "independent": true,
+    "tld": ".pw",
+    "capital": "Melekeok",
+    "currencies": ["USD"],
     "aliases": []
   },
   {
@@ -2253,6 +2993,10 @@
     "callingCodes": ["+595"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".py",
+    "capital": "Asuncion",
+    "currencies": ["PYG"],
     "aliases": []
   },
   {
@@ -2265,6 +3009,10 @@
     "callingCodes": ["+974"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".qa",
+    "capital": "Doha",
+    "currencies": ["QAR"],
     "aliases": []
   },
   {
@@ -2277,6 +3025,10 @@
     "callingCodes": ["+262"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": false,
+    "tld": ".re",
+    "capital": "Saint-Denis",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -2289,6 +3041,10 @@
     "callingCodes": ["+40"],
     "region": "Europe",
     "subregion": "Eastern Europe",
+    "independent": true,
+    "tld": ".ro",
+    "capital": "Bucharest",
+    "currencies": ["RON"],
     "aliases": []
   },
   {
@@ -2301,6 +3057,10 @@
     "callingCodes": ["+381"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".rs",
+    "capital": "Belgrade",
+    "currencies": ["RSD"],
     "aliases": []
   },
   {
@@ -2313,6 +3073,10 @@
     "callingCodes": ["+7"],
     "region": "Europe",
     "subregion": "Eastern Europe",
+    "independent": true,
+    "tld": ".ru",
+    "capital": "Moscow",
+    "currencies": ["RUB"],
     "aliases": ["russia"]
   },
   {
@@ -2325,6 +3089,10 @@
     "callingCodes": ["+250"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".rw",
+    "capital": "Kigali",
+    "currencies": ["RWF"],
     "aliases": []
   },
   {
@@ -2337,6 +3105,10 @@
     "callingCodes": ["+966"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".sa",
+    "capital": "Riyadh",
+    "currencies": ["SAR"],
     "aliases": []
   },
   {
@@ -2349,6 +3121,10 @@
     "callingCodes": ["+677"],
     "region": "Oceania",
     "subregion": "Melanesia",
+    "independent": true,
+    "tld": ".sb",
+    "capital": "Honiara",
+    "currencies": ["SBD"],
     "aliases": []
   },
   {
@@ -2361,6 +3137,10 @@
     "callingCodes": ["+248"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".sc",
+    "capital": "Victoria",
+    "currencies": ["SCR"],
     "aliases": []
   },
   {
@@ -2373,6 +3153,10 @@
     "callingCodes": ["+249"],
     "region": "Africa",
     "subregion": "Northern Africa",
+    "independent": true,
+    "tld": ".sd",
+    "capital": "Khartoum",
+    "currencies": ["SDG"],
     "aliases": []
   },
   {
@@ -2385,6 +3169,10 @@
     "callingCodes": ["+46"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": true,
+    "tld": ".se",
+    "capital": "Stockholm",
+    "currencies": ["SEK"],
     "aliases": []
   },
   {
@@ -2397,6 +3185,10 @@
     "callingCodes": ["+65"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".sg",
+    "capital": "Singapore",
+    "currencies": ["SGD"],
     "aliases": []
   },
   {
@@ -2409,6 +3201,10 @@
     "callingCodes": ["+290", "+247"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": false,
+    "tld": ".sh",
+    "capital": "Jamestown",
+    "currencies": ["SHP"],
     "aliases": []
   },
   {
@@ -2421,6 +3217,10 @@
     "callingCodes": ["+386"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".si",
+    "capital": "Ljubljana",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -2433,6 +3233,10 @@
     "callingCodes": ["+47"],
     "region": "Europe",
     "subregion": "Northern Europe",
+    "independent": false,
+    "tld": ".sj",
+    "capital": "Longyearbyen",
+    "currencies": ["NOK"],
     "aliases": []
   },
   {
@@ -2445,6 +3249,10 @@
     "callingCodes": ["+421"],
     "region": "Europe",
     "subregion": "Eastern Europe",
+    "independent": true,
+    "tld": ".sk",
+    "capital": "Bratislava",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -2457,6 +3265,10 @@
     "callingCodes": ["+232"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".sl",
+    "capital": "Freetown",
+    "currencies": ["SLE"],
     "aliases": []
   },
   {
@@ -2469,6 +3281,10 @@
     "callingCodes": ["+378"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".sm",
+    "capital": "San Marino",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -2481,6 +3297,10 @@
     "callingCodes": ["+221"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".sn",
+    "capital": "Dakar",
+    "currencies": ["XOF"],
     "aliases": []
   },
   {
@@ -2493,6 +3313,10 @@
     "callingCodes": ["+252"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".so",
+    "capital": "Mogadishu",
+    "currencies": ["SOS"],
     "aliases": []
   },
   {
@@ -2505,6 +3329,10 @@
     "callingCodes": ["+597"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".sr",
+    "capital": "Paramaribo",
+    "currencies": ["SRD"],
     "aliases": []
   },
   {
@@ -2517,6 +3345,10 @@
     "callingCodes": ["+211"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".ss",
+    "capital": "Juba",
+    "currencies": ["SSP"],
     "aliases": []
   },
   {
@@ -2529,6 +3361,10 @@
     "callingCodes": ["+239"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".st",
+    "capital": "Sao Tome",
+    "currencies": ["STN"],
     "aliases": ["sao tome"]
   },
   {
@@ -2541,6 +3377,10 @@
     "callingCodes": ["+503"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".sv",
+    "capital": "San Salvador",
+    "currencies": ["SVC", "USD"],
     "aliases": []
   },
   {
@@ -2553,6 +3393,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".sx",
+    "capital": "Philipsburg",
+    "currencies": ["XCG"],
     "aliases": [],
     "nanpAreaCodes": ["721"]
   },
@@ -2566,6 +3410,10 @@
     "callingCodes": ["+963"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".sy",
+    "capital": "Damascus",
+    "currencies": ["SYP"],
     "aliases": ["syria"]
   },
   {
@@ -2578,6 +3426,10 @@
     "callingCodes": ["+268"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".sz",
+    "capital": "Mbabane",
+    "currencies": ["SZL"],
     "aliases": ["swaziland"]
   },
   {
@@ -2590,6 +3442,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".tc",
+    "capital": "Cockburn Town",
+    "currencies": ["USD"],
     "aliases": [],
     "nanpAreaCodes": ["649"]
   },
@@ -2603,6 +3459,10 @@
     "callingCodes": ["+235"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".td",
+    "capital": "N'Djamena",
+    "currencies": ["XAF"],
     "aliases": []
   },
   {
@@ -2615,6 +3475,10 @@
     "callingCodes": ["+262"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": false,
+    "tld": ".tf",
+    "capital": "Port-aux-Francais",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -2627,6 +3491,10 @@
     "callingCodes": ["+228"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".tg",
+    "capital": "Lome",
+    "currencies": ["XOF"],
     "aliases": []
   },
   {
@@ -2639,6 +3507,10 @@
     "callingCodes": ["+66"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".th",
+    "capital": "Bangkok",
+    "currencies": ["THB"],
     "aliases": []
   },
   {
@@ -2651,6 +3523,10 @@
     "callingCodes": ["+992"],
     "region": "Asia",
     "subregion": "Central Asia",
+    "independent": true,
+    "tld": ".tj",
+    "capital": "Dushanbe",
+    "currencies": ["TJS"],
     "aliases": []
   },
   {
@@ -2663,6 +3539,10 @@
     "callingCodes": ["+690"],
     "region": "Oceania",
     "subregion": "Polynesia",
+    "independent": false,
+    "tld": ".tk",
+    "capital": null,
+    "currencies": ["NZD"],
     "aliases": []
   },
   {
@@ -2675,6 +3555,10 @@
     "callingCodes": ["+670"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".tl",
+    "capital": "Dili",
+    "currencies": ["USD"],
     "aliases": ["east timor"]
   },
   {
@@ -2687,6 +3571,10 @@
     "callingCodes": ["+993"],
     "region": "Asia",
     "subregion": "Central Asia",
+    "independent": true,
+    "tld": ".tm",
+    "capital": "Ashgabat",
+    "currencies": ["TMT"],
     "aliases": []
   },
   {
@@ -2699,6 +3587,10 @@
     "callingCodes": ["+216"],
     "region": "Africa",
     "subregion": "Northern Africa",
+    "independent": true,
+    "tld": ".tn",
+    "capital": "Tunis",
+    "currencies": ["TND"],
     "aliases": []
   },
   {
@@ -2711,6 +3603,10 @@
     "callingCodes": ["+676"],
     "region": "Oceania",
     "subregion": "Polynesia",
+    "independent": true,
+    "tld": ".to",
+    "capital": "Nuku'alofa",
+    "currencies": ["TOP"],
     "aliases": []
   },
   {
@@ -2723,6 +3619,10 @@
     "callingCodes": ["+90"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".tr",
+    "capital": "Ankara",
+    "currencies": ["TRY"],
     "aliases": ["turkey"]
   },
   {
@@ -2735,6 +3635,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".tt",
+    "capital": "Port of Spain",
+    "currencies": ["TTD"],
     "aliases": [],
     "nanpAreaCodes": ["868"]
   },
@@ -2748,6 +3652,10 @@
     "callingCodes": ["+688"],
     "region": "Oceania",
     "subregion": "Polynesia",
+    "independent": true,
+    "tld": ".tv",
+    "capital": "Funafuti",
+    "currencies": ["AUD"],
     "aliases": []
   },
   {
@@ -2760,6 +3668,10 @@
     "callingCodes": ["+886"],
     "region": null,
     "subregion": null,
+    "independent": true,
+    "tld": ".tw",
+    "capital": "Taipei",
+    "currencies": ["TWD"],
     "aliases": ["taiwan", "roc"]
   },
   {
@@ -2772,6 +3684,10 @@
     "callingCodes": ["+255"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".tz",
+    "capital": "Dodoma",
+    "currencies": ["TZS"],
     "aliases": ["tanzania"]
   },
   {
@@ -2784,6 +3700,10 @@
     "callingCodes": ["+380"],
     "region": "Europe",
     "subregion": "Eastern Europe",
+    "independent": true,
+    "tld": ".ua",
+    "capital": "Kyiv",
+    "currencies": ["UAH"],
     "aliases": []
   },
   {
@@ -2796,6 +3716,10 @@
     "callingCodes": ["+256"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".ug",
+    "capital": "Kampala",
+    "currencies": ["UGX"],
     "aliases": []
   },
   {
@@ -2808,6 +3732,10 @@
     "callingCodes": ["+1"],
     "region": "Oceania",
     "subregion": "Micronesia",
+    "independent": false,
+    "tld": ".um",
+    "capital": null,
+    "currencies": ["USD"],
     "aliases": []
   },
   {
@@ -2820,6 +3748,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Northern America",
+    "independent": true,
+    "tld": ".us",
+    "capital": "Washington",
+    "currencies": ["USD"],
     "aliases": ["usa", "america", "united states"]
   },
   {
@@ -2832,6 +3764,10 @@
     "callingCodes": ["+598"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".uy",
+    "capital": "Montevideo",
+    "currencies": ["UYU", "UYW"],
     "aliases": []
   },
   {
@@ -2844,6 +3780,10 @@
     "callingCodes": ["+998"],
     "region": "Asia",
     "subregion": "Central Asia",
+    "independent": true,
+    "tld": ".uz",
+    "capital": "Tashkent",
+    "currencies": ["UZS"],
     "aliases": []
   },
   {
@@ -2856,6 +3796,10 @@
     "callingCodes": ["+379"],
     "region": "Europe",
     "subregion": "Southern Europe",
+    "independent": true,
+    "tld": ".va",
+    "capital": "Vatican City",
+    "currencies": ["EUR"],
     "aliases": ["vatican", "holy see"]
   },
   {
@@ -2868,6 +3812,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".vc",
+    "capital": "Kingstown",
+    "currencies": ["XCD"],
     "aliases": [],
     "nanpAreaCodes": ["784"]
   },
@@ -2881,6 +3829,10 @@
     "callingCodes": ["+58"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": true,
+    "tld": ".ve",
+    "capital": "Caracas",
+    "currencies": ["VES", "VED"],
     "aliases": ["venezuela"]
   },
   {
@@ -2893,6 +3845,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".vg",
+    "capital": "Road Town",
+    "currencies": ["USD"],
     "aliases": ["bvi", "british virgin islands"],
     "nanpAreaCodes": ["284"]
   },
@@ -2906,6 +3862,10 @@
     "callingCodes": ["+1"],
     "region": "Americas",
     "subregion": "Latin America and the Caribbean",
+    "independent": false,
+    "tld": ".vi",
+    "capital": "Charlotte Amalie",
+    "currencies": ["USD"],
     "aliases": ["usvi", "us virgin islands"],
     "nanpAreaCodes": ["340"]
   },
@@ -2919,6 +3879,10 @@
     "callingCodes": ["+84"],
     "region": "Asia",
     "subregion": "South-eastern Asia",
+    "independent": true,
+    "tld": ".vn",
+    "capital": "Hanoi",
+    "currencies": ["VND"],
     "aliases": ["vietnam"]
   },
   {
@@ -2931,6 +3895,10 @@
     "callingCodes": ["+678"],
     "region": "Oceania",
     "subregion": "Melanesia",
+    "independent": true,
+    "tld": ".vu",
+    "capital": "Port Vila",
+    "currencies": ["VUV"],
     "aliases": []
   },
   {
@@ -2943,6 +3911,10 @@
     "callingCodes": ["+681"],
     "region": "Oceania",
     "subregion": "Polynesia",
+    "independent": false,
+    "tld": ".wf",
+    "capital": "Mata Utu",
+    "currencies": ["XPF"],
     "aliases": []
   },
   {
@@ -2955,6 +3927,10 @@
     "callingCodes": ["+685"],
     "region": "Oceania",
     "subregion": "Polynesia",
+    "independent": true,
+    "tld": ".ws",
+    "capital": "Apia",
+    "currencies": ["WST"],
     "aliases": []
   },
   {
@@ -2967,6 +3943,10 @@
     "callingCodes": ["+967"],
     "region": "Asia",
     "subregion": "Western Asia",
+    "independent": true,
+    "tld": ".ye",
+    "capital": "Sanaa",
+    "currencies": ["YER"],
     "aliases": []
   },
   {
@@ -2979,6 +3959,10 @@
     "callingCodes": ["+262"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": false,
+    "tld": ".yt",
+    "capital": "Mamoudzou",
+    "currencies": ["EUR"],
     "aliases": []
   },
   {
@@ -2991,6 +3975,10 @@
     "callingCodes": ["+27"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".za",
+    "capital": "Pretoria",
+    "currencies": ["ZAR"],
     "aliases": []
   },
   {
@@ -3003,6 +3991,10 @@
     "callingCodes": ["+260"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".zm",
+    "capital": "Lusaka",
+    "currencies": ["ZMW"],
     "aliases": []
   },
   {
@@ -3015,6 +4007,10 @@
     "callingCodes": ["+263"],
     "region": "Africa",
     "subregion": "Sub-Saharan Africa",
+    "independent": true,
+    "tld": ".zw",
+    "capital": "Harare",
+    "currencies": ["ZWG"],
     "aliases": []
   }
 ]

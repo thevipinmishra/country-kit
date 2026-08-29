@@ -1,6 +1,6 @@
 # country-kit
 
-Official ISO 3166-1 country data for TypeScript — codes, names, ITU-T E.164 calling codes, UN M49 regions, and Unicode flag emojis.
+Official ISO 3166-1 country data for TypeScript — codes, names, ITU-T E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, Unicode flag emojis, and Wikipedia SVG flags.
 
 [![npm version](https://img.shields.io/npm/v/country-kit.svg)](https://www.npmjs.com/package/country-kit)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/country-kit)](https://bundlephobia.com/package/country-kit)
@@ -9,10 +9,12 @@ Official ISO 3166-1 country data for TypeScript — codes, names, ITU-T E.164 ca
 
 ## Why country-kit?
 
-- **Official data**: ISO 3166-1 assigned codes and English short names, UN M49 numeric/region codes, ITU-T E.164 country calling codes
+- **Official data**: ISO 3166-1 assigned codes and English short names, UN M49 numeric/region codes, ITU-T E.164 country calling codes, IANA ccTLDs, ISO 4217 currencies
 - **Type-safe**: `CountryCode` is a union of all 249 assigned alpha-2 codes
 - **Zero dependencies**: static dataset, works in the browser and Node.js
-- **Practical extras**: common names, search aliases, NANP area codes, Unicode flags
+- **Practical extras**: common names, search aliases, NANP area codes, Unicode flags, and Wikipedia SVG flags
+
+Docs: [playground, explorer, flag gallery, and API](https://country-kit.vercel.app/).
 
 ## Data sources
 
@@ -22,11 +24,16 @@ Official ISO 3166-1 country data for TypeScript — codes, names, ITU-T E.164 ca
 | `numeric`, `region`, `subregion` | UN M49 | Numeric codes are identical to ISO 3166-1 numeric. Antarctica and Taiwan have no UN region. |
 | `callingCode` | ITU-T E.164 | Country calling codes only (1–3 digits). NANP members are `+1`, not `+1` plus an area code. |
 | `nanpAreaCodes` | NANP | Area codes for territories that share `+1`. |
+| `independent` | ISO 3166 | Independent-territory flag (195 yes). |
+| `tld` | IANA | Country-code TLD. **`GB` is `.uk`**, not `.gb`. |
+| `currencies` | ISO 4217 | Alphabetic currency codes. Empty when none is assigned (Antarctica, Palestine). |
+| `capital` | Conventional English | Not an ISO field; kept for UI labels. |
 | `flag` | Unicode UTS #51 | Derived from the alpha-2 code via regional indicator symbols. |
+| SVG flags | Wikimedia / flag-icons | Wikipedia SVG drawings, MIT, pinned to flag-icons 7.5.0. |
 
 Kosovo (`XK`) is **not** included: it is a user-assigned code, not an ISO 3166-1 assigned code.
 
-Regenerate the dataset with `pnpm generate` after updating files in `scripts/sources/`.
+Regenerate the dataset with `pnpm generate` after updating files in `scripts/sources/`. Rebuild inline SVGs with `pnpm generate:flags`.
 
 ## Installation
 
@@ -51,11 +58,15 @@ const us = getCountry('US');
 //   callingCode: '+1',                 // ITU-T E.164
 //   dialCode: '+1',
 //   region: 'Americas',
+//   tld: '.us',
+//   currencies: ['USD'],
 //   flag: '🇺🇸'
 // }
 
 searchCountries('uk');        // United Kingdom (alias)
 searchCountries('Vietnam');   // Viet Nam
+searchCountries('.uk');       // United Kingdom (IANA TLD)
+searchCountries('TRY');       // Türkiye (ISO 4217)
 ```
 
 ## API
@@ -68,6 +79,7 @@ searchCountries('Vietnam');   // Viet Nam
 | `getCountryByCode(code)` | ISO 3166-1 alpha-2 |
 | `getCountryByAlpha3(alpha3)` | ISO 3166-1 alpha-3 |
 | `getCountryByNumeric(numeric)` | ISO 3166-1 numeric / UN M49 (`"840"` or `"84"`) |
+| `getCountryByTld(tld)` | IANA ccTLD (`".uk"` or `"uk"` → GB) |
 | `getCountryName(code)` | Official ISO English short name |
 | `getCountryCommonName(code)` | Everyday English name |
 | `getAlpha3Code(code)` | Alpha-3 |
@@ -75,17 +87,22 @@ searchCountries('Vietnam');   // Viet Nam
 | `getCallingCode(code)` | E.164 country calling code (`+1` for all NANP) |
 | `getDialCode(code)` | Phone-input prefix (`+1264` for Anguilla, `+1` for the US) |
 | `getCountryFlag(code)` | Flag emoji |
-| `getAllCountries()` | All 249 records |
+| `getFlagSvgUrl(code, options?)` | Version-pinned Wikipedia SVG URL (`ratio`: `4x3` \| `1x1`) |
+| `getCountryTld` / `getCountryCapital` / `getCountryCurrencies` | IANA TLD, capital, ISO 4217 |
+| `getAllCountries(options?)` | Optional `region`, `subregion`, `independent`, `sortBy` |
+| `getIndependentCountries()` | ISO independent = yes |
+| `getCountrySelectOptions()` | Select-ready `{ value, label, dialCode, flag, flagSvgUrl }` |
 
 ### Search and grouping
 
 | Function | Description |
 | --- | --- |
-| `searchCountries(query, options?)` | Ranked search over official names, common names, aliases, and codes |
+| `searchCountries(query, options?)` | Ranked search over official names, common names, aliases, codes, TLDs, currencies, and capitals |
 | `getCountriesByCallingCode(code)` | E.164 match; `+1264` also resolves NANP NPAs |
+| `getCountriesByCurrency(code)` | ISO 4217 alphabetic code (`EUR`, `usd`) |
 | `getCountriesByRegion()` / `getCountriesByRegion('Europe')` | UN M49 region |
 | `getCountriesBySubregion(subregion)` | UN M49 sub-region |
-| `listRegions()` / `listSubregions()` | Distinct region names |
+| `listRegions()` / `listSubregions()` / `listCurrencies()` | Distinct names / codes |
 
 Search options: `limit`, `exact`, `includeCodes` (default `true`).
 
@@ -113,6 +130,10 @@ interface Country {
   dialCode: string;
   region: string | null;
   subregion: string | null;
+  independent: boolean;
+  tld: string | null;
+  capital: string | null;
+  currencies: readonly string[];
   flag: string;
   nanpAreaCodes?: readonly string[];
 }
@@ -123,12 +144,20 @@ interface Country {
 Country select:
 
 ```typescript
-import { getAllCountries } from 'country-kit';
+import { getCountrySelectOptions } from 'country-kit';
 
-const options = getAllCountries().map((country) => ({
-  value: country.code,
-  label: `${country.flag} ${country.commonName} (${country.dialCode})`,
-}));
+const options = getCountrySelectOptions({ independent: true });
+```
+
+SVG flags (core stays small; inline markup is a separate entry):
+
+```typescript
+import { getFlagSvgUrl } from 'country-kit';
+import { getFlagSvg } from 'country-kit/flags';
+
+<img src={getFlagSvgUrl('JP')} alt="Japan" />;
+<img src={getFlagSvgUrl('JP', { ratio: '1x1' })} alt="" />;
+element.innerHTML = getFlagSvg('JP'); // optional, offline inline SVG
 ```
 
 Phone prefix (official vs display):
@@ -140,29 +169,46 @@ getCallingCode('AI'); // '+1'     official E.164
 getDialCode('AI');    // '+1264'  +1 and Anguilla's NPA
 ```
 
+TLD and currency:
+
+```typescript
+import { getCountryByTld, getCountriesByCurrency } from 'country-kit';
+
+getCountryByTld('.uk')?.code;          // 'GB'
+getCountriesByCurrency('EUR').length;  // euro-using territories
+```
+
 ## Breaking changes in 2.0
 
 - **Calling codes follow ITU-T E.164.** NANP territories such as Anguilla are `+1`, not `+1264`. Use `dialCode` or `nanpAreaCodes` when you need the area code for a phone picker.
 - **`isValidCallingCode`** accepts only 1–3 digit country codes (E.164), not concatenated NPAs.
-- **`Country`** includes `commonName`, `numeric`, `callingCodes`, `dialCode`, `region`, and `subregion`.
+- **`Country`** includes `commonName`, `numeric`, `callingCodes`, `dialCode`, `region`, `subregion`, `independent`, `tld`, `capital`, and `currencies`.
 - Invalid lookups no longer write to `console.error`.
 
 ## Package layout
 
 ```
 src/
-  index.ts           public exports
-  api.ts             lookup, search, validation
-  data.ts            indexes (Maps / Sets) over the dataset
-  flags.ts           Unicode regional-indicator flags
+  index.ts              public exports (does not include inline SVGs)
+  api.ts                lookup, search, validation
+  data.ts               indexes (Maps / Sets) over the dataset
+  flags.ts              Unicode regional-indicator flags
+  flag-urls.ts          version-pinned CDN URLs
+  svg-flags.ts          country-kit/flags entry (inline SVG)
   types.ts
-  country-code.ts    generated CountryCode union
-  data/countries.json  generated from scripts/sources
+  country-code.ts       generated CountryCode union
+  data/countries.json   generated from scripts/sources
+  data/flag-svgs.json   generated Wikipedia SVGs (optional entry)
 scripts/
   generate-data.mjs
-  sources/           ISO 3166-1 / UN M49 snapshot
+  generate-flags.mjs
+  sources/              ISO 3166-1 / UN M49 / extras / flag-icons license
 ```
+
+Import `country-kit/flags` only when you need inline SVG markup. The core bundle stays a compact JSON dataset plus lookup functions.
 
 ## License
 
 ISC — see [LICENSE](https://github.com/thevipinmishra/country-kit/blob/main/LICENSE).
+
+SVG flags are MIT (flag-icons / Wikipedia). See `scripts/sources/flag-icons.LICENSE`.

@@ -12,19 +12,28 @@ import {
   getAlpha3Code,
   getCallingCode,
   getCountriesByCallingCode,
+  getCountriesByCurrency,
   getCountriesByRegion,
   getCountriesBySubregion,
   getCountry,
   getCountryByAlpha3,
   getCountryByCode,
   getCountryByNumeric,
+  getCountryByTld,
+  getCountryCapital,
   getCountryCommonName,
+  getCountryCurrencies,
   getCountryFlag,
   getCountryName,
+  getCountrySelectOptions,
+  getCountryTld,
   getDialCode,
+  getFlagSvgUrl,
+  getIndependentCountries,
   getNumericCode,
   isValidCallingCode,
   isValidCountryCode,
+  listCurrencies,
   listRegions,
   listSubregions,
   searchCountries,
@@ -191,6 +200,9 @@ describe('Search Function', () => {
     expect(searchCountries('UK')[0].code).toBe('GB');
     expect(searchCountries('Vietnam')[0].code).toBe('VN');
     expect(searchCountries('South Korea')[0].code).toBe('KR');
+    expect(searchCountries('.uk')[0].code).toBe('GB');
+    expect(searchCountries('TRY')[0].code).toBe('TR');
+    expect(searchCountries('Paris')[0].code).toBe('FR');
   });
 
   test('search options', () => {
@@ -285,5 +297,65 @@ describe('ISO 3166-1 accuracy', () => {
       expect(country?.region).toBe(row.region || null);
       expect(country?.subregion).toBe(row['sub-region'] || null);
     }
+  });
+});
+
+describe('Official extras', () => {
+  test('IANA TLD, independence, capital, and ISO 4217 currency', () => {
+    expect(getCountryTld('GB')).toBe('.uk');
+    expect(getCountryTld('US')).toBe('.us');
+    expect(getCountryCapital('FR')).toBe('Paris');
+    expect(getCountryCurrencies('JP')).toEqual(['JPY']);
+    expect(getCountryByCode('US')?.independent).toBe(true);
+    expect(getCountryByCode('PR')?.independent).toBe(false);
+    expect(getIndependentCountries()).toHaveLength(195);
+    expect(getIndependentCountries().every((c) => c.independent)).toBe(true);
+    expect(getCountryCurrencies('TR')).toEqual(['TRY']);
+    expect(getCountryCapital('KZ')).toBe('Astana');
+    expect(getCountryTld('BL')).toBe('.bl');
+    expect(getCountryTld('MF')).toBe('.mf');
+    expect(getCountryByTld('.uk')?.code).toBe('GB');
+    expect(getCountryByTld('uk')?.code).toBe('GB');
+    expect(getCountryByTld('.bl')?.code).toBe('BL');
+    expect(getCountriesByCurrency('EUR').length).toBeGreaterThan(20);
+    expect(getCountriesByCurrency('usd').some((c) => c.code === 'US')).toBe(
+      true,
+    );
+    expect(listCurrencies()).toContain('JPY');
+  });
+
+  test('getAllCountries filters and select options', () => {
+    const europe = getAllCountries({ region: 'Europe' });
+    expect(europe.every((c) => c.region === 'Europe')).toBe(true);
+    expect(europe.length).toBeGreaterThan(40);
+
+    const options = getCountrySelectOptions({ independent: true });
+    expect(options[0]).toMatchObject({
+      value: expect.any(String),
+      label: expect.stringMatching(/./),
+      dialCode: expect.stringMatching(/^\+/),
+      flagSvgUrl: expect.stringContaining('.svg'),
+    });
+    expect(options).toHaveLength(195);
+  });
+});
+
+describe('SVG flags', () => {
+  test('CDN URLs are version-pinned Wikipedia SVGs', () => {
+    expect(getFlagSvgUrl('US')).toBe(
+      'https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.5.0/flags/4x3/us.svg',
+    );
+    expect(getFlagSvgUrl('gb', { ratio: '1x1' })).toContain(
+      '/flags/1x1/gb.svg',
+    );
+    expect(getFlagSvgUrl('XX')).toBeUndefined();
+  });
+
+  test('inline SVG markup is an official 4×3 flag', async () => {
+    const { getFlagSvg } = await import('country-kit/flags');
+    const svg = getFlagSvg('JP');
+    expect(svg).toMatch(/^<svg /);
+    expect(svg).toContain('viewBox');
+    expect(getFlagSvg('xx')).toBeUndefined();
   });
 });

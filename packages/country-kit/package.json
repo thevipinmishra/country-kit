@@ -1,6 +1,6 @@
 {
   "name": "country-kit",
-  "description": "Official ISO 3166-1 country data for TypeScript: codes, names, ITU-T E.164 calling codes, UN M49 regions, and flag emojis.",
+  "description": "Official ISO 3166-1 country data for TypeScript: codes, names, ITU-T E.164 calling codes, UN M49 regions, IANA TLDs, ISO 4217 currencies, and Wikipedia SVG flags.",
   "version": "2.0.0",
   "type": "module",
   "sideEffects": false,
@@ -9,6 +9,11 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./flags": {
+      "types": "./dist/flags.d.ts",
+      "import": "./dist/flags.js",
+      "require": "./dist/flags.cjs"
     }
   },
   "main": "./dist/index.cjs",
@@ -30,6 +35,7 @@
     "iso-3166-1",
     "e164",
     "un-m49",
+    "svg-flags",
     "typescript",
     "nodejs"
   ],
@@ -41,6 +47,7 @@
   "homepage": "https://country-kit.vercel.app/",
   "scripts": {
     "generate": "node scripts/generate-data.mjs",
+    "generate:flags": "node scripts/generate-flags.mjs",
     "build": "rslib build",
     "check": "biome check --write",
     "dev": "rslib build --watch",
