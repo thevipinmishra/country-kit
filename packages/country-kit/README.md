@@ -14,7 +14,7 @@ Official ISO 3166-1 country data for TypeScript — codes, names, ITU-T E.164 ca
 - **Zero dependencies**: static dataset, works in the browser and Node.js
 - **Practical extras**: common names, search aliases, NANP area codes, Unicode flags, and Wikipedia SVG flags
 
-Docs: [playground, explorer, flag gallery, and API](https://country-kit.vercel.app/).
+Docs: [playground](https://country-kit.vercel.app/), [examples](https://country-kit.vercel.app/examples/), [API](https://country-kit.vercel.app/api/).
 
 ## Data sources
 
@@ -141,41 +141,136 @@ interface Country {
 
 ## Examples
 
-Country select:
+Live widgets for each of these live on the [examples page](https://country-kit.vercel.app/examples/).
+
+### Signup: country of residence
+
+Persist the ISO alpha-2 code. Show the common name. Hide territories.
 
 ```typescript
-import { getCountrySelectOptions } from 'country-kit';
+import { getCountry, getCountrySelectOptions } from 'country-kit';
 
 const options = getCountrySelectOptions({ independent: true });
+
+select.innerHTML = options
+  .map((o) => `<option value="${o.value}">${o.label}</option>`)
+  .join('');
+
+const country = getCountry(select.value);
+profile.countryCode = country?.code;       // 'FR'
+profile.displayName = country?.commonName; // 'France'
 ```
 
-SVG flags (core stays small; inline markup is a separate entry):
+### Checkout: phone prefix
+
+`dialCode` is what a phone picker should show. `callingCode` is the ITU-T E.164 country code.
 
 ```typescript
-import { getFlagSvgUrl } from 'country-kit';
-import { getFlagSvg } from 'country-kit/flags';
+import {
+  getCallingCode,
+  getCountriesByCallingCode,
+  getDialCode,
+  searchCountries,
+} from 'country-kit';
 
-<img src={getFlagSvgUrl('JP')} alt="Japan" />;
-<img src={getFlagSvgUrl('JP', { ratio: '1x1' })} alt="" />;
-element.innerHTML = getFlagSvg('JP'); // optional, offline inline SVG
+const [match] = searchCountries('Anguilla', { limit: 1 });
+getDialCode(match.code);    // '+1264'  prefix in the UI
+getCallingCode(match.code); // '+1'     store as E.164 country code
+
+getCountriesByCallingCode('+1264'); // [Anguilla]
+getCountriesByCallingCode('+1');    // US, CA, AI, …
 ```
 
-Phone prefix (official vs display):
+### Address typeahead
 
 ```typescript
-import { getCallingCode, getDialCode } from 'country-kit';
+import { searchCountries } from 'country-kit';
 
-getCallingCode('AI'); // '+1'     official E.164
-getDialCode('AI');    // '+1264'  +1 and Anguilla's NPA
+const results = searchCountries(query, { limit: 6 });
+// 'uk' / '.uk' → United Kingdom
+// 'Vietnam'    → Viet Nam
+// 'TRY'        → Türkiye
+// 'Paris'      → France
+
+order.shipTo = results[0].code;
+order.shipToLabel = results[0].commonName;
 ```
 
-TLD and currency:
+### Profile flag
 
 ```typescript
-import { getCountryByTld, getCountriesByCurrency } from 'country-kit';
+import { getCountry, getCountryFlag, getFlagSvgUrl } from 'country-kit';
+import { getFlagSvg } from 'country-kit/flags'; // optional, larger entry
 
-getCountryByTld('.uk')?.code;          // 'GB'
-getCountriesByCurrency('EUR').length;  // euro-using territories
+const user = getCountry(profile.countryCode);
+<img src={getFlagSvgUrl(user.code)} alt={`Flag of ${user.commonName}`} />;
+<img src={getFlagSvgUrl(user.code, { ratio: '1x1' })} alt="" />;
+getCountryFlag(user.code); // '🇯🇵'
+// Offline: element.innerHTML = getFlagSvg(user.code);
+```
+
+### Country from a hostname or email
+
+```typescript
+import { getCountryByTld } from 'country-kit';
+
+function countryFromHost(value: string) {
+  const host = value.includes('@')
+    ? value.split('@').pop()!
+    : value.replace(/^https?:\/\//, '').split(/[/?#]/)[0];
+  return getCountryByTld('.' + host.split('.').pop());
+}
+
+countryFromHost('https://www.gov.uk'); // United Kingdom (GB, not .gb)
+countryFromHost('ada@bund.de');        // Germany
+countryFromHost('https://npmjs.com');  // undefined (.com is not a ccTLD)
+```
+
+### Billing: where a currency is used
+
+```typescript
+import { getCountriesByCurrency, listCurrencies } from 'country-kit';
+
+listCurrencies(); // ['AED', 'AFN', …]
+const euro = getCountriesByCurrency('EUR');
+pricing.enabledMarkets = euro.map((c) => c.code);
+```
+
+### Shipping zone
+
+```typescript
+import { getAllCountries, getIndependentCountries, listRegions } from 'country-kit';
+
+listRegions(); // Africa, Americas, Asia, Europe, Oceania
+
+const europe = getAllCountries({
+  region: 'Europe',
+  independent: true,
+  sortBy: 'commonName',
+});
+
+getIndependentCountries(); // 195 sovereign states
+```
+
+### Validate a webhook / query param
+
+```typescript
+import {
+  getCountry,
+  isValidCallingCode,
+  isValidCountryCode,
+  type CountryCode,
+} from 'country-kit';
+
+function parseCountry(raw: string): CountryCode | undefined {
+  if (isValidCountryCode(raw)) return raw;
+  return getCountry(raw)?.code; // 'USA' / '840' → 'US'
+}
+
+parseCountry('GB');            // 'GB'
+parseCountry('XK');            // undefined (not ISO assigned)
+isValidCallingCode('+44');     // true
+isValidCallingCode('+1264');   // false (NANP area code, not E.164)
 ```
 
 ## Breaking changes in 2.0

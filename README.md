@@ -14,7 +14,7 @@ Official ISO 3166-1 country data for TypeScript — codes, names, ITU-T E.164 ca
 - **Zero dependencies**: static dataset, works in the browser and Node.js
 - **Practical extras**: common names, search aliases, NANP area codes, Wikipedia SVG flags
 
-Docs: [playground, explorer, flag gallery, and API](https://country-kit.vercel.app/).
+Docs: [playground](https://country-kit.vercel.app/), [examples](https://country-kit.vercel.app/examples/), [API](https://country-kit.vercel.app/api/).
 
 ## Data sources
 
@@ -56,7 +56,7 @@ getFlagSvgUrl('JP');        // version-pinned Wikipedia SVG
 getFlagSvg('JP');           // inline <svg> markup
 ```
 
-See [`packages/country-kit/README.md`](./packages/country-kit/README.md) for the full API.
+See [`packages/country-kit/README.md`](./packages/country-kit/README.md) for the full API and copy-paste examples (signup select, phone prefix, TLD lookup, shipping zones, validation). Live widgets: [country-kit.vercel.app/examples](https://country-kit.vercel.app/examples/).
 
 ## License
 

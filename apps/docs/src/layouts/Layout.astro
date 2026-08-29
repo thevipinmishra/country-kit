@@ -17,6 +17,7 @@ const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const canonical = path === '/' ? 'https://country-kit.vercel.app/' : `https://country-kit.vercel.app${path}/`;
 const links = [
   { href: '/', label: 'Playground' },
+  { href: '/examples', label: 'Examples' },
   { href: '/explorer', label: 'Explorer' },
   { href: '/flags', label: 'Flags' },
   { href: '/api', label: 'API' },
