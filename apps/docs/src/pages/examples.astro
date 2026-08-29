@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ExampleBlock from '../components/ExampleBlock.astro';
+import { snippets } from '../examples/snippets';
+import ResidenceSelectReact from '../components/react/ResidenceSelect';
+import PhoneFieldReact from '../components/react/PhoneField';
+import CountryTypeaheadReact from '../components/react/CountryTypeahead';
+import ProfileFlagReact from '../components/react/ProfileFlag';
+import HostLookupReact from '../components/react/HostLookup';
+import CodeValidatorReact from '../components/react/CodeValidator';
+import ResidenceSelectVue from '../components/vue/ResidenceSelect.vue';
+import PhoneFieldVue from '../components/vue/PhoneField.vue';
+import CountryTypeaheadVue from '../components/vue/CountryTypeahead.vue';
+import ProfileFlagVue from '../components/vue/ProfileFlag.vue';
+import HostLookupVue from '../components/vue/HostLookup.vue';
+import CodeValidatorVue from '../components/vue/CodeValidator.vue';
+
+const toc = [
+  ['#residence', 'Select'],
+  ['#phone', 'Phone'],
+  ['#search', 'Search'],
+  ['#profile', 'Flags'],
+  ['#tld', 'TLD'],
+  ['#validate', 'Validate'],
+];
+---
+
+<Layout
+  title="Examples"
+  description="React and Vue examples for country-kit: country select, phone prefix, search, flags, TLD lookup, and validation."
+>
+  <section class="border-b border-[var(--line)]">
+    <div class="container py-10 lg:py-12">
+      <h1 class="text-3xl font-semibold tracking-tight lg:text-4xl">Examples</h1>
+      <p class="mt-3 max-w-2xl text-[var(--muted)]">
+        React and Vue. Each section has a live preview and the code next to it.
+      </p>
+      <nav class="mt-6 flex flex-wrap gap-2">
+        {toc.map(([href, label]) => (
+          <a
+            href={href}
+            class="rounded-md border border-[var(--line)] bg-[var(--card)] px-3 py-1.5 text-sm hover:border-[var(--ink)]"
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+    </div>
+  </section>
+
+  <div class="container space-y-16 py-12">
+    <ExampleBlock
+      id="residence"
+      title="Country select"
+      description="Independent countries for a select. Store the alpha-2 code; display commonName."
+      apis="getCountrySelectOptions · getCountry"
+      reactCode={snippets.residence.react}
+      vueCode={snippets.residence.vue}
+    >
+      <div slot="react">
+        <ResidenceSelectReact client:idle />
+      </div>
+      <div slot="vue">
+        <ResidenceSelectVue client:idle />
+      </div>
+    </ExampleBlock>
+
+    <ExampleBlock
+      id="phone"
+      title="Phone prefix"
+      description="Show dialCode in the picker (+1264 for Anguilla). callingCode is the E.164 country code (+1 for NANP)."
+      apis="searchCountries · getDialCode · getCallingCode"
+      reactCode={snippets.phone.react}
+      vueCode={snippets.phone.vue}
+    >
+      <div slot="react">
+        <PhoneFieldReact client:idle />
+      </div>
+      <div slot="vue">
+        <PhoneFieldVue client:idle />
+      </div>
+    </ExampleBlock>
+
+    <ExampleBlock
+      id="search"
+      title="Search"
+      description="searchCountries ranks official names, common names, aliases (UK, Vietnam), codes, TLDs, currencies, and capitals."
+      apis="searchCountries"
+      reactCode={snippets.search.react}
+      vueCode={snippets.search.vue}
+    >
+      <div slot="react">
+        <CountryTypeaheadReact client:idle />
+      </div>
+      <div slot="vue">
+        <CountryTypeaheadVue client:idle />
+      </div>
+    </ExampleBlock>
+
+    <ExampleBlock
+      id="profile"
+      title="Flags"
+      description="getFlagSvgUrl returns a CDN URL (core package). Import country-kit/flags only for inline SVG markup."
+      apis="getFlagSvgUrl · getCountryFlag · getCountry"
+      reactCode={snippets.flag.react}
+      vueCode={snippets.flag.vue}
+    >
+      <div slot="react">
+        <ProfileFlagReact client:idle />
+      </div>
+      <div slot="vue">
+        <ProfileFlagVue client:idle />
+      </div>
+    </ExampleBlock>
+
+    <ExampleBlock
+      id="tld"
+      title="TLD lookup"
+      description="getCountryByTld maps IANA ccTLDs to alpha-2. gov.uk is GB, not .gb. .com is not a country TLD."
+      apis="getCountryByTld"
+      reactCode={snippets.tld.react}
+      vueCode={snippets.tld.vue}
+    >
+      <div slot="react">
+        <HostLookupReact client:idle />
+      </div>
+      <div slot="vue">
+        <HostLookupVue client:idle />
+      </div>
+    </ExampleBlock>
+
+    <ExampleBlock
+      id="validate"
+      title="Validation"
+      description="isValidCountryCode is a type guard for assigned alpha-2 codes. getCountry also accepts alpha-3 and numeric. XK is not assigned."
+      apis="isValidCountryCode · getCountry · isValidCallingCode"
+      reactCode={snippets.validate.react}
+      vueCode={snippets.validate.vue}
+    >
+      <div slot="react">
+        <CodeValidatorReact client:idle />
+      </div>
+      <div slot="vue">
+        <CodeValidatorVue client:idle />
+      </div>
+    </ExampleBlock>
+  </div>
+</Layout>

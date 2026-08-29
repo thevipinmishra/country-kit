@@ -1,22 +1,25 @@
 {
   "name": "country-kit",
-  "description": "A lightweight TypeScript library providing comprehensive country data including ISO codes, names, calling codes, and flag emojis.",
-  "version": "1.1.0",
+  "description": "Official ISO 3166-1 country data for TypeScript: codes, names, ITU-T E.164 calling codes, UN M49 regions, IANA TLDs, ISO 4217 currencies, and Wikipedia SVG flags.",
+  "version": "2.0.0",
   "type": "module",
+  "sideEffects": false,
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
+    },
+    "./flags": {
+      "types": "./dist/flags.d.ts",
+      "import": "./dist/flags.js",
+      "require": "./dist/flags.cjs"
     }
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**",
-     "README.md"
-  ],
+  "files": ["dist/**", "README.md"],
   "keywords": [
     "country",
     "countries",
@@ -29,6 +32,10 @@
     "country-list",
     "international",
     "iso-3166",
+    "iso-3166-1",
+    "e164",
+    "un-m49",
+    "svg-flags",
     "typescript",
     "nodejs"
   ],
@@ -39,6 +46,8 @@
   },
   "homepage": "https://country-kit.vercel.app/",
   "scripts": {
+    "generate": "node scripts/generate-data.mjs",
+    "generate:flags": "node scripts/generate-flags.mjs",
     "build": "rslib build",
     "check": "biome check --write",
     "dev": "rslib build --watch",

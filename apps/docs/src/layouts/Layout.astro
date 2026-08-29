@@ -1,0 +1,155 @@
+---
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '@fontsource/ibm-plex-sans/latin-700.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'country-kit',
+  description = 'ISO 3166-1 country data for TypeScript: codes, names, E.164 calling codes, UN M49 regions, and SVG flags.',
+} = Astro.props;
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const canonical =
+  path === '/' ? 'https://country-kit.vercel.app/' : `https://country-kit.vercel.app${path}/`;
+const links = [
+  { href: '/', label: 'Playground' },
+  { href: '/examples', label: 'Examples' },
+  { href: '/explorer', label: 'Explorer' },
+  { href: '/flags', label: 'Flags' },
+  { href: '/api', label: 'API' },
+  { href: '/data', label: 'Data' },
+];
+
+const pageTitle =
+  title === 'country-kit'
+    ? 'country-kit — ISO 3166-1 country data for TypeScript'
+    : `${title} · country-kit`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1c1917" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:title" content={title === 'country-kit' ? 'country-kit' : `${title} · country-kit`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body>
+    <a
+      href="#content"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2"
+      >Skip to content</a
+    >
+    <header class="sticky top-0 z-40 border-b border-stone-800/80 bg-[#161412] text-[#f4efe6]">
+      <div class="container flex h-14 items-center justify-between gap-3">
+        <a href="/" class="text-[0.95rem] font-semibold tracking-tight">country-kit</a>
+        <nav class="hidden min-w-0 items-center gap-1 text-sm lg:flex" aria-label="Primary">
+          {links.map((link) => (
+            <a
+              href={link.href}
+              aria-current={path === link.href ? 'page' : undefined}
+              class:list={[
+                'rounded-md px-2.5 py-1.5',
+                path === link.href
+                  ? 'bg-[#f4efe6] text-[#161412]'
+                  : 'text-stone-300 hover:bg-white/10 hover:text-white',
+              ]}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="https://github.com/thevipinmishra/country-kit"
+            class="rounded-md px-2.5 py-1.5 text-stone-300 hover:bg-white/10 hover:text-white"
+            >GitHub</a
+          >
+        </nav>
+        <button
+          type="button"
+          id="nav-toggle"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20 text-[#f4efe6] lg:hidden"
+          aria-expanded="false"
+          aria-controls="nav-panel"
+          aria-label="Open menu"
+        >
+          <svg id="nav-icon-open" class="h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+          </svg>
+          <svg id="nav-icon-close" class="hidden h-5 w-5" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+    <div id="nav-backdrop" class="nav-backdrop" hidden></div>
+    <nav id="nav-panel" class="nav-panel" aria-label="Mobile" hidden>
+      <div class="container space-y-1 py-3 text-[0.95rem]">
+        {links.map((link) => (
+          <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>
+            {link.label}
+          </a>
+        ))}
+        <a href="https://github.com/thevipinmishra/country-kit">GitHub</a>
+      </div>
+    </nav>
+    <div id="content" class="min-w-0 overflow-x-clip">
+      <slot />
+    </div>
+    <footer class="mt-16 border-t border-[var(--line)] py-8 text-sm text-[var(--muted)]">
+      <div class="container flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
+        <p>ISO 3166-1, UN M49, ITU-T E.164, IANA, ISO 4217</p>
+        <p>
+          <a class="underline decoration-stone-400 underline-offset-4 hover:text-[var(--ink)]" href="https://www.npmjs.com/package/country-kit"
+            >npm</a
+          >
+          · ISC
+        </p>
+      </div>
+    </footer>
+    <script>
+      const toggle = document.querySelector('#nav-toggle');
+      const panel = document.querySelector('#nav-panel');
+      const backdrop = document.querySelector('#nav-backdrop');
+      const iconOpen = document.querySelector('#nav-icon-open');
+      const iconClose = document.querySelector('#nav-icon-close');
+
+      function setOpen(open: boolean) {
+        panel?.toggleAttribute('hidden', !open);
+        backdrop?.toggleAttribute('hidden', !open);
+        toggle?.setAttribute('aria-expanded', String(open));
+        toggle?.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        iconOpen?.classList.toggle('hidden', open);
+        iconClose?.classList.toggle('hidden', !open);
+        document.body.classList.toggle('nav-open', open);
+      }
+
+      toggle?.addEventListener('click', () => {
+        setOpen(!document.body.classList.contains('nav-open'));
+      });
+      backdrop?.addEventListener('click', () => setOpen(false));
+      panel?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => setOpen(false));
+      });
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') setOpen(false);
+      });
+      window.addEventListener('resize', () => {
+        if (window.matchMedia('(min-width: 1024px)').matches) setOpen(false);
+      });
+    </script>
+  </body>
+</html>

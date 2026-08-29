@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getAllCountries, getFlagSvgUrl, listRegions } from 'country-kit';
+
+const countries = getAllCountries({ sortBy: 'commonName' }).map((country) => ({
+  code: country.code,
+  commonName: country.commonName,
+  name: country.name,
+  alpha3: country.alpha3,
+  numeric: country.numeric,
+  dialCode: country.dialCode,
+  callingCode: country.callingCode,
+  tld: country.tld,
+  capital: country.capital,
+  currencies: country.currencies,
+  region: country.region,
+  subregion: country.subregion,
+  independent: country.independent,
+  flag: country.flag,
+  flagSvgUrl: getFlagSvgUrl(country.code) ?? '',
+}));
+const regions = listRegions();
+---
+
+<Layout title="Explorer" description="Browse every ISO 3166-1 country and territory in country-kit.">
+  <section class="container min-w-0 py-10">
+    <h1 class="text-3xl font-semibold tracking-tight">Explorer</h1>
+    <p class="mt-3 max-w-2xl text-[var(--muted)]">
+      All 249 assigned ISO 3166-1 codes. Filter by UN M49 region or independent status.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      <input
+        id="filter-q"
+        type="search"
+        placeholder="Filter by name, code, capital, TLD…"
+        class="w-full min-w-0 flex-1 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 outline-none ring-[var(--accent)] focus:ring-2 sm:min-w-[12rem]"
+      />
+      <select id="filter-region" class="min-w-0 flex-1 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 sm:flex-none">
+        <option value="">All regions</option>
+        {regions.map((region) => <option value={region}>{region}</option>)}
+      </select>
+      <select id="filter-ind" class="min-w-0 flex-1 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 sm:flex-none">
+        <option value="">Independent & territories</option>
+        <option value="yes">Independent only</option>
+        <option value="no">Territories only</option>
+      </select>
+    </div>
+    <p id="count" class="mt-3 font-mono text-xs text-[var(--muted)]"></p>
+
+    <div class="mt-4 min-w-0 overflow-x-auto rounded-lg border border-[var(--line)] bg-[var(--card)]">
+      <table class="min-w-[44rem] text-left text-sm">
+        <thead class="border-b border-[var(--line)] bg-stone-50 font-medium">
+          <tr>
+            <th class="px-4 py-3">Flag</th>
+            <th class="px-4 py-3">Country</th>
+            <th class="px-4 py-3">Codes</th>
+            <th class="px-4 py-3">Dial</th>
+            <th class="px-4 py-3">TLD</th>
+            <th class="px-4 py-3">Currency</th>
+            <th class="px-4 py-3">Capital</th>
+            <th class="px-4 py-3">Region</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+</Layout>
+
+<script define:vars={{ countries }}>
+  const q = document.querySelector('#filter-q');
+  const region = document.querySelector('#filter-region');
+  const ind = document.querySelector('#filter-ind');
+  const rows = document.querySelector('#rows');
+  const count = document.querySelector('#count');
+
+  function apply() {
+    const query = (q?.value || '').trim().toLowerCase();
+    const regionValue = region?.value || '';
+    const indValue = ind?.value || '';
+    const matches = countries.filter((country) => {
+      if (regionValue && country.region !== regionValue) return false;
+      if (indValue === 'yes' && !country.independent) return false;
+      if (indValue === 'no' && country.independent) return false;
+      if (!query) return true;
+      const hay = [
+        country.commonName,
+        country.name,
+        country.code,
+        country.alpha3,
+        country.numeric,
+        country.capital,
+        country.tld,
+        country.dialCode,
+        country.callingCode,
+        ...(country.currencies ?? []),
+      ]
+        .filter(Boolean)
+        .join(' ')
+        .toLowerCase();
+      return hay.includes(query);
+    });
+
+    if (count) count.textContent = `${matches.length} shown`;
+    if (!rows) return;
+    rows.innerHTML = matches
+      .map(
+        (country) => `<tr class="border-b border-[var(--line)] last:border-0">
+          <td class="px-4 py-2"><span class="flag-frame inline-block h-5 w-7 align-middle"><img src="${country.flagSvgUrl}" alt=""></span></td>
+          <td class="px-4 py-2"><div class="font-medium">${country.commonName}</div><div class="text-xs text-[var(--muted)]">${country.name}</div></td>
+          <td class="px-4 py-2 font-mono text-xs">${country.code} · ${country.alpha3} · ${country.numeric}</td>
+          <td class="px-4 py-2 font-mono text-xs">${country.dialCode}</td>
+          <td class="px-4 py-2 font-mono text-xs">${country.tld ?? '—'}</td>
+          <td class="px-4 py-2 font-mono text-xs">${country.currencies?.join(' ') || '—'}</td>
+          <td class="px-4 py-2">${country.capital ?? '—'}</td>
+          <td class="px-4 py-2 text-xs">${country.region ?? '—'}<div class="text-[var(--muted)]">${country.subregion ?? ''}</div></td>
+        </tr>`,
+      )
+      .join('');
+  }
+
+  q?.addEventListener('input', apply);
+  region?.addEventListener('change', apply);
+  ind?.addEventListener('change', apply);
+  apply();
+</script>
