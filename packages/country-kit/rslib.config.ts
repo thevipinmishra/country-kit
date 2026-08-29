@@ -8,14 +8,14 @@ export default defineConfig({
       dts: true,
       output: {
         minify: true,
-      }
+      },
     },
     {
       format: 'cjs',
       syntax: 'es2021',
       output: {
         minify: true,
-      }
+      },
     },
   ],
 });

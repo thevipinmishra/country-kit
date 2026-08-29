@@ -1,6 +1,6 @@
 # country-kit
 
-> A comprehensive TypeScript library providing accurate ISO 3166-1 country data, including country codes, names, calling codes, and Unicode flag emojis.
+Official ISO 3166-1 country data for TypeScript — codes, names, ITU-T E.164 calling codes, UN M49 regions, and Unicode flag emojis.
 
 [![npm version](https://img.shields.io/npm/v/country-kit.svg)](https://www.npmjs.com/package/country-kit)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/country-kit)](https://bundlephobia.com/package/country-kit)
@@ -9,156 +9,47 @@
 
 ## Why country-kit?
 
-country-kit is designed to be the go-to solution for handling country-related data in modern JavaScript/TypeScript applications. It provides:
+- **Official data**: ISO 3166-1 assigned codes and English short names, UN M49 numeric/region codes, ITU-T E.164 country calling codes
+- **Type-safe**: `CountryCode` is a union of all 249 assigned alpha-2 codes
+- **Zero dependencies**: static dataset, works in the browser and Node.js
+- **Practical extras**: common names, search aliases, NANP area codes, Unicode flags
 
-- 🎯 **Accuracy**: Complete ISO 3166-1 compliant country data
-- 🔒 **Type Safety**: Full TypeScript support with precise types
-- 🪶 **Lightweight**: Zero dependencies, tree-shakeable
-- 🚀 **Performance**: Optimized for both browser and Node.js
-- 🌍 **Comprehensive**: Includes names, codes, calling codes, and flags
+## Data sources
 
-## Features
+| Field | Standard | Notes |
+| --- | --- | --- |
+| `code`, `alpha3`, `name` | ISO 3166-1 | All **249** officially assigned codes. `name` is the ISO English short name. |
+| `numeric`, `region`, `subregion` | UN M49 | Numeric codes are identical to ISO 3166-1 numeric. Antarctica and Taiwan have no UN region. |
+| `callingCode` | ITU-T E.164 | Country calling codes only (1–3 digits). NANP members are `+1`, not `+1` plus an area code. |
+| `nanpAreaCodes` | NANP | Area codes for territories that share `+1`. |
+| `flag` | Unicode UTS #51 | Derived from the alpha-2 code via regional indicator symbols. |
 
-- 📚 **Complete ISO 3166-1 Coverage**: Full support for alpha-2, alpha-3 codes, and country names
-- 🎯 **Strict Validation**: Robust input validation and error handling
-- 🔒 **Type Safety**: Comprehensive TypeScript types and interfaces
-- 🪶 **Tree-Shakeable**: Import only what you need
-- ⚡ **Optimized**: Fast lookups and efficient data structures
-- 🌐 **Unicode Flags**: Correct flag emoji handling
-- 📞 **Calling Codes**: Accurate international dialing codes
+Kosovo (`XK`) is **not** included: it is a user-assigned code, not an ISO 3166-1 assigned code.
+
+The published package lives in [`packages/country-kit`](./packages/country-kit).
 
 ## Installation
 
 ```bash
-# npm
 npm install country-kit
-
-# yarn
-yarn add country-kit
-
-# pnpm
-pnpm add country-kit
 ```
 
-## Quick Start
+## Quick start
 
 ```typescript
-import { getCountryByCode, searchCountries } from 'country-kit';
+import { getCountry, searchCountries } from 'country-kit';
 
-// Get country details
-const us = getCountryByCode('US');
-console.log(us);
-// {
-//   code: 'US',
-//   name: 'United States of America',
-//   alpha3: 'USA',
-//   callingCode: '+1',
-//   flag: '🇺🇸'
-// }
+const us = getCountry('US');
+// name: 'United States of America' (ISO)
+// commonName: 'United States'
+// callingCode: '+1' (ITU-T E.164)
 
-// Search countries
-const results = searchCountries('united', { limit: 2 });
-console.log(results);
-// Returns matching countries like United States, United Kingdom
+searchCountries('uk');      // United Kingdom
+searchCountries('Vietnam'); // Viet Nam
 ```
 
-## API Reference
-
-### Functions
-
-#### `getCountryName(code: CountryCode): string | undefined`
-Returns the country name for a given ISO 3166-1 alpha-2 country code.
-
-#### `getCountryByCode(code: CountryCode): Country | undefined`
-Returns complete country information including name, alpha-3 code, calling code, and flag.
-
-#### `getCallingCode(code: CountryCode): string | undefined`
-Returns the international calling code (with + prefix) for a given country code.
-
-#### `getAlpha3Code(code: CountryCode): string | undefined`
-Returns the ISO 3166-1 alpha-3 code for a given alpha-2 country code.
-
-#### `getCountryFlag(code: CountryCode): string | undefined`
-Returns the flag emoji for a given country code.
-
-#### `getAllCountries(): Country[]`
-Returns an array of all countries with their complete information.
-
-#### `searchCountries(query: string, options?: CountrySearchOptions): Country[]`
-Searches for countries by name or code using case-insensitive matching.
-
-Options:
-- `limit?: number` - Maximum number of results to return
-- `exact?: boolean` - Whether to match exactly (default: false)
-- `includeCodes?: boolean` - Whether to search by country codes (alpha-2, alpha-3) as well (default: true)
-
-#### `isValidCountryCode(code: string): boolean`
-Validates if a string is a valid ISO 3166-1 alpha-2 country code.
-
-#### `isValidCallingCode(callingCode: string): boolean`
-Validates if a string matches the format of an international calling code (must start with '+' followed by 1-4 digits).
-
-#### `getCountriesByCallingCode(callingCode: string): Country[]`
-Returns an array of countries that share the specified calling code.
-
-### Types
-
-```typescript
-type CountryCode = string; // ISO 3166-1 alpha-2 code
-
-interface Country {
-  name: string;
-  code: CountryCode;
-  alpha3: string;
-  callingCode: string;
-  flag: string;
-}
-```
-
-## Examples
-
-### Country Selection in Forms
-
-```typescript
-import { getAllCountries, isValidCountryCode } from 'country-kit';
-
-const countries = getAllCountries();
-const formattedOptions = countries.map(country => ({
-  value: country.code,
-  label: `${country.flag} ${country.name} (${country.callingCode})`
-}));
-```
-
-### Phone Number Formatting
-
-```typescript
-import { getCallingCode, isValidCallingCode } from 'country-kit';
-
-function formatPhoneNumber(countryCode: string, number: string) {
-  const callingCode = getCallingCode(countryCode);
-  return callingCode ? `${callingCode} ${number}` : number;
-}
-```
-
-## Contributing
-We welcome contributions to country-kit! Here's how you can help:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-Please make sure to:
-- Update the documentation
-- Add/update tests as needed
-- Follow the existing code style
-- Run the test suite before submitting
+See [`packages/country-kit/README.md`](./packages/country-kit/README.md) for the full API.
 
 ## License
 
-This project is licensed under the ISC License - see the [LICENSE](https://github.com/thevipinmishra/country-kit/blob/main/LICENSE) file for details.
-
----
-
-Made with ❤️ by [Vipin Mishra](https://github.com/thevipinmishra)
+ISC — see [LICENSE](./LICENSE).

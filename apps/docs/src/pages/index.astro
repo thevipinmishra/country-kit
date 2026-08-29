@@ -67,7 +67,7 @@ const url = "https://www.npmjs.com/package/country-kit";
             <section>
                 <h2 id="introduction">Introduction</h2>
                 <p>
-                    country-kit is a lightweight TypeScript library providing ISO country data and utilities for working with country codes, names, calling codes and flags.
+                    country-kit is a zero-dependency TypeScript library of official ISO 3166-1 country data: assigned codes and English short names, UN M49 regions, ITU-T E.164 calling codes, and Unicode flag emojis.
                 </p>
 
                 <div class="flex gap-2 flex-wrap">
@@ -88,12 +88,12 @@ const url = "https://www.npmjs.com/package/country-kit";
                 <div>
                     <h3 id="features">Features</h3>
                     <ul>
-                        <li>Zero dependencies</li>
-                        <li>TypeScript support</li>
-                        <li>ISO 3166-1 alpha-2 and alpha-3 codes</li>
-                        <li>Country names and flags</li>
-                        <li>International calling codes</li>
-                        <li>Search and validation utilities</li>
+                        <li>All 249 ISO 3166-1 assigned codes (alpha-2, alpha-3, numeric)</li>
+                        <li>Official ISO English short names plus common names and search aliases</li>
+                        <li>ITU-T E.164 country calling codes (NANP area codes stored separately)</li>
+                        <li>UN M49 regions and sub-regions</li>
+                        <li>Unicode flag emojis from regional indicator symbols</li>
+                        <li>Zero dependencies, TypeScript-first API</li>
                     </ul>
                 </div>
             </section>
@@ -108,15 +108,21 @@ const url = "https://www.npmjs.com/package/country-kit";
 
                 <div>
                     <h3 id="basic-usage">Basic Usage</h3>
-                    <Code  code={`import { getCountryByCode, searchCountries } from 'country-kit';
+                    <Code  code={`import { getCountry, searchCountries } from 'country-kit';
 
-// Get country details
-const usa = getCountryByCode('US');
-// => { code: 'US', name: 'United States', alpha3: 'USA', callingCode: '+1', flag: '🇺🇸' }
+const usa = getCountry('US');
+// => {
+//   code: 'US',
+//   name: 'United States of America',
+//   commonName: 'United States',
+//   alpha3: 'USA',
+//   numeric: '840',
+//   callingCode: '+1',
+//   flag: '🇺🇸'
+// }
 
-// Search countries
-const results = searchCountries('united');
-// => [{ code: 'US', name: 'United States'... }, { code: 'GB', name: 'United Kingdom'... }]`} lang="typescript" theme="vesper" />
+searchCountries('uk');      // United Kingdom
+searchCountries('Vietnam'); // Viet Nam`} lang="typescript" theme="vesper" />
                 </div>
 
                 <div>
@@ -126,10 +132,12 @@ const results = searchCountries('united');
                             <h4 id="get-country-by-code">getCountryByCode(code: CountryCode)</h4>
                             <p>Returns complete country information for a given ISO 3166-1 alpha-2 code.</p>
                             <Code code={`const country = getCountryByCode('GB');
-// => { 
+// => {
 //   code: 'GB',
-//   name: 'United Kingdom',
+//   name: 'United Kingdom of Great Britain and Northern Ireland',
+//   commonName: 'United Kingdom',
 //   alpha3: 'GBR',
+//   numeric: '826',
 //   callingCode: '+44',
 //   flag: '🇬🇧'
 // }`} lang="typescript" theme="vesper" />
@@ -138,7 +146,8 @@ const results = searchCountries('united');
                         <li>
                             <h4 id="get-country-name">getCountryName(code: CountryCode)</h4>
                             <p>Returns the country name for a given country code.</p>
-                            <Code code={`const name = getCountryName('US'); // => 'United States'`} lang="typescript" theme="vesper" />
+                            <Code code={`getCountryName('US');        // => 'United States of America'
+getCountryCommonName('US'); // => 'United States'`} lang="typescript" theme="vesper" />
                         </li>
 
                         <li>
@@ -150,7 +159,8 @@ const results = searchCountries('united');
                         <li>
                             <h4 id="get-calling-code">getCallingCode(code: CountryCode)</h4>
                             <p>Gets the international calling code for a country.</p>
-                            <Code code={`const callingCode = getCallingCode('US'); // => '+1'`} lang="typescript" theme="vesper" />
+                            <Code code={`getCallingCode('AI'); // => '+1'     ITU-T E.164
+getDialCode('AI');    // => '+1264'  +1 plus Anguilla NPA`} lang="typescript" theme="vesper" />
                         </li>
 
                         <li>
@@ -203,8 +213,14 @@ isValidCallingCode('+12345'); // => false`} lang="typescript" theme="vesper" />
                         <li>
                             <h4 id="get-countries-by-calling-code">getCountriesByCallingCode(callingCode: string)</h4>
                             <p>Returns all countries that share a specific calling code.</p>
-                            <Code code={`const countries = getCountriesByCallingCode('+1');
-// Returns countries like US, Canada, etc. that use +1`} lang="typescript" theme="vesper" />
+                            <Code code={`getCountriesByCallingCode('+1');    // US, CA, AI, and other NANP members
+getCountriesByCallingCode('+1264'); // Anguilla (NANP NPA lookup)`} lang="typescript" theme="vesper" />
+                        </li>
+                        <li>
+                            <h4 id="get-countries-by-region">getCountriesByRegion(region?: string)</h4>
+                            <p>Groups countries by UN M49 region, or returns one region.</p>
+                            <Code code={`getCountriesByRegion();          // { Europe: [...], Asia: [...], ... }
+getCountriesByRegion('Europe');`} lang="typescript" theme="vesper" />
                         </li>
                     </ul>
                 </div>
@@ -212,20 +228,21 @@ isValidCallingCode('+12345'); // => false`} lang="typescript" theme="vesper" />
 
             <section>
                 <h2 id="types">Types</h2>
-                <Code code={`type CountryCode = string; // ISO 3166-1 alpha-2 code
+                <Code code={`type CountryCode = 'AD' | 'AE' | /* 249 assigned alpha-2 codes */;
 
 interface Country {
-    code: CountryCode;  // ISO 3166-1 alpha-2 code
-    name: string;       // Official country name
-    alpha3: string;     // ISO 3166-1 alpha-3 code
-    callingCode: string; // International calling code with + prefix
-    flag: string;       // Unicode flag emoji
-}
-
-interface CountrySearchOptions {
-    limit?: number;         // Maximum number of results to return
-    exact?: boolean;        // Whether to match exactly (default: false)
-    includeCodes?: boolean; // Whether to search by country codes as well (default: true)
+    code: CountryCode;
+    name: string;            // ISO 3166-1 English short name
+    commonName: string;
+    alpha3: string;
+    numeric: string;
+    callingCode: string;     // ITU-T E.164
+    callingCodes: readonly string[];
+    dialCode: string;
+    region: string | null;
+    subregion: string | null;
+    flag: string;
+    nanpAreaCodes?: readonly string[];
 }`} lang="typescript" theme="vesper" />
             </section>
 
