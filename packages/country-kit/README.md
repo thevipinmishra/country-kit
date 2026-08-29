@@ -7,12 +7,10 @@ Official ISO 3166-1 country data for TypeScript — codes, names, ITU-T E.164 ca
 [![license](https://img.shields.io/npm/l/country-kit.svg)](https://github.com/thevipinmishra/country-kit/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 
-## Why country-kit?
-
-- **Official data**: ISO 3166-1 assigned codes and English short names, UN M49 numeric/region codes, ITU-T E.164 country calling codes, IANA ccTLDs, ISO 4217 currencies
-- **Type-safe**: `CountryCode` is a union of all 249 assigned alpha-2 codes
-- **Zero dependencies**: static dataset, works in the browser and Node.js
-- **Practical extras**: common names, search aliases, NANP area codes, Unicode flags, and Wikipedia SVG flags
+- ISO 3166-1 assigned codes and English short names, UN M49, ITU-T E.164, IANA ccTLDs, ISO 4217
+- `CountryCode` is a union of all 249 assigned alpha-2 codes
+- Zero runtime dependencies
+- Common names, search aliases, NANP area codes, Unicode flags, Wikipedia SVG flags
 
 Docs: [playground](https://country-kit.vercel.app/), [examples](https://country-kit.vercel.app/examples/), [API](https://country-kit.vercel.app/api/).
 
@@ -81,7 +79,7 @@ searchCountries('TRY');       // Türkiye (ISO 4217)
 | `getCountryByNumeric(numeric)` | ISO 3166-1 numeric / UN M49 (`"840"` or `"84"`) |
 | `getCountryByTld(tld)` | IANA ccTLD (`".uk"` or `"uk"` → GB) |
 | `getCountryName(code)` | Official ISO English short name |
-| `getCountryCommonName(code)` | Everyday English name |
+| `getCountryCommonName(code)` | Common English name |
 | `getAlpha3Code(code)` | Alpha-3 |
 | `getNumericCode(code)` | Numeric, zero-padded |
 | `getCallingCode(code)` | E.164 country calling code (`+1` for all NANP) |
@@ -91,7 +89,7 @@ searchCountries('TRY');       // Türkiye (ISO 4217)
 | `getCountryTld` / `getCountryCapital` / `getCountryCurrencies` | IANA TLD, capital, ISO 4217 |
 | `getAllCountries(options?)` | Optional `region`, `subregion`, `independent`, `sortBy` |
 | `getIndependentCountries()` | ISO independent = yes |
-| `getCountrySelectOptions()` | Select-ready `{ value, label, dialCode, flag, flagSvgUrl }` |
+| `getCountrySelectOptions()` | `{ value, label, dialCode, flag, flagSvgUrl }` for a select |
 
 ### Search and grouping
 
@@ -141,11 +139,11 @@ interface Country {
 
 ## Examples
 
-Live React and Vue islands (with copy-paste snippets) are on the [examples page](https://country-kit.vercel.app/examples/).
+React and Vue previews: [examples](https://country-kit.vercel.app/examples/).
 
-### Signup: country of residence
+### Country select
 
-Persist the ISO alpha-2 code. Show the common name. Hide territories.
+Store the alpha-2 code. Display `commonName`. `independent: true` excludes territories.
 
 ```tsx
 import { useMemo, useState } from 'react';
@@ -188,7 +186,7 @@ const country = computed(() => getCountry(code.value));
 </template>
 ```
 
-### Checkout: phone prefix
+### Phone prefix
 
 `dialCode` is what a phone picker should show. `callingCode` is the ITU-T E.164 country code.
 
@@ -208,7 +206,7 @@ getCountriesByCallingCode('+1264'); // [Anguilla]
 getCountriesByCallingCode('+1');    // US, CA, AI, …
 ```
 
-### Address typeahead
+### Search
 
 ```typescript
 import { searchCountries } from 'country-kit';
@@ -223,7 +221,7 @@ order.shipTo = results[0].code;
 order.shipToLabel = results[0].commonName;
 ```
 
-### Profile flag
+### Flags
 
 ```tsx
 import { getCountryFlag, getFlagSvgUrl } from 'country-kit';
@@ -244,9 +242,9 @@ import { getCountryFlag, getFlagSvgUrl } from 'country-kit';
 </template>
 ```
 
-Offline inline markup (optional, larger entry): `import { getFlagSvg } from 'country-kit/flags'`.
+Offline inline markup (larger entry): `import { getFlagSvg } from 'country-kit/flags'`.
 
-### Country from a hostname or email
+### TLD lookup
 
 ```typescript
 import { getCountryByTld } from 'country-kit';
@@ -263,7 +261,7 @@ countryFromHost('ada@bund.de');        // Germany
 countryFromHost('https://npmjs.com');  // undefined (.com is not a ccTLD)
 ```
 
-### Billing: where a currency is used
+### Currency
 
 ```typescript
 import { getCountriesByCurrency, listCurrencies } from 'country-kit';
@@ -273,7 +271,7 @@ const euro = getCountriesByCurrency('EUR');
 pricing.enabledMarkets = euro.map((c) => c.code);
 ```
 
-### Shipping zone
+### Regions
 
 ```typescript
 import { getAllCountries, getIndependentCountries, listRegions } from 'country-kit';
@@ -289,7 +287,7 @@ const europe = getAllCountries({
 getIndependentCountries(); // 195 sovereign states
 ```
 
-### Validate a webhook / query param
+### Validation
 
 ```typescript
 import {
@@ -337,7 +335,7 @@ scripts/
   sources/              ISO 3166-1 / UN M49 / extras / flag-icons license
 ```
 
-Import `country-kit/flags` only when you need inline SVG markup. The core bundle stays a compact JSON dataset plus lookup functions.
+Import `country-kit/flags` only for inline SVG. The core package is the JSON dataset plus lookups.
 
 ## License
 

@@ -5,22 +5,19 @@ import { Code } from 'astro:components';
 const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris'];
 ---
 
-<Layout title="Playground" description="Try country-kit in the browser: search ISO names, aliases, codes, calling prefixes, TLDs, and currencies.">
-  <section class="ck-grid-bg border-b border-[var(--line)]">
-    <div class="container py-14 lg:py-20">
-      <p class="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">v2 · 249 ISO 3166-1 codes · zero dependencies</p>
-      <h1 class="max-w-3xl text-4xl font-semibold leading-tight tracking-tight lg:text-6xl">
-        Official country data for TypeScript.
-      </h1>
-      <p class="mt-5 max-w-2xl text-lg text-[var(--muted)]">
-        ISO 3166-1 names and codes, ITU-T E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, and Wikipedia SVG flags — one small static package.
+<Layout title="Playground" description="Search country-kit: ISO names, aliases, codes, calling prefixes, TLDs, and currencies.">
+  <section class="border-b border-[var(--line)]">
+    <div class="container py-10 lg:py-14">
+      <h1 class="text-3xl font-semibold tracking-tight lg:text-4xl">country-kit</h1>
+      <p class="mt-3 max-w-2xl text-[var(--muted)]">
+        ISO 3166-1 country data for TypeScript. 249 assigned codes, ITU-T E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, and SVG flags. No runtime dependencies.
       </p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <a href="/examples" class="rounded-full bg-[var(--ink)] px-5 py-2.5 text-sm font-medium text-[var(--paper)] hover:bg-black">Real-world examples</a>
-        <a href="/explorer" class="rounded-full border border-[var(--ink)]/20 px-5 py-2.5 text-sm font-medium hover:border-[var(--ink)]">Explore 249 countries</a>
-        <a href="/api" class="rounded-full border border-[var(--ink)]/20 px-5 py-2.5 text-sm font-medium hover:border-[var(--ink)]">API reference</a>
+      <div class="mt-6 flex flex-wrap gap-2">
+        <a href="/examples" class="rounded-md bg-[var(--ink)] px-4 py-2 text-sm font-medium text-[var(--paper)] hover:bg-black">Examples</a>
+        <a href="/explorer" class="rounded-md border border-[var(--ink)]/20 px-4 py-2 text-sm font-medium hover:border-[var(--ink)]">Explorer</a>
+        <a href="/api" class="rounded-md border border-[var(--ink)]/20 px-4 py-2 text-sm font-medium hover:border-[var(--ink)]">API</a>
       </div>
-      <div class="mt-8 max-w-xl min-w-0">
+      <div class="mt-6 max-w-xl min-w-0">
         <div class="ck-code">
           <Code code={`npm install country-kit`} lang="bash" theme="vesper" />
         </div>
@@ -28,11 +25,13 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
     </div>
   </section>
 
-  <section class="container py-12">
-    <div class="mb-6 flex flex-wrap items-end justify-between gap-4">
+  <section class="container py-10">
+    <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
       <div>
-        <h2 class="text-2xl font-semibold">Live playground</h2>
-        <p class="mt-1 text-[var(--muted)]">Search official names, common names, aliases, alpha-2/3, numeric codes, dial prefixes, IANA TLDs, currencies, or capitals.</p>
+        <h2 class="text-xl font-semibold">Search</h2>
+        <p class="mt-1 text-sm text-[var(--muted)]">
+          Names, aliases, alpha-2/3, numeric codes, dial prefixes, TLDs, currencies, capitals.
+        </p>
       </div>
       <p class="font-mono text-xs text-[var(--muted)]">searchCountries(query)</p>
     </div>
@@ -42,7 +41,7 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
         <button
           type="button"
           data-q={sample}
-          class="rounded-full border border-[var(--line)] bg-white px-3 py-1 text-sm hover:border-[var(--ink)]"
+          class="rounded-md border border-[var(--line)] bg-white px-2.5 py-1 text-sm hover:border-[var(--ink)]"
         >
           {sample}
         </button>
@@ -50,38 +49,19 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
     </div>
 
     <div class="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
-      <div class="min-w-0 rounded-2xl border border-[var(--line)] bg-[var(--card)] p-4 shadow-sm lg:p-6">
-        <label for="q" class="mb-2 block text-sm font-medium">Search</label>
+      <div class="min-w-0 rounded-lg border border-[var(--line)] bg-[var(--card)] p-4 lg:p-5">
+        <label for="q" class="mb-2 block text-sm font-medium">Query</label>
         <input
           id="q"
           type="search"
           value="united"
           autocomplete="off"
           placeholder="UK, Vietnam, +1, 840, .uk, TRY, Paris…"
-          class="w-full rounded-xl border border-[var(--line)] bg-white px-4 py-3 outline-none ring-[var(--accent)] focus:ring-2"
+          class="w-full rounded-md border border-[var(--line)] bg-white px-3 py-2.5 outline-none ring-[var(--accent)] focus:ring-2"
         />
         <ul id="results" class="mt-4 divide-y divide-[var(--line)]"></ul>
       </div>
-      <aside id="detail" class="min-w-0 rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5 shadow-sm"></aside>
-    </div>
-  </section>
-
-  <section class="container pb-16">
-    <h2 class="text-2xl font-semibold">What you get</h2>
-    <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {[
-        ['ISO 3166-1', 'All 249 assigned alpha-2, alpha-3, and numeric codes, with official English short names.'],
-        ['ITU-T E.164', 'Country calling codes only. NANP territories are +1, with area codes stored separately.'],
-        ['UN M49 regions', 'Filter Europe, Caribbean, Polynesia, and the rest of the official UN geoscheme.'],
-        ['IANA + ISO 4217', 'ccTLDs (GB is .uk) and alphabetic currency codes, plus conventional capitals.'],
-        ['SVG flags', 'Wikipedia/Wikimedia SVGs via flag-icons (MIT), as a CDN URL or inline markup.'],
-        ['Type-safe', 'CountryCode is a union of every assigned alpha-2 code. Zero runtime dependencies.'],
-      ].map(([title, body]) => (
-        <article class="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-5">
-          <h3 class="font-semibold">{title}</h3>
-          <p class="mt-2 text-sm text-[var(--muted)]">{body}</p>
-        </article>
-      ))}
+      <aside id="detail" class="min-w-0 rounded-lg border border-[var(--line)] bg-[var(--card)] p-5"></aside>
     </div>
   </section>
 </Layout>
@@ -106,7 +86,7 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
         <img src="${url}" alt="Flag of ${country.commonName}" />
       </div>
       <p class="mt-4 font-mono text-xs text-[var(--muted)]">${country.code} · ${country.alpha3} · ${country.numeric}</p>
-      <h3 class="mt-1 text-xl font-semibold">${country.commonName}</h3>
+      <h3 class="mt-1 text-lg font-semibold">${country.commonName}</h3>
       <p class="text-sm text-[var(--muted)]">${country.name}</p>
       <dl class="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 text-sm">
         <dt class="text-[var(--muted)]">Calling</dt><dd class="font-mono">${country.callingCode}</dd>
@@ -125,7 +105,7 @@ const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris
     if (!list) return;
     const matches = searchCountries(query, { limit: 8 });
     if (!matches.length) {
-      list.innerHTML = '<li class="px-1 py-6 text-sm text-[var(--muted)]">No matches. Try an ISO name, alias, code, TLD, or currency.</li>';
+      list.innerHTML = '<li class="px-1 py-6 text-sm text-[var(--muted)]">No matches.</li>';
       if (detail) detail.innerHTML = '<p class="text-sm text-[var(--muted)]">No matches.</p>';
       return;
     }

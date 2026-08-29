@@ -3,7 +3,6 @@ import { Code } from 'astro:components';
 
 interface Props {
   id: string;
-  kicker: string;
   title: string;
   description: string;
   apis: string;
@@ -11,23 +10,22 @@ interface Props {
   vueCode: string;
 }
 
-const { id, kicker, title, description, apis, reactCode, vueCode } = Astro.props;
+const { id, title, description, apis, reactCode, vueCode } = Astro.props;
 ---
 
 <section id={id} class="example-block scroll-mt-24">
-  <p class="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--accent)]">{kicker}</p>
-  <h2 class="mt-2 text-3xl font-semibold tracking-tight">{title}</h2>
-  <p class="mt-3 max-w-2xl text-[var(--muted)]">{description}</p>
+  <h2 class="text-2xl font-semibold tracking-tight">{title}</h2>
+  <p class="mt-2 max-w-2xl text-[var(--muted)]">{description}</p>
   <p class="mt-2 font-mono text-xs text-[var(--muted)]">{apis}</p>
 
-  <div class="mt-5 flex flex-wrap gap-1" role="tablist" aria-label="Framework">
+  <div class="mt-4 flex flex-wrap gap-1" role="tablist" aria-label="Framework">
     <button type="button" class="example-tab is-active" data-fw="react" role="tab" aria-selected="true">React</button>
     <button type="button" class="example-tab" data-fw="vue" role="tab" aria-selected="false">Vue</button>
   </div>
 
   <div class="mt-4 grid min-w-0 gap-4 lg:grid-cols-2">
-    <div class="min-w-0 overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--card)] p-4 shadow-sm sm:p-5">
-      <p class="mb-3 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-[var(--muted)]">Live preview</p>
+    <div class="min-w-0 overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--card)] p-4 sm:p-5">
+      <p class="mb-3 font-mono text-xs text-[var(--muted)]">Preview</p>
       <div data-fw-panel="react">
         <slot name="react" />
       </div>

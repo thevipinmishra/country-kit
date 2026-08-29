@@ -12,8 +12,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ["Source Sans 3 Variable", "Source Sans 3", "ui-sans-serif", "system-ui", "sans-serif"],
-        serif: ["Source Serif 4 Variable", "Source Serif 4", "ui-serif", "Georgia", "serif"],
+        sans: ["IBM Plex Sans", "ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["IBM Plex Sans", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["IBM Plex Mono", "ui-monospace", "SFMono-Regular", "monospace"],
       },
     },

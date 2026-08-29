@@ -16,35 +16,30 @@ import HostLookupVue from '../components/vue/HostLookup.vue';
 import CodeValidatorVue from '../components/vue/CodeValidator.vue';
 
 const toc = [
-  ['#residence', 'Residence'],
+  ['#residence', 'Select'],
   ['#phone', 'Phone'],
-  ['#search', 'Ship-to'],
+  ['#search', 'Search'],
   ['#profile', 'Flags'],
-  ['#tld', 'Hostname'],
+  ['#tld', 'TLD'],
   ['#validate', 'Validate'],
 ];
 ---
 
 <Layout
   title="Examples"
-  description="React and Vue examples for country-kit: signup selects, phone pickers, address search, SVG flags, TLD lookup, and ISO validation."
+  description="React and Vue examples for country-kit: country select, phone prefix, search, flags, TLD lookup, and validation."
 >
-  <section class="ck-grid-bg border-b border-[var(--line)]">
-    <div class="container py-12 lg:py-16">
-      <p class="mb-3 font-mono text-[0.7rem] uppercase tracking-[0.18em] text-[var(--accent)]">
-        React · Vue islands
+  <section class="border-b border-[var(--line)]">
+    <div class="container py-10 lg:py-12">
+      <h1 class="text-3xl font-semibold tracking-tight lg:text-4xl">Examples</h1>
+      <p class="mt-3 max-w-2xl text-[var(--muted)]">
+        React and Vue. Each section has a live preview and the code next to it.
       </p>
-      <h1 class="max-w-3xl text-4xl font-semibold leading-tight lg:text-5xl">
-        Examples you can paste into a form.
-      </h1>
-      <p class="mt-4 max-w-2xl text-lg text-[var(--muted)]">
-        Each block is a product surface with a live React island, a live Vue island, and the snippet beside it. Switch tabs to compare.
-      </p>
-      <nav class="mt-8 flex flex-wrap gap-2">
+      <nav class="mt-6 flex flex-wrap gap-2">
         {toc.map(([href, label]) => (
           <a
             href={href}
-            class="rounded-full border border-[var(--line)] bg-[var(--card)] px-3 py-1.5 text-sm hover:border-[var(--ink)]"
+            class="rounded-md border border-[var(--line)] bg-[var(--card)] px-3 py-1.5 text-sm hover:border-[var(--ink)]"
           >
             {label}
           </a>
@@ -53,12 +48,11 @@ const toc = [
     </div>
   </section>
 
-  <div class="container space-y-20 py-12 sm:py-16">
+  <div class="container space-y-16 py-12">
     <ExampleBlock
       id="residence"
-      kicker="Signup / KYC"
-      title="Country of residence"
-      description="Independent-country dropdown. Persist the ISO alpha-2 code; show the common name. Territories stay out via independent: true."
+      title="Country select"
+      description="Independent countries for a select. Store the alpha-2 code; display commonName."
       apis="getCountrySelectOptions · getCountry"
       reactCode={snippets.residence.react}
       vueCode={snippets.residence.vue}
@@ -73,9 +67,8 @@ const toc = [
 
     <ExampleBlock
       id="phone"
-      kicker="Checkout / 2FA"
-      title="Phone number with dial prefix"
-      description="Show dialCode in the picker (+1264 for Anguilla). Keep callingCode when you need the official E.164 country code (+1 for every NANP member)."
+      title="Phone prefix"
+      description="Show dialCode in the picker (+1264 for Anguilla). callingCode is the E.164 country code (+1 for NANP)."
       apis="searchCountries · getDialCode · getCallingCode"
       reactCode={snippets.phone.react}
       vueCode={snippets.phone.vue}
@@ -90,9 +83,8 @@ const toc = [
 
     <ExampleBlock
       id="search"
-      kicker="Address / shipping"
-      title="Typeahead country field"
-      description="Ranked search over official names, common names, aliases (UK, Vietnam), codes, TLDs, currencies, and capitals."
+      title="Search"
+      description="searchCountries ranks official names, common names, aliases (UK, Vietnam), codes, TLDs, currencies, and capitals."
       apis="searchCountries"
       reactCode={snippets.search.react}
       vueCode={snippets.search.vue}
@@ -107,9 +99,8 @@ const toc = [
 
     <ExampleBlock
       id="profile"
-      kicker="Profile / locale"
-      title="Flag on a user card"
-      description="CDN Wikipedia SVGs stay in the tiny core bundle. Import country-kit/flags only when you need offline inline markup."
+      title="Flags"
+      description="getFlagSvgUrl returns a CDN URL (core package). Import country-kit/flags only for inline SVG markup."
       apis="getFlagSvgUrl · getCountryFlag · getCountry"
       reactCode={snippets.flag.react}
       vueCode={snippets.flag.vue}
@@ -124,9 +115,8 @@ const toc = [
 
     <ExampleBlock
       id="tld"
-      kicker="Growth / support"
-      title="Country from a hostname or email"
-      description="IANA ccTLDs map to ISO alpha-2 except the UK: gov.uk is GB, not .gb. Generic TLDs like .com are not countries."
+      title="TLD lookup"
+      description="getCountryByTld maps IANA ccTLDs to alpha-2. gov.uk is GB, not .gb. .com is not a country TLD."
       apis="getCountryByTld"
       reactCode={snippets.tld.react}
       vueCode={snippets.tld.vue}
@@ -141,9 +131,8 @@ const toc = [
 
     <ExampleBlock
       id="validate"
-      kicker="API / webhooks"
-      title="Validate a country code"
-      description="isValidCountryCode is a type guard for assigned alpha-2 codes. getCountry also accepts alpha-3 and UN numeric. Kosovo XK is rejected on purpose."
+      title="Validation"
+      description="isValidCountryCode is a type guard for assigned alpha-2 codes. getCountry also accepts alpha-3 and numeric. XK is not assigned."
       apis="isValidCountryCode · getCountry · isValidCallingCode"
       reactCode={snippets.validate.react}
       vueCode={snippets.validate.vue}

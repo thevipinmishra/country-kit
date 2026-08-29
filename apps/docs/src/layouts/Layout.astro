@@ -1,8 +1,10 @@
 ---
-import '@fontsource-variable/source-sans-3';
-import '@fontsource-variable/source-serif-4';
-import '@fontsource/ibm-plex-mono/400.css';
-import '@fontsource/ibm-plex-mono/500.css';
+import '@fontsource/ibm-plex-sans/latin-400.css';
+import '@fontsource/ibm-plex-sans/latin-500.css';
+import '@fontsource/ibm-plex-sans/latin-600.css';
+import '@fontsource/ibm-plex-sans/latin-700.css';
+import '@fontsource/ibm-plex-mono/latin-400.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
 import '../styles/global.css';
 
 interface Props {
@@ -12,7 +14,7 @@ interface Props {
 
 const {
   title = 'country-kit',
-  description = 'Official ISO 3166-1 country data for TypeScript — codes, names, E.164 calling codes, UN M49 regions, and Wikipedia SVG flags.',
+  description = 'ISO 3166-1 country data for TypeScript: codes, names, E.164 calling codes, UN M49 regions, and SVG flags.',
 } = Astro.props;
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -29,7 +31,7 @@ const links = [
 
 const pageTitle =
   title === 'country-kit'
-    ? 'country-kit — official country data for TypeScript'
+    ? 'country-kit — ISO 3166-1 country data for TypeScript'
     : `${title} · country-kit`;
 ---
 
@@ -46,22 +48,22 @@ const pageTitle =
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
   </head>
-  <body class="min-h-dvh min-w-0 font-sans antialiased">
+  <body>
     <a
       href="#content"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-white focus:px-3 focus:py-2"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2"
       >Skip to content</a
     >
     <header class="sticky top-0 z-40 border-b border-stone-800/80 bg-[#161412] text-[#f4efe6]">
       <div class="container flex h-14 items-center justify-between gap-3">
-        <a href="/" class="font-serif text-[1.15rem] font-semibold tracking-tight">country-kit</a>
-        <nav class="hidden min-w-0 items-center gap-0.5 text-[0.9375rem] lg:flex" aria-label="Primary">
+        <a href="/" class="text-[0.95rem] font-semibold tracking-tight">country-kit</a>
+        <nav class="hidden min-w-0 items-center gap-1 text-sm lg:flex" aria-label="Primary">
           {links.map((link) => (
             <a
               href={link.href}
               aria-current={path === link.href ? 'page' : undefined}
               class:list={[
-                'rounded-full px-3 py-1.5',
+                'rounded-md px-2.5 py-1.5',
                 path === link.href
                   ? 'bg-[#f4efe6] text-[#161412]'
                   : 'text-stone-300 hover:bg-white/10 hover:text-white',
@@ -72,14 +74,14 @@ const pageTitle =
           ))}
           <a
             href="https://github.com/thevipinmishra/country-kit"
-            class="rounded-full px-3 py-1.5 text-stone-300 hover:bg-white/10 hover:text-white"
+            class="rounded-md px-2.5 py-1.5 text-stone-300 hover:bg-white/10 hover:text-white"
             >GitHub</a
           >
         </nav>
         <button
           type="button"
           id="nav-toggle"
-          class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-[#f4efe6] lg:hidden"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/20 text-[#f4efe6] lg:hidden"
           aria-expanded="false"
           aria-controls="nav-panel"
           aria-label="Open menu"
@@ -95,7 +97,7 @@ const pageTitle =
     </header>
     <div id="nav-backdrop" class="nav-backdrop" hidden></div>
     <nav id="nav-panel" class="nav-panel" aria-label="Mobile" hidden>
-      <div class="container space-y-1 py-4 text-[1.05rem]">
+      <div class="container space-y-1 py-3 text-[0.95rem]">
         {links.map((link) => (
           <a href={link.href} aria-current={path === link.href ? 'page' : undefined}>
             {link.label}
@@ -109,12 +111,12 @@ const pageTitle =
     </div>
     <footer class="mt-16 border-t border-[var(--line)] py-8 text-sm text-[var(--muted)]">
       <div class="container flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
-        <p>ISO 3166-1 · UN M49 · ITU-T E.164 · Wikipedia SVG flags</p>
+        <p>ISO 3166-1, UN M49, ITU-T E.164, IANA, ISO 4217</p>
         <p>
           <a class="underline decoration-stone-400 underline-offset-4 hover:text-[var(--ink)]" href="https://www.npmjs.com/package/country-kit"
             >npm</a
           >
-          · ISC license
+          · ISC
         </p>
       </div>
     </footer>
