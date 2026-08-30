@@ -1,5 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import { LinkButton } from 'starlight-theme-nova/components';
 import CodeBlock from '../components/CodeBlock.astro';
 
 const samples = ['united', 'uk', 'Vietnam', '+1264', '840', '.uk', 'TRY', 'Paris'];
@@ -13,73 +14,66 @@ us?.callingCode;          // '+1'
 searchCountries('uk')[0]; // United Kingdom`;
 ---
 
-<Layout
-  title="Playground"
-  description="Search ISO 3166-1 countries by name, alias, calling code, TLD, or currency. Install country-kit for TypeScript."
+<StarlightPage
+  frontmatter={{
+    title: 'Playground',
+    description:
+      'Search ISO 3166-1 countries by name, alias, calling code, TLD, or currency. Install country-kit for TypeScript.',
+  }}
+  headings={[{ depth: 2, slug: 'search', text: 'Search' }]}
 >
-  <section class="border-b border-[var(--line)]">
-    <div class="container py-10 lg:py-14">
-      <p class="font-mono text-xs tracking-wide text-[var(--muted)]">npm · TypeScript · 249 codes</p>
-      <h1 class="mt-2 max-w-[22ch] text-3xl font-semibold tracking-tight lg:text-4xl">
-        Look up ISO 3166-1 countries by code, name, TLD, or currency
-      </h1>
-      <p class="mt-4 max-w-2xl text-[var(--muted)]">
-        Static dataset of 249 assigned ISO 3166-1 codes: ITU-T E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, Unicode flags, and Wikipedia SVGs. No runtime dependencies.
-      </p>
-      <div class="mt-6 flex flex-wrap gap-2">
-        <a href="/examples" class="ck-btn rounded-md bg-[var(--ink)] px-4 py-2.5 text-sm font-medium text-[var(--paper)] hover:bg-black">Open examples</a>
-        <a href="/explorer" class="ck-btn rounded-md border border-[var(--ink)]/20 px-4 py-2.5 text-sm font-medium hover:border-[var(--ink)]">Browse countries</a>
-        <a href="/api" class="ck-btn rounded-md border border-[var(--ink)]/20 px-4 py-2.5 text-sm font-medium hover:border-[var(--ink)]">Read the API</a>
-      </div>
-      <div class="mt-8 grid min-w-0 gap-4 lg:grid-cols-2">
-        <div class="min-w-0">
-          <p class="text-sm font-medium">Install</p>
-          <CodeBlock class="mt-2" code={install} lang="bash" />
-        </div>
-        <div class="min-w-0">
-          <p class="text-sm font-medium">Usage</p>
-          <CodeBlock class="mt-2" code={usage} lang="typescript" />
-        </div>
-      </div>
+  <p class="font-mono text-xs tracking-wide text-[var(--muted)]">npm · TypeScript · 249 codes</p>
+  <p class="ck-lede mt-2">Look up ISO 3166-1 countries by code, name, TLD, or currency</p>
+  <p class="mt-4 max-w-2xl text-[var(--muted)]">
+    249 assigned ISO 3166-1 codes: ITU-T E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, Unicode flags, and Wikipedia SVGs. No runtime dependencies.
+  </p>
+  <div class="not-content mt-6 flex flex-wrap gap-2">
+    <LinkButton href="/getting-started/">Get started</LinkButton>
+    <LinkButton href="/examples/" variant="secondary">Examples</LinkButton>
+    <LinkButton href="/api/" variant="secondary">API</LinkButton>
+  </div>
+  <div class="mt-8 grid min-w-0 gap-4 lg:grid-cols-2">
+    <div class="min-w-0">
+      <p class="text-sm font-medium">Install</p>
+      <CodeBlock class="mt-2" code={install} lang="bash" />
     </div>
-  </section>
+    <div class="min-w-0">
+      <p class="text-sm font-medium">Usage</p>
+      <CodeBlock class="mt-2" code={usage} lang="typescript" />
+    </div>
+  </div>
 
-  <section class="container py-10">
-    <div class="mb-4 flex flex-wrap items-end justify-between gap-3">
-      <div>
-        <h2 class="text-xl font-semibold">Search</h2>
-        <p class="mt-1 max-w-2xl text-sm text-[var(--muted)]">
-          ISO short names, common names, aliases, alpha-2/3, numeric codes, dial prefixes, TLDs, currencies, capitals.
-        </p>
-      </div>
-      <p class="font-mono text-xs text-[var(--muted)]">searchCountries(query)</p>
-    </div>
+  <h2 id="search">Search</h2>
+  <p class="max-w-2xl text-sm text-[var(--muted)]">
+    ISO short names, common names, aliases, alpha-2/3, numeric codes, dial prefixes, TLDs, currencies, capitals.
+  </p>
+  <p class="font-mono text-xs text-[var(--muted)]">searchCountries(query)</p>
 
-    <div class="mb-4 flex flex-wrap gap-2" id="chips">
-      {samples.map((sample) => (
-        <button type="button" data-q={sample} class="ck-chip">
-          {sample}
-        </button>
-      ))}
-    </div>
+  <div class="not-content mb-4 flex flex-wrap items-center gap-2" id="chips">
+    {samples.map((sample) => (
+      <button type="button" data-q={sample} class="ck-chip">
+        {sample}
+      </button>
+    ))}
+  </div>
 
-    <div class="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
-      <div class="min-w-0 rounded-lg border border-[var(--line)] bg-[var(--card)] p-4 lg:p-5">
-        <label for="q" class="mb-2 block text-sm font-medium">Query</label>
-        <input
-          id="q"
-          type="search"
-          value="united"
-          autocomplete="off"
-          placeholder="UK, Vietnam, +1, 840, .uk, TRY, Paris"
-          class="w-full rounded-md border border-[var(--line)] bg-white px-3 py-2.5 text-base outline-none sm:text-sm"
-        />
-        <p id="search-status" class="tabular mt-2 text-xs text-[var(--muted)]" role="status"></p>
-        <ul id="results" class="mt-2 divide-y divide-[var(--line)]"></ul>
-      </div>
-      <aside id="detail" class="min-w-0 rounded-lg border border-[var(--line)] bg-[var(--card)] p-5" aria-live="polite"></aside>
+  <div class="not-content grid min-w-0 gap-6 lg:grid-cols-[minmax(0,1fr)_20rem]">
+    <div class="ck-panel p-4 lg:p-5">
+      <label for="q" class="ck-label">Query</label>
+      <input
+        id="q"
+        type="search"
+        value="united"
+        autocomplete="off"
+        placeholder="UK, Vietnam, +1, 840, .uk, TRY, Paris"
+        class="ck-field"
+      />
+      <p id="search-status" class="tabular mt-2 text-xs text-[var(--muted)]" role="status"></p>
+      <ul id="results" class="mt-2 divide-y divide-[var(--line)]"></ul>
     </div>
-  </section>
+    <aside id="detail" class="ck-panel p-5" aria-live="polite"></aside>
+  </div>
+</StarlightPage>
 
 <script>
   import {
@@ -145,7 +139,7 @@ searchCountries('uk')[0]; // United Kingdom`;
       .map((country, index) => {
         const url = getFlagSvgUrl(country.code) ?? '';
         return `<li>
-          <button type="button" data-index="${index}" class="flex min-h-11 w-full items-center gap-3 px-1 py-3 text-left hover:bg-stone-50">
+          <button type="button" data-index="${index}" class="ck-result">
             <span class="flag-frame h-6 w-8 shrink-0"><img src="${url}" alt="" /></span>
             <span class="min-w-0 flex-1">
               <span class="block truncate font-medium">${escapeHtml(country.commonName)}</span>
@@ -190,4 +184,3 @@ searchCountries('uk')[0]; // United Kingdom`;
   input?.addEventListener('input', () => render(input.value));
   render(input?.value ?? 'united');
 </script>
-</Layout>

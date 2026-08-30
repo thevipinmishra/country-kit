@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import { getAllCountries, getFlagSvgUrl, listRegions } from 'country-kit';
 
 const countries = getAllCountries({ sortBy: 'commonName' }).map((country) => ({
@@ -22,63 +22,65 @@ const countries = getAllCountries({ sortBy: 'commonName' }).map((country) => ({
 const regions = listRegions();
 ---
 
-<Layout
-  title="Explorer"
-  description="Browse all 249 ISO 3166-1 countries and territories in country-kit. Filter by UN M49 region, independence, name, TLD, or currency."
+<StarlightPage
+  frontmatter={{
+    title: 'Explorer',
+    description:
+      'Browse all 249 ISO 3166-1 countries and territories in country-kit. Filter by UN M49 region, independence, name, TLD, or currency.',
+    tableOfContents: false,
+  }}
 >
-  <section class="container min-w-0 py-10">
-    <h1 class="text-3xl font-semibold tracking-tight">Explorer</h1>
-    <p class="mt-3 max-w-2xl text-[var(--muted)]">
-      All 249 assigned ISO 3166-1 codes. Filter by UN M49 region or independent status.
-    </p>
+  <p class="max-w-2xl text-[var(--muted)]">
+    All 249 assigned ISO 3166-1 codes. Filter by UN M49 region or independent status.
+  </p>
 
-    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_12rem_14rem]">
-      <div>
-        <label for="filter-q" class="ck-label">Filter</label>
-        <input
-          id="filter-q"
-          type="search"
-          placeholder="Japan, JP, .jp, JPY, Tokyo"
-          class="w-full min-w-0 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 text-base outline-none sm:text-sm"
-        />
-      </div>
-      <div>
-        <label for="filter-region" class="ck-label">Region</label>
-        <select id="filter-region" class="w-full min-w-0 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 text-base sm:text-sm">
-          <option value="">All regions</option>
-          {regions.map((region) => <option value={region}>{region}</option>)}
-        </select>
-      </div>
-      <div>
-        <label for="filter-ind" class="ck-label">Status</label>
-        <select id="filter-ind" class="w-full min-w-0 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 text-base sm:text-sm">
-          <option value="">Independent and territories</option>
-          <option value="yes">Independent only</option>
-          <option value="no">Territories only</option>
-        </select>
-      </div>
+  <div class="not-content ck-filters">
+    <div>
+      <label for="filter-q" class="ck-label">Filter</label>
+      <input
+        id="filter-q"
+        type="search"
+        placeholder="Japan, JP, .jp, JPY, Tokyo"
+        class="ck-field"
+      />
     </div>
-    <p id="count" class="tabular mt-3 font-mono text-xs text-[var(--muted)]" role="status"></p>
+    <div>
+      <label for="filter-region" class="ck-label">Region</label>
+      <select id="filter-region" class="ck-select">
+        <option value="">All regions</option>
+        {regions.map((region) => <option value={region}>{region}</option>)}
+      </select>
+    </div>
+    <div>
+      <label for="filter-ind" class="ck-label">Status</label>
+      <select id="filter-ind" class="ck-select">
+        <option value="">Independent and territories</option>
+        <option value="yes">Independent only</option>
+        <option value="no">Territories only</option>
+      </select>
+    </div>
+  </div>
+  <p id="count" class="tabular mt-3 font-mono text-xs text-[var(--muted)]" role="status"></p>
 
-    <div class="mt-4 min-w-0 overflow-x-auto rounded-lg border border-[var(--line)] bg-[var(--card)]">
-      <table class="min-w-[44rem] text-left text-sm">
-        <caption class="sr-only">ISO 3166-1 countries and territories</caption>
-        <thead class="border-b border-[var(--line)] bg-stone-50 font-medium">
-          <tr>
-            <th class="px-4 py-3" scope="col">Flag</th>
-            <th class="px-4 py-3" scope="col">Country</th>
-            <th class="px-4 py-3" scope="col">Codes</th>
-            <th class="px-4 py-3" scope="col">Dial</th>
-            <th class="px-4 py-3" scope="col">TLD</th>
-            <th class="px-4 py-3" scope="col">Currency</th>
-            <th class="px-4 py-3" scope="col">Capital</th>
-            <th class="px-4 py-3" scope="col">Region</th>
-          </tr>
-        </thead>
-        <tbody id="rows"></tbody>
-      </table>
-    </div>
-  </section>
+  <div class="not-content ck-panel mt-4 min-w-0 overflow-x-auto">
+    <table class="min-w-[44rem] text-left text-sm">
+      <caption class="sr-only">ISO 3166-1 countries and territories</caption>
+      <thead class="ck-table-head border-b border-[var(--line)] font-medium">
+        <tr>
+          <th class="px-4 py-3" scope="col">Flag</th>
+          <th class="px-4 py-3" scope="col">Country</th>
+          <th class="px-4 py-3" scope="col">Codes</th>
+          <th class="px-4 py-3" scope="col">Dial</th>
+          <th class="px-4 py-3" scope="col">TLD</th>
+          <th class="px-4 py-3" scope="col">Currency</th>
+          <th class="px-4 py-3" scope="col">Capital</th>
+          <th class="px-4 py-3" scope="col">Region</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</StarlightPage>
 
 <script define:vars={{ countries }}>
   const q = document.querySelector('#filter-q');
@@ -149,4 +151,3 @@ const regions = listRegions();
   ind?.addEventListener('change', apply);
   apply();
 </script>
-</Layout>
