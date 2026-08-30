@@ -22,51 +22,63 @@ const countries = getAllCountries({ sortBy: 'commonName' }).map((country) => ({
 const regions = listRegions();
 ---
 
-<Layout title="Explorer" description="Browse every ISO 3166-1 country and territory in country-kit.">
+<Layout
+  title="Explorer"
+  description="Browse all 249 ISO 3166-1 countries and territories in country-kit. Filter by UN M49 region, independence, name, TLD, or currency."
+>
   <section class="container min-w-0 py-10">
     <h1 class="text-3xl font-semibold tracking-tight">Explorer</h1>
     <p class="mt-3 max-w-2xl text-[var(--muted)]">
       All 249 assigned ISO 3166-1 codes. Filter by UN M49 region or independent status.
     </p>
 
-    <div class="mt-8 flex flex-wrap gap-3">
-      <input
-        id="filter-q"
-        type="search"
-        placeholder="Filter by name, code, capital, TLD…"
-        class="w-full min-w-0 flex-1 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 outline-none ring-[var(--accent)] focus:ring-2 sm:min-w-[12rem]"
-      />
-      <select id="filter-region" class="min-w-0 flex-1 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 sm:flex-none">
-        <option value="">All regions</option>
-        {regions.map((region) => <option value={region}>{region}</option>)}
-      </select>
-      <select id="filter-ind" class="min-w-0 flex-1 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 sm:flex-none">
-        <option value="">Independent & territories</option>
-        <option value="yes">Independent only</option>
-        <option value="no">Territories only</option>
-      </select>
+    <div class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_12rem_14rem]">
+      <div>
+        <label for="filter-q" class="ck-label">Filter</label>
+        <input
+          id="filter-q"
+          type="search"
+          placeholder="Japan, JP, .jp, JPY, Tokyo"
+          class="w-full min-w-0 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 text-base outline-none sm:text-sm"
+        />
+      </div>
+      <div>
+        <label for="filter-region" class="ck-label">Region</label>
+        <select id="filter-region" class="w-full min-w-0 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 text-base sm:text-sm">
+          <option value="">All regions</option>
+          {regions.map((region) => <option value={region}>{region}</option>)}
+        </select>
+      </div>
+      <div>
+        <label for="filter-ind" class="ck-label">Status</label>
+        <select id="filter-ind" class="w-full min-w-0 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 text-base sm:text-sm">
+          <option value="">Independent and territories</option>
+          <option value="yes">Independent only</option>
+          <option value="no">Territories only</option>
+        </select>
+      </div>
     </div>
-    <p id="count" class="mt-3 font-mono text-xs text-[var(--muted)]"></p>
+    <p id="count" class="tabular mt-3 font-mono text-xs text-[var(--muted)]" role="status"></p>
 
     <div class="mt-4 min-w-0 overflow-x-auto rounded-lg border border-[var(--line)] bg-[var(--card)]">
       <table class="min-w-[44rem] text-left text-sm">
+        <caption class="sr-only">ISO 3166-1 countries and territories</caption>
         <thead class="border-b border-[var(--line)] bg-stone-50 font-medium">
           <tr>
-            <th class="px-4 py-3">Flag</th>
-            <th class="px-4 py-3">Country</th>
-            <th class="px-4 py-3">Codes</th>
-            <th class="px-4 py-3">Dial</th>
-            <th class="px-4 py-3">TLD</th>
-            <th class="px-4 py-3">Currency</th>
-            <th class="px-4 py-3">Capital</th>
-            <th class="px-4 py-3">Region</th>
+            <th class="px-4 py-3" scope="col">Flag</th>
+            <th class="px-4 py-3" scope="col">Country</th>
+            <th class="px-4 py-3" scope="col">Codes</th>
+            <th class="px-4 py-3" scope="col">Dial</th>
+            <th class="px-4 py-3" scope="col">TLD</th>
+            <th class="px-4 py-3" scope="col">Currency</th>
+            <th class="px-4 py-3" scope="col">Capital</th>
+            <th class="px-4 py-3" scope="col">Region</th>
           </tr>
         </thead>
         <tbody id="rows"></tbody>
       </table>
     </div>
   </section>
-</Layout>
 
 <script define:vars={{ countries }}>
   const q = document.querySelector('#filter-q');
@@ -74,6 +86,14 @@ const regions = listRegions();
   const ind = document.querySelector('#filter-ind');
   const rows = document.querySelector('#rows');
   const count = document.querySelector('#count');
+
+  function escapeHtml(value) {
+    return String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;');
+  }
 
   function apply() {
     const query = (q?.value || '').trim().toLowerCase();
@@ -104,17 +124,21 @@ const regions = listRegions();
 
     if (count) count.textContent = `${matches.length} shown`;
     if (!rows) return;
+    if (!matches.length) {
+      rows.innerHTML = `<tr><td colspan="8" class="px-4 py-8 text-sm text-[var(--muted)]">No countries match these filters. Clear the search or choose All regions.</td></tr>`;
+      return;
+    }
     rows.innerHTML = matches
       .map(
         (country) => `<tr class="border-b border-[var(--line)] last:border-0">
           <td class="px-4 py-2"><span class="flag-frame inline-block h-5 w-7 align-middle"><img src="${country.flagSvgUrl}" alt=""></span></td>
-          <td class="px-4 py-2"><div class="font-medium">${country.commonName}</div><div class="text-xs text-[var(--muted)]">${country.name}</div></td>
+          <td class="px-4 py-2"><div class="font-medium">${escapeHtml(country.commonName)}</div><div class="text-xs text-[var(--muted)]">${escapeHtml(country.name)}</div></td>
           <td class="px-4 py-2 font-mono text-xs">${country.code} · ${country.alpha3} · ${country.numeric}</td>
-          <td class="px-4 py-2 font-mono text-xs">${country.dialCode}</td>
-          <td class="px-4 py-2 font-mono text-xs">${country.tld ?? '—'}</td>
-          <td class="px-4 py-2 font-mono text-xs">${country.currencies?.join(' ') || '—'}</td>
-          <td class="px-4 py-2">${country.capital ?? '—'}</td>
-          <td class="px-4 py-2 text-xs">${country.region ?? '—'}<div class="text-[var(--muted)]">${country.subregion ?? ''}</div></td>
+          <td class="px-4 py-2 tabular font-mono text-xs">${country.dialCode}</td>
+          <td class="px-4 py-2 font-mono text-xs">${country.tld ?? '-'}</td>
+          <td class="px-4 py-2 font-mono text-xs">${country.currencies?.join(' ') || '-'}</td>
+          <td class="px-4 py-2">${escapeHtml(country.capital ?? '-')}</td>
+          <td class="px-4 py-2 text-xs">${escapeHtml(country.region ?? '-')}<div class="text-[var(--muted)]">${escapeHtml(country.subregion ?? '')}</div></td>
         </tr>`,
       )
       .join('');
@@ -125,3 +149,4 @@ const regions = listRegions();
   ind?.addEventListener('change', apply);
   apply();
 </script>
+</Layout>

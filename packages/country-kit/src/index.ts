@@ -1,22 +1,3 @@
-export { COUNTRY_CODES, type CountryCode } from './country-code';
-export {
-  countries,
-  countryCodes,
-  countryData,
-  countryNames,
-} from './data';
-export { getFlag } from './flags';
-export type {
-  Country,
-  CountryData,
-  CountryListOptions,
-  CountryRecord,
-  CountryRegion,
-  CountrySearchOptions,
-  CountrySelectOption,
-} from './types';
-export type { FlagRatio, FlagSource, FlagUrlOptions } from './flag-urls';
-export { FLAG_ICONS_VERSION } from './flag-urls';
 export {
   getAllCountries,
   getAlpha3Code,
@@ -48,3 +29,22 @@ export {
   listSubregions,
   searchCountries,
 } from './api';
+export { COUNTRY_CODES, type CountryCode } from './country-code';
+export {
+  countries,
+  countryCodes,
+  countryData,
+  countryNames,
+} from './data';
+export type { FlagRatio, FlagSource, FlagUrlOptions } from './flag-urls';
+export { FLAG_ICONS_VERSION } from './flag-urls';
+export { getFlag } from './flags';
+export type {
+  Country,
+  CountryData,
+  CountryListOptions,
+  CountryRecord,
+  CountryRegion,
+  CountrySearchOptions,
+  CountrySelectOption,
+} from './types';

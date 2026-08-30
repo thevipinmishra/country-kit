@@ -1,22 +1,53 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Monaco,
+    Consolas, monospace;
+}
+
+@utility container {
+  margin-inline: auto;
+  width: 100%;
+  max-width: 80rem;
+  padding-inline: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: 2rem;
+  }
+}
 
 :root {
-  --ink: #1c1917;
-  --muted: #57534e;
-  --paper: #f7f4ee;
-  --card: #fffcf7;
-  --line: #e4dccf;
-  --accent: #0b6b52;
+  --ink: #1a1814;
+  --muted: #4a4540;
+  --paper: #f3f0e8;
+  --card: #fbfaf6;
+  --line: #ddd5c6;
+  --accent: #0a5f4c;
+  --header: #12110f;
+  --header-fg: #f3eee6;
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Monaco,
+    Consolas, monospace;
 }
 
 html {
-  scroll-behavior: smooth;
   overflow-x: clip;
   font-family: var(--font-sans);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 html,
@@ -34,6 +65,7 @@ body {
   overflow-x: clip;
   max-width: 100%;
   min-height: 100dvh;
+  padding-bottom: env(safe-area-inset-bottom);
   font-size: 16px;
   line-height: 1.6;
   font-weight: 400;
@@ -43,6 +75,11 @@ body {
 
 body.nav-open {
   overflow: hidden;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--accent) 22%, var(--paper));
+  color: var(--ink);
 }
 
 img,
@@ -64,15 +101,22 @@ h3,
 h4 {
   font-family: var(--font-sans);
   font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.25;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  text-wrap: balance;
+  scroll-margin-top: 5.5rem;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 .flag-frame {
   overflow: hidden;
-  border: 1px solid var(--line);
   border-radius: 3px;
   background: #fff;
+  outline: 1px solid oklch(0 0 0 / 0.1);
+  outline-offset: -1px;
 }
 
 .flag-frame img,
@@ -81,6 +125,7 @@ h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  pointer-events: none;
 }
 
 pre,
@@ -118,16 +163,69 @@ pre.astro-code code {
 }
 
 .ck-code {
+  display: flex;
   min-width: 0;
   max-width: 100%;
+  flex-direction: column;
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: 0.5rem;
   background: #101010;
 }
 
+.ck-code-bar {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.25rem 0.5rem 0;
+}
+
+.ck-copy {
+  display: inline-flex;
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+  border-radius: 0.375rem;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: #d4cfc4;
+  background: transparent;
+}
+
+@media (hover: hover) {
+  .ck-copy {
+    opacity: 0;
+  }
+
+  .ck-code:hover .ck-copy,
+  .ck-code:focus-within .ck-copy {
+    opacity: 1;
+  }
+
+  .ck-copy:hover {
+    color: #f3eee6;
+    background: rgb(255 255 255 / 0.08);
+  }
+}
+
+.ck-copy:focus-visible {
+  outline: 2px solid var(--header-fg);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ck-copy {
+    opacity: 1;
+  }
+}
+
 .ck-code pre.astro-code {
-  border-radius: 0.45rem;
+  border-radius: 0;
 }
 
 .ck-label {
@@ -146,13 +244,20 @@ pre.astro-code code {
   background: #fff;
   padding: 0.5rem 0.75rem;
   font-family: var(--font-sans);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   outline: none;
 }
 
-.ck-input:focus,
-.ck-select:focus {
-  box-shadow: 0 0 0 2px var(--accent);
+@media (min-width: 640px) {
+  .ck-input,
+  .ck-select {
+    font-size: 0.9375rem;
+  }
+}
+
+.ck-input:focus-visible,
+.ck-select:focus-visible {
+  box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent);
 }
 
 .ck-row {
@@ -177,6 +282,7 @@ pre.astro-code code {
 .ck-dl dd {
   font-size: 0.75rem;
   overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
 }
 
 .ck-hits {
@@ -189,29 +295,41 @@ pre.astro-code code {
 .ck-hit {
   display: flex;
   width: 100%;
+  min-height: 2.5rem;
   align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0.15rem;
-  text-align: left;
+  text-align: start;
   font-size: 0.875rem;
 }
 
-.ck-hit:hover,
 .ck-hit.is-active {
-  background: rgb(28 25 23 / 0.04);
+  background: rgb(26 24 20 / 0.06);
+}
+
+@media (hover: hover) {
+  .ck-hit:hover {
+    background: rgb(26 24 20 / 0.04);
+  }
 }
 
 .ck-chip {
   border-radius: 999px;
   border: 1px solid var(--line);
   background: #fff;
-  padding: 0.2rem 0.7rem;
+  padding: 0.35rem 0.75rem;
+  min-height: 2.5rem;
   font-size: 0.8125rem;
 }
 
-.ck-chip:hover,
 .ck-chip.is-active {
   border-color: var(--ink);
+}
+
+@media (hover: hover) {
+  .ck-chip:hover {
+    border-color: var(--ink);
+  }
 }
 
 .ck-widget {
@@ -220,7 +338,8 @@ pre.astro-code code {
 
 .example-tab {
   border-radius: 0.375rem;
-  padding: 0.35rem 0.75rem;
+  padding: 0.45rem 0.75rem;
+  min-height: 2.5rem;
   font-size: 0.8125rem;
   color: var(--muted);
 }
@@ -230,11 +349,18 @@ pre.astro-code code {
   color: var(--paper);
 }
 
+.ck-empty {
+  padding-block: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
 .nav-backdrop {
   position: fixed;
   inset: 0;
   z-index: 30;
-  background: rgb(22 20 18 / 0.45);
+  background: rgb(18 17 15 / 0.45);
 }
 
 .nav-panel {
@@ -244,24 +370,94 @@ pre.astro-code code {
   max-height: calc(100dvh - 3.5rem);
   overflow-y: auto;
   border-bottom: 1px solid rgb(255 255 255 / 0.1);
-  background: #161412;
-  color: #f4efe6;
+  background: var(--header);
+  color: var(--header-fg);
 }
 
 .nav-panel a {
   display: block;
   border-radius: 0.5rem;
-  padding: 0.65rem 0.75rem;
+  padding: 0.75rem;
+  min-height: 2.75rem;
 }
 
 .nav-panel a[aria-current="page"] {
-  background: #f4efe6;
-  color: #161412;
+  background: var(--header-fg);
+  color: var(--header);
 }
 
-@media (min-width: 1024px) {
+button,
+.ck-chip,
+.example-tab,
+a.ck-btn {
+  transition-property: scale, opacity, background-color, border-color, color;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+button:active:not(:disabled),
+.ck-chip:active,
+.example-tab:active,
+a.ck-btn:active {
+  scale: 0.96;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.nav-panel a:focus-visible,
+header a:focus-visible,
+#nav-toggle:focus-visible {
+  outline-color: var(--header-fg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button,
+  .ck-chip,
+  .example-tab,
+  a.ck-btn {
+    transition: none;
+  }
+
+  button:active:not(:disabled),
+  .ck-chip:active,
+  .example-tab:active,
+  a.ck-btn:active {
+    scale: 1;
+  }
+}
+
+@media (forced-colors: active) {
+  .flag-frame {
+    outline: 1px solid CanvasText;
+  }
+
+  :focus-visible {
+    outline: 2px solid Highlight;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 1280px) {
   .nav-panel,
   .nav-backdrop {
     display: none !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-inline: 2rem;
   }
 }

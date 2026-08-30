@@ -58,7 +58,7 @@ export default function HostLookup() {
         ) : (
           <p>
             <span className="font-mono">{host}</span> ends in{' '}
-            <span className="font-mono">{tld}</span> — not a country-code TLD.
+            <span className="font-mono">{tld}</span>, not a country-code TLD.
           </p>
         )}
       </div>

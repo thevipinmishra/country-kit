@@ -40,12 +40,15 @@ function onQuery(value: string) {
           <span class="font-mono text-xs">{{ item.code }}</span>
         </button>
       </li>
+      <li v-if="!matches.length" class="ck-empty">
+        No countries match. Try a name, ISO code, TLD, or currency.
+      </li>
     </ul>
     <p class="mt-3 text-sm text-[var(--muted)]">
       {{
         selected
-          ? `Persist ${selected.code} · show “${selected.commonName}”`
-          : 'No match.'
+          ? `Persist ${selected.code} · show "${selected.commonName}"`
+          : 'No match. Try a name, ISO code, or TLD.'
       }}
     </p>
   </div>

@@ -1,6 +1,6 @@
 {
   "name": "country-kit",
-  "description": "Official ISO 3166-1 country data for TypeScript: codes, names, ITU-T E.164 calling codes, UN M49 regions, IANA TLDs, ISO 4217 currencies, and Wikipedia SVG flags.",
+  "description": "ISO 3166-1 country data for TypeScript: alpha-2/3 codes, names, ITU-T E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, flag emoji, and SVG flags.",
   "version": "2.0.0",
   "type": "module",
   "sideEffects": false,
@@ -19,30 +19,39 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist/**", "README.md"],
+  "files": [
+    "dist/**",
+    "README.md",
+    "CHANGELOG.md"
+  ],
   "keywords": [
+    "iso-3166",
+    "iso-3166-1",
     "country",
     "countries",
     "country-codes",
-    "iso-codes",
-    "country-data",
-    "country-flags",
-    "country-calling-codes",
-    "flag-emoji",
     "country-list",
-    "international",
-    "iso-3166",
-    "iso-3166-1",
-    "e164",
-    "un-m49",
+    "country-flags",
+    "flag-emoji",
     "svg-flags",
-    "typescript",
-    "nodejs"
+    "calling-code",
+    "e164",
+    "phone",
+    "dial-code",
+    "iso-4217",
+    "currency",
+    "un-m49",
+    "cctld",
+    "locale",
+    "typescript"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/thevipinmishra/country-kit.git",
+    "url": "git+https://github.com/thevipinmishra/country-kit.git",
     "directory": "packages/country-kit"
+  },
+  "bugs": {
+    "url": "https://github.com/thevipinmishra/country-kit/issues"
   },
   "homepage": "https://country-kit.vercel.app/",
   "scripts": {
@@ -56,11 +65,14 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.3",
-    "@rslib/core": "^0.2.0",
-    "@types/node": "^22.8.1",
-    "typescript": "^5.6.3",
-    "vitest": "^2.1.8"
+    "@biomejs/biome": "^2.5.11",
+    "@rslib/core": "^0.23.2",
+    "@types/node": "^26.4.0",
+    "typescript": "^5.9.2",
+    "vitest": "^4.1.11"
+  },
+  "engines": {
+    "node": ">=18"
   },
   "author": "Vipin Mishra",
   "license": "ISC"

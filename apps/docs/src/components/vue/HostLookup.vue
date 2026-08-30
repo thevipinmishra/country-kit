@@ -49,7 +49,7 @@ const country = computed(() => (tld.value ? getCountryByTld(tld.value) : undefin
       </div>
       <p v-else>
         <span class="font-mono">{{ host }}</span> ends in
-        <span class="font-mono">{{ tld }}</span> — not a country-code TLD.
+        <span class="font-mono">{{ tld }}</span>, not a country-code TLD.
       </p>
     </div>
   </div>
