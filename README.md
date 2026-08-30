@@ -5,46 +5,26 @@ ISO 3166-1 country data for TypeScript: alpha-2/3 codes, names, ITU-T E.164 call
 [![npm version](https://img.shields.io/npm/v/country-kit.svg)](https://www.npmjs.com/package/country-kit)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/country-kit)](https://bundlephobia.com/package/country-kit)
 [![license](https://img.shields.io/npm/l/country-kit.svg)](https://github.com/thevipinmishra/country-kit/blob/main/LICENSE)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 
-Use it for a country select, phone prefix, flag, TLD, or currency lookup. `CountryCode` is a union of all 249 assigned alpha-2 codes. The published package has no runtime dependencies.
+249 assigned ISO 3166-1 codes. `CountryCode` is a union of those alpha-2 values. No runtime dependencies.
 
-Docs: [playground](https://country-kit.vercel.app/), [examples](https://country-kit.vercel.app/examples/), [API](https://country-kit.vercel.app/api/), [changelog](https://country-kit.vercel.app/changelog/).
+Docs: [getting started](https://country-kit.vercel.app/getting-started/), [playground](https://country-kit.vercel.app/), [examples](https://country-kit.vercel.app/examples/), [API](https://country-kit.vercel.app/api/), [changelog](https://country-kit.vercel.app/changelog/).
 
-## Upgrading from 1.x
-
-npm still publishes 1.1.0. This repo is 2.0.0.
-
-**Who this hits.** Anyone using `getCallingCode` for NANP territories (Anguilla, Puerto Rico, and others that used to return country code plus area code) or `isValidCallingCode` with those concatenated values.
-
-**What broke.** `getCallingCode('AI')` is `+1` (1.x returned `+1264`). `isValidCallingCode('+1264')` is false. Invalid lookups return `undefined` and do not call `console.error`.
-
-**Migrate.** Use `getDialCode` or `nanpAreaCodes` in a phone picker. Keep `callingCode` when you want the ITU-T E.164 country code. Full notes: [changelog](https://country-kit.vercel.app/changelog/), [`packages/country-kit/README.md`](./packages/country-kit/README.md).
-
-## Data sources
-
-| Field | Standard | Notes |
-| --- | --- | --- |
-| `code`, `alpha3`, `name` | ISO 3166-1 | All **249** officially assigned codes. `name` is the ISO English short name. |
-| `numeric`, `region`, `subregion` | UN M49 | Numeric codes are identical to ISO 3166-1 numeric. Antarctica and Taiwan have no UN region. |
-| `callingCode` | ITU-T E.164 | Country calling codes only (1-3 digits). NANP members are `+1`. Area codes live on `nanpAreaCodes`. |
-| `nanpAreaCodes` | NANP | Area codes for territories that share `+1`. |
-| `tld` | IANA | Country-code TLD (`GB` is `.uk`). |
-| `currencies` | ISO 4217 | Alphabetic currency codes. |
-| `flag` | Unicode UTS #51 | Derived from the alpha-2 code via regional indicator symbols. |
-| SVG flags | flag-icons / Wikimedia | Wikipedia SVG drawings, MIT, optional `country-kit/flags` entry. |
-
-Kosovo (`XK`) is omitted. It is a user-assigned code, not an ISO 3166-1 assigned code.
-
-The published package lives in [`packages/country-kit`](./packages/country-kit).
-
-## Installation
+## Install
 
 ```bash
 npm install country-kit
-# pnpm add country-kit
-# yarn add country-kit
 ```
+
+```bash
+pnpm add country-kit
+```
+
+```bash
+bun add country-kit
+```
+
+Requires Node 18 or newer. ESM and CommonJS both work.
 
 ## Quick start
 
@@ -53,9 +33,10 @@ import { getCountry, getFlagSvgUrl, searchCountries } from 'country-kit';
 import { getFlagSvg } from 'country-kit/flags';
 
 const us = getCountry('US');
-// name: 'United States of America' (ISO)
+// name: 'United States of America' (ISO English short name)
 // commonName: 'United States'
-// callingCode: '+1' (ITU-T E.164)
+// callingCode: '+1'  (ITU-T E.164)
+// dialCode: '+1'
 
 searchCountries('uk');      // United Kingdom
 searchCountries('Vietnam'); // Viet Nam
@@ -63,7 +44,33 @@ getFlagSvgUrl('JP');        // version-pinned Wikipedia SVG
 getFlagSvg('JP');           // inline <svg> markup
 ```
 
-See [`packages/country-kit/README.md`](./packages/country-kit/README.md) for the full API and copy-paste examples (signup select, phone prefix, TLD lookup, shipping zones, validation). Live widgets: [country-kit.vercel.app/examples](https://country-kit.vercel.app/examples/).
+Full API and copy-paste examples (select, phone prefix, TLD, currency, validation) live in [`packages/country-kit/README.md`](./packages/country-kit/README.md) and on [the examples page](https://country-kit.vercel.app/examples/).
+
+## What you get
+
+- ISO 3166-1 assigned codes and English short names, UN M49, ITU-T E.164, IANA ccTLDs, ISO 4217
+- Common names, search aliases, NANP area codes, Unicode flags
+- `getFlagSvgUrl` in the core package; optional `country-kit/flags` for inline SVG
+- Tree-shakeable (`sideEffects: false`)
+
+There is no React or Vue package. Import the same functions from React, Vue, or Node.
+
+## Upgrading from 1.x
+
+`getCallingCode` returns the ITU-T E.164 country code only. NANP territories that used to return country code plus area code now return `+1`.
+
+```typescript
+getCallingCode('AI');        // '+1'     (was '+1264' in 1.x)
+getDialCode('AI');           // '+1264'
+isValidCallingCode('+1264'); // false
+isValidCallingCode('+1');    // true
+```
+
+Invalid lookups return `undefined` and do not call `console.error`. Use `getDialCode` or `nanpAreaCodes` in a phone picker. Notes: [changelog](https://country-kit.vercel.app/changelog/).
+
+## Data
+
+The published package is [`packages/country-kit`](./packages/country-kit). Kosovo (`XK`) is omitted because it is user-assigned, not ISO 3166-1 assigned. Sources and field notes: [data](https://country-kit.vercel.app/data/).
 
 ## License
 

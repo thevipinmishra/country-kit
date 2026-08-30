@@ -1,11 +1,11 @@
-# Changelog
+---
+title: Changelog
+description: "country-kit version history: 1.0.0 through 2.0.0. E.164 calling codes, generated ISO dataset, flags, and lookups."
+---
 
-All notable changes to country-kit are documented in this file.
+Package history for `country-kit`. Same text as [`packages/country-kit/CHANGELOG.md`](https://github.com/thevipinmishra/country-kit/blob/main/packages/country-kit/CHANGELOG.md).
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [2.0.0] - 2026-08-29
+## 2.0.0 - 2026-08-29
 
 ### Added
 
@@ -22,7 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `isValidCallingCode` accepts `+` plus 1-3 digits. `isValidCallingCode('+1264')` is `false`. `+1` is `true`.
 - Invalid lookups return `undefined`. They no longer call `console.error`.
 
-```ts
+```typescript
 import { getCallingCode, getDialCode, isValidCallingCode } from 'country-kit';
 
 getCallingCode('AI');        // was '+1264' in 1.x; now '+1'
@@ -31,7 +31,7 @@ isValidCallingCode('+1264'); // false
 isValidCallingCode('+1');    // true
 ```
 
-## [1.1.0] - 2024-12-28
+## 1.1.0 - 2024-12-28
 
 ### Added
 
@@ -43,7 +43,7 @@ isValidCallingCode('+1');    // true
 - Unknown alpha-2 lookups log with `console.error`
 - `homepage` field in package.json
 
-## [1.0.3] - 2024-12-27
+## 1.0.3 - 2024-12-27
 
 ### Changed
 
@@ -53,20 +53,20 @@ isValidCallingCode('+1');    // true
 
 - `getCountryFlag` returns `undefined` for unknown codes instead of calling `getFlag` on a missing code
 
-## [1.0.2] - 2024-12-27
+## 1.0.2 - 2024-12-27
 
 ### Changed
 
 - Version bump only
 
-## [1.0.1] - 2024-12-27
+## 1.0.1 - 2024-12-27
 
 ### Changed
 
 - README license badge and Node / browser note
 - package.json metadata
 
-## [1.0.0] - 2024-12-27
+## 1.0.0 - 2024-12-27
 
 ### Added
 

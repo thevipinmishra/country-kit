@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import CodeBlock from '../components/CodeBlock.astro';
 import { FLAG_ICONS_VERSION, getAllCountries, getFlagSvgUrl } from 'country-kit';
 
@@ -23,51 +23,56 @@ element.innerHTML = getFlagSvg('JP');
 // 4x3 SVG markup`;
 ---
 
-<Layout
-  title="Flags"
-  description="SVG country flags for every ISO 3166-1 alpha-2 code, plus Unicode flag emoji. CDN URLs or inline SVG from country-kit."
+<StarlightPage
+  frontmatter={{
+    title: 'Flags',
+    description:
+      'SVG country flags for every ISO 3166-1 alpha-2 code, plus Unicode flag emoji. CDN URLs or inline SVG from country-kit.',
+  }}
+  headings={[
+    { depth: 2, slug: 'cdn-url', text: 'CDN URL' },
+    { depth: 2, slug: 'inline-svg', text: 'Inline SVG' },
+  ]}
 >
-  <section class="container min-w-0 py-10">
-    <h1 class="text-3xl font-semibold tracking-tight">Flags</h1>
-    <p class="mt-3 max-w-2xl text-[var(--muted)]">
-      ISO 3166 does not define flag artwork. SVGs come from <a class="underline underline-offset-4" href="https://github.com/lipis/flag-icons">flag-icons</a> (MIT, Wikipedia/Wikimedia drawings), keyed by alpha-2, pinned at {FLAG_ICONS_VERSION}.
-    </p>
+  <p class="max-w-2xl text-[var(--muted)]">
+    ISO 3166 does not define flag artwork. SVGs come from <a href="https://github.com/lipis/flag-icons">flag-icons</a> (MIT, Wikipedia/Wikimedia drawings), keyed by alpha-2, pinned at {FLAG_ICONS_VERSION}.
+  </p>
 
-    <div class="mt-8 grid min-w-0 gap-6 lg:grid-cols-2">
-      <div class="min-w-0 overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--card)]">
-        <h2 class="px-5 pt-5 text-base font-semibold">CDN URL</h2>
-        <p class="mt-1 mb-3 px-5 text-sm text-[var(--muted)]">Default. The core package stores the versioned URL pattern.</p>
-        <CodeBlock class="rounded-none border-0 border-t" code={snippetCdn} lang="tsx" />
-      </div>
-      <div class="min-w-0 overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--card)]">
-        <h2 class="px-5 pt-5 text-base font-semibold">Inline SVG</h2>
-        <p class="mt-1 mb-3 px-5 text-sm text-[var(--muted)]">Optional. <code class="font-mono text-xs">country-kit/flags</code> is a separate, larger entry.</p>
-        <CodeBlock class="rounded-none border-0 border-t" code={snippetInline} lang="typescript" />
-      </div>
+  <div class="mt-8 grid min-w-0 gap-6 lg:grid-cols-2">
+    <div class="min-w-0">
+      <h2 id="cdn-url">CDN URL</h2>
+      <p>Default. The core package stores the versioned URL pattern.</p>
+      <CodeBlock code={snippetCdn} lang="tsx" />
     </div>
+    <div class="min-w-0">
+      <h2 id="inline-svg">Inline SVG</h2>
+      <p>Optional. <code>country-kit/flags</code> is a separate, larger entry.</p>
+      <CodeBlock code={snippetInline} lang="typescript" />
+    </div>
+  </div>
 
-    <div class="mt-8 flex flex-wrap items-end gap-3">
-      <div class="min-w-0 flex-1">
-        <label for="flag-q" class="ck-label">Filter</label>
-        <input
-          id="flag-q"
-          type="search"
-          placeholder="Japan or JP"
-          class="w-full min-w-0 rounded-md border border-[var(--line)] bg-white px-3 py-2.5 text-base outline-none sm:text-sm"
-        />
-      </div>
-      <label class="flex min-h-11 items-center gap-2 pb-0.5 text-sm">
-        <input id="flag-ratio" type="checkbox" class="size-4 accent-[var(--accent)]" />
-        1x1
-      </label>
-      <label class="flex min-h-11 items-center gap-2 pb-0.5 text-sm">
-        <input id="flag-emoji" type="checkbox" class="size-4 accent-[var(--accent)]" />
-        Emoji
-      </label>
+  <div class="not-content mt-8 flex flex-wrap items-end gap-3">
+    <div class="min-w-0 flex-1">
+      <label for="flag-q" class="ck-label">Filter</label>
+      <input
+        id="flag-q"
+        type="search"
+        placeholder="Japan or JP"
+        class="ck-field"
+      />
     </div>
-    <p id="flag-count" class="tabular mt-3 font-mono text-xs text-[var(--muted)]" role="status"></p>
-    <ul id="flag-grid" class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"></ul>
-  </section>
+    <label class="flex min-h-11 items-center gap-2 pb-0.5 text-sm">
+      <input id="flag-ratio" type="checkbox" class="size-4 accent-[var(--accent)]" />
+      1x1
+    </label>
+    <label class="flex min-h-11 items-center gap-2 pb-0.5 text-sm">
+      <input id="flag-emoji" type="checkbox" class="size-4 accent-[var(--accent)]" />
+      Emoji
+    </label>
+  </div>
+  <p id="flag-count" class="tabular mt-3 font-mono text-xs text-[var(--muted)]" role="status"></p>
+  <div id="flag-grid" class="not-content mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6"></div>
+</StarlightPage>
 
 <script define:vars={{ flags }}>
   const q = document.querySelector('#flag-q');
@@ -98,18 +103,18 @@ element.innerHTML = getFlagSvg('JP');
     if (count) count.textContent = `${matches.length} · ${square ? '1x1' : '4x3'}`;
     if (!grid) return;
     if (!matches.length) {
-      grid.innerHTML = `<li class="col-span-full ck-empty">No flags match "${escapeHtml(query)}". Clear the filter to see all 249.</li>`;
+      grid.innerHTML = `<div class="col-span-full ck-empty">No flags match "${escapeHtml(query)}". Clear the filter to see all 249.</div>`;
       return;
     }
     grid.innerHTML = matches
       .map(
-        (flag) => `<li class="rounded-lg border border-[var(--line)] bg-[var(--card)] p-3">
+        (flag) => `<div class="ck-panel p-3">
           <div class="flag-frame ${square ? 'aspect-square' : 'aspect-[4/3]'}"><img src="${square ? flag.svgSquare : flag.svg}" alt="Flag of ${escapeHtml(flag.commonName)}" loading="lazy" /></div>
           <div class="mt-2 flex items-center justify-between gap-2 text-sm">
             <span class="truncate font-medium">${escapeHtml(flag.commonName)}</span>
             <span class="font-mono text-xs text-[var(--muted)]">${flag.code}${showEmoji ? ` ${flag.emoji}` : ''}</span>
           </div>
-        </li>`,
+        </div>`,
       )
       .join('');
   }
@@ -119,4 +124,3 @@ element.innerHTML = getFlagSvg('JP');
   ratio?.addEventListener('change', apply);
   apply();
 </script>
-</Layout>

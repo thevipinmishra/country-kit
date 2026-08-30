@@ -1,5 +1,5 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
 import ExampleBlock from '../components/ExampleBlock.astro';
 import { snippets } from '../examples/snippets';
 import ResidenceSelectReact from '../components/react/ResidenceSelect';
@@ -25,30 +25,31 @@ const toc = [
 ];
 ---
 
-<Layout
-  title="Examples"
-  description="Copy-paste React and Vue examples: country select, phone prefix, search, SVG flags, TLD lookup, and ISO code validation."
+<StarlightPage
+  frontmatter={{
+    title: 'Examples',
+    description:
+      'Copy-paste React and Vue examples: country select, phone prefix, search, SVG flags, TLD lookup, and ISO code validation.',
+  }}
+  headings={[
+    { depth: 2, slug: 'residence', text: 'Country select' },
+    { depth: 2, slug: 'phone', text: 'Phone prefix' },
+    { depth: 2, slug: 'search', text: 'Search' },
+    { depth: 2, slug: 'profile', text: 'Flags' },
+    { depth: 2, slug: 'tld', text: 'TLD lookup' },
+    { depth: 2, slug: 'validate', text: 'Validation' },
+  ]}
 >
-  <section class="border-b border-[var(--line)]">
-    <div class="container py-10 lg:py-12">
-      <h1 class="text-3xl font-semibold tracking-tight lg:text-4xl">Examples</h1>
-      <p class="mt-3 max-w-2xl text-[var(--muted)]">
-        React and Vue widgets for a country select, phone prefix, search, SVG flags, TLD lookup, and ISO code checks. Preview on the left, source on the right.
-      </p>
-      <nav class="mt-6 flex flex-wrap gap-2">
-        {toc.map(([href, label]) => (
-          <a
-            href={href}
-            class="rounded-md border border-[var(--line)] bg-[var(--card)] px-3 py-1.5 text-sm hover:border-[var(--ink)]"
-          >
-            {label}
-          </a>
-        ))}
-      </nav>
-    </div>
-  </section>
+  <p>
+    React and Vue widgets that call country-kit. Preview on the left, source on the right. The library itself has no framework package.
+  </p>
+  <nav class="not-content mt-6 flex flex-wrap items-center gap-2">
+    {toc.map(([href, label]) => (
+      <a href={href} class="ck-chip">{label}</a>
+    ))}
+  </nav>
 
-  <div class="container space-y-16 py-12">
+  <div class="mt-12 space-y-16">
     <ExampleBlock
       id="residence"
       title="Country select"
@@ -145,4 +146,4 @@ const toc = [
       </div>
     </ExampleBlock>
   </div>
-</Layout>
+</StarlightPage>

@@ -33,8 +33,6 @@ const payload = computed(() => {
         {{ sample }}
       </button>
     </div>
-    <pre class="mt-4 overflow-x-auto rounded-xl bg-[#161412] p-3 font-mono text-xs text-[#f4efe6]">{{
-      JSON.stringify(payload, null, 2)
-    }}</pre>
+    <pre class="ck-json">{{ JSON.stringify(payload, null, 2) }}</pre>
   </div>
 </template>

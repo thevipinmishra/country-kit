@@ -1,5 +1,6 @@
 ---
-import CodeBlock from './CodeBlock.astro';
+import { TabItem, Tabs } from '@astrojs/starlight/components';
+import { Code } from 'starlight-theme-nova/components';
 
 interface Props {
   id: string;
@@ -11,93 +12,33 @@ interface Props {
 }
 
 const { id, title, description, apis, reactCode, vueCode } = Astro.props;
-const reactTab = `${id}-tab-react`;
-const vueTab = `${id}-tab-vue`;
-const reactPanel = `${id}-panel-react`;
-const vuePanel = `${id}-panel-vue`;
 ---
 
-<section id={id} class="example-block scroll-mt-24">
-  <h2 class="text-2xl font-semibold tracking-tight">{title}</h2>
-  <p class="mt-2 max-w-2xl text-[var(--muted)]">{description}</p>
-  <p class="mt-2 font-mono text-xs text-[var(--muted)]">{apis}</p>
+<section class="example-block">
+  <h2 id={id}>{title}</h2>
+  <p>{description}</p>
+  <p class="font-mono text-xs">{apis}</p>
 
-  <div class="mt-4 flex flex-wrap gap-1" role="tablist" aria-label="Framework">
-    <button
-      type="button"
-      id={reactTab}
-      class="example-tab is-active"
-      data-fw="react"
-      role="tab"
-      aria-selected="true"
-      aria-controls={reactPanel}
-      tabindex="0">React</button
-    >
-    <button
-      type="button"
-      id={vueTab}
-      class="example-tab"
-      data-fw="vue"
-      role="tab"
-      aria-selected="false"
-      aria-controls={vuePanel}
-      tabindex="-1">Vue</button
-    >
-  </div>
-
-  <div class="mt-4 grid min-w-0 gap-4 lg:grid-cols-2">
-    <div class="min-w-0 overflow-hidden rounded-lg border border-[var(--line)] bg-[var(--card)] p-4 sm:p-5">
-      <p class="mb-3 font-mono text-xs text-[var(--muted)]">Preview</p>
-      <div id={reactPanel} data-fw-panel="react" role="tabpanel" aria-labelledby={reactTab}>
-        <slot name="react" />
-      </div>
-      <div id={vuePanel} data-fw-panel="vue" role="tabpanel" aria-labelledby={vueTab} hidden>
-        <slot name="vue" />
-      </div>
-    </div>
-    <div class="min-w-0 self-start">
-      <div data-fw-panel="react">
-        <CodeBlock code={reactCode} lang="tsx" />
-      </div>
-      <div data-fw-panel="vue" hidden>
-        <CodeBlock code={vueCode} lang="vue" />
-      </div>
-    </div>
+  <div class="not-content">
+    <Tabs syncKey="framework">
+      <TabItem label="React">
+        <div class="example-split">
+          <div class="p-4 sm:p-5">
+            <p class="mb-3 font-mono text-xs">Preview</p>
+            <slot name="react" />
+          </div>
+          <Code code={reactCode} lang="tsx" />
+        </div>
+      </TabItem>
+      <TabItem label="Vue">
+        <div class="example-split">
+          <div class="p-4 sm:p-5">
+            <p class="mb-3 font-mono text-xs">Preview</p>
+            <slot name="vue" />
+          </div>
+          <Code code={vueCode} lang="vue" />
+        </div>
+      </TabItem>
+    </Tabs>
   </div>
 </section>
-
-<script>
-  document.querySelectorAll('.example-block').forEach((block) => {
-    const buttons = [...block.querySelectorAll<HTMLButtonElement>('[data-fw]')];
-
-    function activate(button: HTMLButtonElement) {
-      const framework = button.getAttribute('data-fw');
-      buttons.forEach((item) => {
-        const active = item === button;
-        item.classList.toggle('is-active', active);
-        item.setAttribute('aria-selected', String(active));
-        item.tabIndex = active ? 0 : -1;
-      });
-      block.querySelectorAll('[data-fw-panel]').forEach((panel) => {
-        const hidden = panel.getAttribute('data-fw-panel') !== framework;
-        if (hidden) panel.setAttribute('hidden', '');
-        else panel.removeAttribute('hidden');
-      });
-      button.focus();
-    }
-
-    buttons.forEach((button) => {
-      button.addEventListener('click', () => activate(button));
-      button.addEventListener('keydown', (event) => {
-        if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
-        event.preventDefault();
-        const index = buttons.indexOf(button);
-        const next =
-          event.key === 'ArrowRight'
-            ? buttons[(index + 1) % buttons.length]
-            : buttons[(index - 1 + buttons.length) % buttons.length];
-        if (next) activate(next);
-      });
-    });
-  });
-</script>
