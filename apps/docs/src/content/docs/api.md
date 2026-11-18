@@ -52,7 +52,7 @@ Codes are trimmed and case-folded. Invalid lookups return `undefined`.
 | `getCountriesBySubregion(subregion)` | UN M49 sub-region. |
 | `listRegions` / `listSubregions` / `listCurrencies` | Distinct region names and currency codes. |
 
-`searchCountries` options: `limit`, `exact` (default `false`), `includeCodes` (default `true`). Results are ranked so exact code and name matches appear first.
+Set `exact: true` to require a full match on a searched field. Set `includeCodes: false` to skip ISO identifiers, calling codes, and NANP dial prefixes. Use `limit` to cap the result count.
 
 ## Validation
 
@@ -60,6 +60,8 @@ Codes are trimmed and case-folded. Invalid lookups return `undefined`.
 | --- | --- |
 | `isValidCountryCode(code)` | Type guard for assigned alpha-2 codes. |
 | `isValidCallingCode(code)` | E.164 format: `+` and 1-3 digits. |
+
+Use `getCountry(input)?.code` to get a canonical uppercase code from user input. `isValidCountryCode` accepts lowercase and surrounding whitespace while leaving the input string as provided.
 
 ```typescript
 isValidCountryCode('US');    // true
@@ -74,7 +76,7 @@ isValidCallingCode('+1264'); // false
 import { FLAG_ICONS_VERSION, getFlagSvgUrl } from 'country-kit';
 
 getFlagSvgUrl('JP');
-// https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.5.0/flags/4x3/jp.svg
+// https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.6.0/flags/4x3/jp.svg
 
 getFlagSvgUrl('JP', { ratio: '1x1' });
 getFlagSvgUrl('US', { source: 'flagcdn' });           // https://flagcdn.com/us.svg
@@ -100,7 +102,7 @@ getFlagSvg('JP'); // 4x3 SVG markup, or undefined
 | `countryNames` | ISO English short names, same order. |
 | `countryData` | Record keyed by alpha-2, including `aliases`. |
 | `countries` | `{ [code]: name }` map. Deprecated; use `getCountryName` / `getAllCountries`. |
-| `FLAG_ICONS_VERSION` | Pinned flag-icons version (`7.5.0`). |
+| `FLAG_ICONS_VERSION` | Pinned flag-icons version (`7.6.0`). |
 
 ## Select options
 

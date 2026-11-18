@@ -12,10 +12,13 @@ export default defineConfig({
       format: 'esm',
       syntax: 'es2021',
       dts: true,
+      redirect: { dts: { extension: true } },
     },
     {
       format: 'cjs',
       syntax: 'es2021',
+      dts: { autoExtension: true, distPath: './dist/cjs' },
+      redirect: { dts: { extension: true } },
     },
   ],
   output: {

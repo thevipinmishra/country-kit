@@ -27,7 +27,8 @@ const normalizeNumeric = (value: string): string => {
 };
 
 /**
- * Type guard for assigned ISO 3166-1 alpha-2 codes.
+ * Checks an alpha-2 code after trimming and uppercasing it.
+ * Use `getCountry(code)?.code` to get the canonical code.
  */
 export const isValidCountryCode = (code: string): code is CountryCode => {
   if (!code || typeof code !== 'string') return false;
@@ -172,8 +173,6 @@ const filterCountries = (
 /**
  * Returns assigned ISO 3166-1 countries, optionally filtered and sorted.
  */
-export function getAllCountries(): Country[];
-export function getAllCountries(options: CountryListOptions): Country[];
 export function getAllCountries(options?: CountryListOptions): Country[] {
   if (!options) return allCountries.slice();
   return filterCountries(allCountries, options);
@@ -252,6 +251,7 @@ const scoreCountry = (
   country: Country,
   query: string,
   includeCodes: boolean,
+  exact: boolean,
 ): number => {
   const name = country.name.toLowerCase();
   const common = country.commonName.toLowerCase();
@@ -267,18 +267,9 @@ const scoreCountry = (
     ) {
       return 90;
     }
-    if (
-      country.callingCode.replace('+', '') === query ||
-      country.callingCode.toLowerCase() === query
-    ) {
-      return 88;
-    }
-    if (
-      country.dialCode.replace('+', '') === query ||
-      country.dialCode.toLowerCase() === query
-    ) {
-      return 87;
-    }
+    const callingQuery = query.startsWith('+') ? query : `+${query}`;
+    if (country.callingCodes.includes(callingQuery)) return 88;
+    if (matchesNanpAreaCode(country, callingQuery)) return 87;
   }
 
   if (country.tld) {
@@ -293,6 +284,7 @@ const scoreCountry = (
     return 72;
   }
   if (country.capital?.toLowerCase() === query) return 70;
+  if (exact) return 0;
   if (common.startsWith(query) || name.startsWith(query)) return 60;
   if (country.capital?.toLowerCase().startsWith(query)) return 55;
   if (common.includes(query) || name.includes(query)) return 40;
@@ -314,8 +306,8 @@ const scoreCountry = (
 };
 
 /**
- * Searches countries by official name, common name, aliases, and optionally codes.
- * Results are ranked so exact code / name matches appear first.
+ * Searches names, aliases, TLDs, currencies, capitals, and optionally codes.
+ * Full matches rank above partial matches.
  */
 export const searchCountries = (
   query?: string | null,
@@ -329,20 +321,9 @@ export const searchCountries = (
   const scored = allCountries
     .map((country) => ({
       country,
-      score: scoreCountry(country, normalizedQuery, includeCodes),
+      score: scoreCountry(country, normalizedQuery, includeCodes, exact),
     }))
-    .filter(({ country, score }) => {
-      if (score === 0) return false;
-      if (!exact) return true;
-      return (
-        country.name.toLowerCase() === normalizedQuery ||
-        country.commonName.toLowerCase() === normalizedQuery ||
-        (includeCodes &&
-          (country.code.toLowerCase() === normalizedQuery ||
-            country.alpha3.toLowerCase() === normalizedQuery ||
-            country.numeric === normalizedQuery))
-      );
-    })
+    .filter(({ score }) => score > 0)
     .sort(
       (a, b) =>
         b.score - a.score ||
@@ -350,7 +331,9 @@ export const searchCountries = (
     );
 
   const matches = scored.map(({ country }) => country);
-  return typeof limit === 'number' ? matches.slice(0, limit) : matches;
+  return typeof limit === 'number'
+    ? matches.slice(0, Math.max(0, limit))
+    : matches;
 };
 
 /**
@@ -369,6 +352,11 @@ const normalizeCallingQuery = (value: string): string | undefined => {
   return withPlus;
 };
 
+const matchesNanpAreaCode = (country: Country, prefix: string): boolean =>
+  prefix.startsWith('+1') &&
+  prefix.length === 5 &&
+  (country.nanpAreaCodes?.includes(prefix.slice(2)) ?? false);
+
 /**
  * Finds countries that use an E.164 country calling code.
  * NANP lookups accept both `+1` and a composite such as `+1264` (Anguilla).
@@ -377,17 +365,11 @@ export const getCountriesByCallingCode = (callingCode: string): Country[] => {
   const normalized = normalizeCallingQuery(callingCode);
   if (!normalized) return [];
 
-  return allCountries.filter((country) => {
-    if (country.callingCodes.includes(normalized)) return true;
-    if (
-      normalized.startsWith('+1') &&
-      normalized.length === 5 &&
-      country.nanpAreaCodes?.includes(normalized.slice(2))
-    ) {
-      return true;
-    }
-    return false;
-  });
+  return allCountries.filter(
+    (country) =>
+      country.callingCodes.includes(normalized) ||
+      matchesNanpAreaCode(country, normalized),
+  );
 };
 
 export function getCountriesByRegion(): Record<string, Country[]>;

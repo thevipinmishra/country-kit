@@ -66,11 +66,11 @@ There is no React or Vue package. Import these functions from any JS runtime.
 | `callingCode` | ITU-T E.164 | Country calling codes only (1-3 digits). NANP members are `+1`. Area codes live on `nanpAreaCodes`. |
 | `nanpAreaCodes` | NANP | Area codes for territories that share `+1`. |
 | `independent` | ISO 3166 | Independent-territory flag (195 yes). |
-| `tld` | IANA | Country-code TLD. `GB` is `.uk`, not `.gb`. |
+| `tld` | IANA | Delegated country-code TLD, or `null`. The United Kingdom uses `.uk`. |
 | `currencies` | ISO 4217 | Alphabetic currency codes. Empty when none is assigned (Antarctica, Palestine). |
 | `capital` | Conventional English | Not an ISO field; kept for UI labels. |
 | `flag` | Unicode UTS #51 | Derived from the alpha-2 code via regional indicator symbols. |
-| SVG flags | Wikimedia / flag-icons | Wikipedia SVG drawings, MIT, pinned to flag-icons 7.5.0. |
+| SVG flags | Wikimedia / flag-icons | Wikipedia SVG drawings, MIT, pinned to flag-icons 7.6.0. |
 
 Kosovo (`XK`) is omitted. It is a user-assigned code, not an ISO 3166-1 assigned code.
 
@@ -125,7 +125,7 @@ isValidCallingCode('+1');    // true
 | `getCountriesBySubregion(subregion)` | UN M49 sub-region |
 | `listRegions()` / `listSubregions()` / `listCurrencies()` | Distinct names / codes |
 
-Search options: `limit`, `exact`, `includeCodes` (default `true`).
+Set `exact: true` to require a full match on a searched field. Set `includeCodes: false` to skip ISO identifiers, calling codes, and NANP dial prefixes. Use `limit` to cap the result count.
 
 ### Validation
 
@@ -144,7 +144,7 @@ isValidCallingCode('+1264'); // false (that is +1 plus a NANP area code)
 | `countryNames` | ISO English short names, same order |
 | `countryData` | Record keyed by alpha-2, including `aliases` |
 | `countries` | `{ [code]: name }` map. Deprecated; use `getCountryName` / `getAllCountries` |
-| `FLAG_ICONS_VERSION` | Pinned flag-icons version (`7.5.0`) |
+| `FLAG_ICONS_VERSION` | Pinned flag-icons version (`7.6.0`) |
 
 ### Types
 
@@ -331,16 +331,16 @@ getIndependentCountries(); // 195 sovereign states
 import {
   getCountry,
   isValidCallingCode,
-  isValidCountryCode,
   type CountryCode,
 } from 'country-kit';
 
 function parseCountry(raw: string): CountryCode | undefined {
-  if (isValidCountryCode(raw)) return raw;
-  return getCountry(raw)?.code; // 'USA' / '840' → 'US'
+  return getCountry(raw)?.code;
 }
 
 parseCountry('GB');            // 'GB'
+parseCountry(' gb ');          // 'GB'
+parseCountry('840');           // 'US'
 parseCountry('XK');            // undefined (not ISO assigned)
 isValidCallingCode('+44');     // true
 isValidCallingCode('+1264');   // false (NANP area code, not E.164)

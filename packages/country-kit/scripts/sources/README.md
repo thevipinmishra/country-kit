@@ -19,11 +19,12 @@ Calling codes are **ITU-T E.164 country calling codes**, not national destinatio
 | --- | --- | --- | --- | --- |
 | `TR` | `currencies` | `[]` | `TRY` | Turkish lira is ISO 4217 `TRY` |
 | `KZ` | `capital` | Nur-Sultan | Astana | Official rename (2022) |
-| `BL` | `tld` | `.gp` | `.bl` | IANA ccTLD for Saint Barthélemy |
-| `MF` | `tld` | `.gp` | `.mf` | IANA ccTLD for Saint Martin (French) |
+| `BL`, `BQ`, `EH`, `MF`, `UM` | `tld` | Matching alpha-2 domains | `null` | Absent from the [IANA delegated TLD list](https://data.iana.org/TLD/tlds-alpha-by-domain.txt) |
 | `GS` | `currencies` | `[]` | `GBP` | Sterling is used on South Georgia |
 | `GB` | `tld` | `.uk` | `.uk` | IANA exception; `.gb` is unused |
 
 Antarctica (`AQ`) and Palestine (`PS`) keep an empty `currencies` list: ISO 4217 does not assign them a code.
+
+The Vatican uses `+39`. The ITU lists `+379` as reserved for future use. [ITU E.164 assigned country codes](https://www.itu.int/dms_pub/itu-t/opb/sp/T-SP-E.164D-2016-PDF-E.pdf) · [Vatican telephone exchange](https://www.vatican.va/content/vatican/en/info.html)
 
 Unicode flag emojis are derived from ISO 3166-1 alpha-2 codes via regional indicator symbols (UTS #51). SVG flags are generated with `pnpm generate:flags`.

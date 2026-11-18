@@ -1,19 +1,29 @@
 {
   "name": "country-kit",
   "description": "ISO 3166-1 country data for TypeScript: alpha-2/3 codes, names, ITU-T E.164 calling codes, UN M49 regions, IANA ccTLDs, ISO 4217 currencies, flag emoji, and SVG flags.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "type": "module",
   "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./flags": {
-      "types": "./dist/flags.d.ts",
-      "import": "./dist/flags.js",
-      "require": "./dist/flags.cjs"
+      "import": {
+        "types": "./dist/svg-flags.d.ts",
+        "default": "./dist/flags.js"
+      },
+      "require": {
+        "types": "./dist/cjs/svg-flags.d.cts",
+        "default": "./dist/flags.cjs"
+      }
     }
   },
   "main": "./dist/index.cjs",
@@ -22,7 +32,8 @@
   "files": [
     "dist/**",
     "README.md",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "scripts/sources/flag-icons.LICENSE"
   ],
   "keywords": [
     "iso-3166",
@@ -55,21 +66,22 @@
   },
   "homepage": "https://country-kit.vercel.app/",
   "scripts": {
-    "generate": "node scripts/generate-data.mjs",
+    "generate": "node scripts/generate-data.mjs && biome format --write src/data/countries.json src/country-code.ts",
     "generate:flags": "node scripts/generate-flags.mjs",
     "build": "rslib build",
     "check": "biome check --write",
     "dev": "rslib build --watch",
     "format": "biome format --write",
     "publish": "pnpm run build && npm publish",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:package": "pnpm run build && tsc --ignoreConfig --noEmit --strict --module nodenext tests/package.mts tests/package.cts"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.11",
-    "@rslib/core": "^0.23.2",
-    "@types/node": "^26.4.0",
-    "typescript": "^5.9.2",
-    "vitest": "^4.1.11"
+    "@biomejs/biome": "^2.6.8",
+    "@rslib/core": "^1.0.7",
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
   },
   "engines": {
     "node": ">=18"

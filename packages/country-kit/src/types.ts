@@ -37,7 +37,7 @@ export interface Country {
   subregion: string | null;
   /** ISO 3166 independent territory (true for sovereign states) */
   independent: boolean;
-  /** IANA country-code TLD, including the leading dot (`".uk"` for GB) */
+  /** Delegated IANA country-code TLD with a leading dot, or null */
   tld: string | null;
   /** Common English capital city name, when one exists */
   capital: string | null;
@@ -90,9 +90,9 @@ export interface CountryRecord {
 export interface CountrySearchOptions {
   /** Maximum number of results to return */
   limit?: number;
-  /** Whether to match exactly (default: false) */
+  /** Require a full match on one of the searched fields (default: false) */
   exact?: boolean;
-  /** Whether to search by country codes (alpha-2, alpha-3, numeric) as well (default: true) */
+  /** Include ISO codes, calling codes, and NANP dial prefixes (default: true) */
   includeCodes?: boolean;
 }
 

@@ -181,6 +181,12 @@ describe('Calling Code Functions', () => {
     expect(getCountriesByCallingCode('+247').some((c) => c.code === 'SH')).toBe(
       true,
     );
+    expect(getCallingCode('VA')).toBe('+39');
+    expect(getCountriesByCallingCode('+39').map((c) => c.code)).toEqual([
+      'IT',
+      'VA',
+    ]);
+    expect(getCountriesByCallingCode('+379')).toEqual([]);
   });
 
   test('getCountriesByCallingCode handles invalid codes', () => {
@@ -225,6 +231,25 @@ describe('Search Function', () => {
 
     const withoutCodes = searchCountries('us', { includeCodes: false });
     expect(withoutCodes.some((c) => c.code === 'US')).toBe(false);
+  });
+
+  test.each([
+    [' UK ', 'GB'],
+    ['.uk', 'GB'],
+    [' jpy ', 'JP'],
+    ['Paris', 'FR'],
+    ['4', 'AF'],
+    ['+247', 'SH'],
+    ['1658', 'JM'],
+  ])('finds exact matches for %s', (query, code) => {
+    expect(searchCountries(query, { exact: true })[0]?.code).toBe(code);
+  });
+
+  test('applies code and result filters to calling-code matches', () => {
+    expect(searchCountries('+247')[0]?.code).toBe('SH');
+    expect(searchCountries('1658')[0]?.code).toBe('JM');
+    expect(searchCountries('+247', { includeCodes: false })).toEqual([]);
+    expect(searchCountries('united', { limit: -1 })).toEqual([]);
   });
 
   test.each(['', '   ', undefined, null] as Array<string | undefined | null>)(
@@ -314,17 +339,22 @@ describe('Official extras', () => {
     expect(getIndependentCountries().every((c) => c.independent)).toBe(true);
     expect(getCountryCurrencies('TR')).toEqual(['TRY']);
     expect(getCountryCapital('KZ')).toBe('Astana');
-    expect(getCountryTld('BL')).toBe('.bl');
-    expect(getCountryTld('MF')).toBe('.mf');
     expect(getCountryByTld('.uk')?.code).toBe('GB');
     expect(getCountryByTld('uk')?.code).toBe('GB');
-    expect(getCountryByTld('.bl')?.code).toBe('BL');
     expect(getCountriesByCurrency('EUR').length).toBeGreaterThan(20);
     expect(getCountriesByCurrency('usd').some((c) => c.code === 'US')).toBe(
       true,
     );
     expect(listCurrencies()).toContain('JPY');
   });
+
+  test.each(['BL', 'BQ', 'EH', 'MF', 'UM'])(
+    '%s has no delegated country-code TLD',
+    (code) => {
+      expect(getCountryTld(code)).toBeNull();
+      expect(getCountryByTld(code)).toBeUndefined();
+    },
+  );
 
   test('getAllCountries filters and select options', () => {
     const europe = getAllCountries({ region: 'Europe' });
@@ -345,7 +375,7 @@ describe('Official extras', () => {
 describe('SVG flags', () => {
   test('CDN URLs are version-pinned Wikipedia SVGs', () => {
     expect(getFlagSvgUrl('US')).toBe(
-      'https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.5.0/flags/4x3/us.svg',
+      'https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.6.0/flags/4x3/us.svg',
     );
     expect(getFlagSvgUrl('gb', { ratio: '1x1' })).toContain(
       '/flags/1x1/gb.svg',
@@ -360,6 +390,9 @@ describe('SVG flags', () => {
     expect(svg).toContain('viewBox');
     expect(getFlagSvg('xx')).toBeUndefined();
     expect(getFlagSvg('')).toBeUndefined();
+    for (const code of COUNTRY_CODES) {
+      expect(getFlagSvg(code), code).toMatch(/^<svg /);
+    }
   });
 });
 
@@ -367,7 +400,7 @@ describe('Edge cases', () => {
   test('getFlag and FLAG_ICONS_VERSION', () => {
     expect(getFlag('US')).toBe('🇺🇸');
     expect(getFlag('jp')).toBe(getCountryFlag('JP'));
-    expect(FLAG_ICONS_VERSION).toBe('7.5.0');
+    expect(FLAG_ICONS_VERSION).toBe('7.6.0');
   });
 
   test('getFlagSvgUrl accepts flagcdn', () => {

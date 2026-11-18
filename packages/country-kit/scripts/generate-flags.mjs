@@ -12,7 +12,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const FLAG_ICONS_VERSION = '7.5.0';
+const FLAG_ICONS_VERSION = '7.6.0';
 const pkgRoot = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   '..',

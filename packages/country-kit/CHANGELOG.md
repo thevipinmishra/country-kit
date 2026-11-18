@@ -5,6 +5,19 @@ All notable changes to country-kit are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.1]
+
+### Fixed
+
+- Point `country-kit/flags` at its SVG declarations and resolve declarations for both ESM and CommonJS under TypeScript `NodeNext`.
+- Match full aliases, TLDs, currencies, capitals, and codes in exact search. Calling-code search includes secondary E.164 codes and listed NANP area codes.
+- Use `+39` for Vatican City. Return `null` for the undelegated TLDs of `BL`, `BQ`, `EH`, `MF`, and `UM`.
+- Include the ISC and flag-icons MIT license notices in the npm package.
+
+### Changed
+
+- Refresh bundled SVG flags and CDN URLs to [flag-icons 7.6.0](https://github.com/lipis/flag-icons/releases/tag/v7.6.0).
+
 ## [2.0.0] - 2026-08-29
 
 ### Added

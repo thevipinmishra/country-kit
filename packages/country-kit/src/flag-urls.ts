@@ -1,4 +1,4 @@
-export const FLAG_ICONS_VERSION = '7.5.0';
+export const FLAG_ICONS_VERSION = '7.6.0';
 
 export type FlagRatio = '4x3' | '1x1';
 export type FlagSource = 'flag-icons' | 'flagcdn';

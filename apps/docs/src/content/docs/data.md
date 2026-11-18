@@ -12,11 +12,11 @@ Identifiers come from published standards. Flag artwork is not an ISO field. SVG
 | `callingCode` | ITU-T E.164 country calling codes (1-3 digits) |
 | `nanpAreaCodes` / `dialCode` | NANP NPAs for phone UIs. Separate from E.164 country codes |
 | `independent` | ISO 3166 independent-territory flag (195 yes) |
-| `tld` | IANA ccTLD. GB is .uk; .gb is unused |
+| `tld` | Delegated IANA country-code TLD, or `null`. The United Kingdom uses `.uk` |
 | `currencies` | ISO 4217 alphabetic codes. Empty for Antarctica and Palestine |
 | `capital` | Conventional English capital (not an ISO field) |
 | flag emoji | Unicode UTS #51 regional indicator symbols |
-| SVG flags | flag-icons 4×3 and 1×1 SVGs (MIT), Wikipedia/Wikimedia, v7.5.0 |
+| SVG flags | flag-icons 4×3 and 1×1 SVGs (MIT), Wikipedia/Wikimedia, v7.6.0 |
 
 ## Calling codes vs dial prefixes
 
@@ -26,7 +26,7 @@ Saint Helena, Ascension and Tristan da Cunha (`SH`) has two E.164 codes: `+290` 
 
 ## TLD exceptions
 
-Most assigned alpha-2 codes map to `.` plus the lowercase code. The United Kingdom is the documented IANA exception: `GB` → `.uk`. Saint Barthélemy is `.bl`; Saint Martin (French) is `.mf`.
+The United Kingdom uses `.uk`. The entries for `BL`, `BQ`, `EH`, `MF`, and `UM` have `tld: null`. [IANA delegated TLD list](https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
 
 ## Not included
 

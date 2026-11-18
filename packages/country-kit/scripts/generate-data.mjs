@@ -135,14 +135,16 @@ const extras = JSON.parse(
 );
 
 /**
- * Corrections on top of datasets/country-codes (stale capitals, missing ISO 4217,
- * and IANA ccTLDs that were copied from a parent territory).
+ * Corrections to the extras snapshot. See sources/README.md for provenance.
  */
 const EXTRA_OVERRIDES = {
   TR: { currencies: ['TRY'] },
   KZ: { capital: 'Astana' },
-  BL: { tld: '.bl' },
-  MF: { tld: '.mf' },
+  BL: { tld: null },
+  BQ: { tld: null },
+  EH: { tld: null },
+  MF: { tld: null },
+  UM: { tld: null },
   GS: { currencies: ['GBP'] },
 };
 
@@ -152,12 +154,8 @@ if (iso.length !== 249) {
 
 function toE164(code, raw) {
   if (NANP_AREA_CODES[code]) return '+1';
-  if (!raw) {
-    throw new Error(`Missing calling code seed for ${code}`);
-  }
-  // Collapse accidental NANP concatenations like +1264
-  if (raw.startsWith('+1') && raw.length > 2 && NANP_AREA_CODES[code]) {
-    return '+1';
+  if (!/^\+[1-9]\d{0,2}$/.test(raw ?? '')) {
+    throw new Error(`Missing or invalid E.164 calling code seed for ${code}`);
   }
   return raw;
 }
@@ -207,11 +205,6 @@ const countries = iso
   });
 
 const codes = countries.map((c) => c.code);
-const missingSeed = codes.filter((c) => !seedCalling[c] && !NANP_AREA_CODES[c]);
-if (missingSeed.length) {
-  throw new Error(`Missing calling-code seed for: ${missingSeed.join(', ')}`);
-}
-
 const extraSeed = Object.keys(seedCalling).filter((c) => !codes.includes(c));
 if (extraSeed.length) {
   throw new Error(
@@ -222,6 +215,13 @@ if (extraSeed.length) {
 const missingExtras = codes.filter((c) => !extras[c]);
 if (missingExtras.length) {
   throw new Error(`Missing ISO extras for: ${missingExtras.join(', ')}`);
+}
+
+const unknownExtras = Object.keys(extras).filter((c) => !codes.includes(c));
+if (unknownExtras.length) {
+  throw new Error(
+    `ISO extras contain unknown codes: ${unknownExtras.join(', ')}`,
+  );
 }
 
 const tldOwners = new Map();

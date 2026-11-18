@@ -1,7 +1,7 @@
 {
   "name": "country-kit-monorepo",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Workspace for the country-kit npm package and its docs site.",
   "type": "module",
   "scripts": {
