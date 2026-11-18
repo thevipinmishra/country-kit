@@ -5,7 +5,7 @@ description: "country-kit version history and release notes."
 
 Package history for `country-kit`. Same text as [`packages/country-kit/CHANGELOG.md`](https://github.com/thevipinmishra/country-kit/blob/main/packages/country-kit/CHANGELOG.md).
 
-## 2.0.1
+## 2.0.1 - 2026-11-18
 
 ### Fixed
 

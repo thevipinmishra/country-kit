@@ -11,7 +11,7 @@
     "build-package": "pnpm --filter country-kit run build",
     "build-docs": "pnpm run build-package && pnpm --filter docs run build",
     "dev:docs": "pnpm --filter docs dev",
-    "publish": "pnpm --filter country-kit run publish"
+    "release": "pnpm --filter country-kit run release"
   },
   "keywords": [],
   "author": "Vipin Mishra",
